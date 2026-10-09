@@ -26,6 +26,7 @@ without having to reproduce it.
   controller.py --stop-after 60           stop after 60 decisions
   controller.py --no-stay-put             drop `stay put`, so it must move
   controller.py --binary                  one yes/no question per direction
+  controller.py --wait-live 120           wait up to 2 min for the game to run
 
 The `--binary` mode asks a separate question for each direction -- "if the
 player moves here, will a bullet hit them" -- and takes the direction least
@@ -35,6 +36,10 @@ because the single eight-way question is answered by whatever is most
 distinctive in the evidence, which is always the threat, and that scores at
 chance on a dense board. It defaults to the `rays` encoding, which is the one
 that carries the distances the comparison needs.
+
+th06c pauses whenever it loses focus and stays paused until it is resumed by
+hand, so the controller waits for the board to start moving rather than
+refusing. Alt-tabbing to start a run is the normal case, not an error.
 
 Stop it with Ctrl+C, or by creating the stop file (default controller.stop).
 """
@@ -124,9 +129,10 @@ class Controller:
     def __init__(self, fmt="crop", speed=4.0, dry_run=False, log_path=None,
                  stop_file="controller.stop", stop_after=None, vel_off=None,
                  poll_hz=60.0, use_oracle=True, model=DE.DEFAULT_MODEL,
-                 options=None, binary=False):
+                 options=None, binary=False, wait_live=60.0):
         self.fmt = fmt
         self.binary = binary
+        self.wait_live = wait_live
         self.speed = speed
         self.dry_run = dry_run
         self.stop_file = stop_file
@@ -344,6 +350,28 @@ class Controller:
                 self.running = False
 
     # -------------------------------------------------------------------- run
+    def _wait_for_live(self, deadline):
+        """Wait until the board moves, or the deadline passes.
+
+        A paused game answers every read identically, so this is the same test
+        the old hard refusal used -- run in a loop so that resuming the game a
+        second or two after starting the controller still works.
+        """
+        a = board_fingerprint(self.reader.snapshot(speed=self.speed))
+        last_note = 0.0
+        while time.perf_counter() < deadline:
+            time.sleep(0.4)
+            b = board_fingerprint(self.reader.snapshot(speed=self.speed))
+            if a != b:
+                return True
+            a = b
+            now = time.perf_counter()
+            if now - last_note > 10.0:
+                last_note = now
+                print("  ... still frozen, %.0fs left"
+                      % max(0.0, deadline - now))
+        return False
+
     def run(self):
         pid, h = self.reader.pid, self.reader.h
         wins = th06.game_windows()
@@ -360,24 +388,23 @@ class Controller:
             print("dry run: reading state and asking the DE, pressing no keys")
         print("stop with Ctrl+C or by creating %s\n" % self.stop_file)
 
-        # Fail fast when the game is not actually running. A paused window --
-        # and th06c pauses itself on focus loss -- answers every read
-        # identically, so a full run against one is 500 decisions spent asking
-        # the same frozen question. Two reads 0.4s apart is enough to tell.
-        try:
-            a = board_fingerprint(self.reader.snapshot(speed=self.speed))
-            time.sleep(0.4)
-            b = board_fingerprint(self.reader.snapshot(speed=self.speed))
-        except Exception as e:                           # noqa: BLE001
-            print("refusing to start: could not read the board: %s: %s"
-                  % (type(e).__name__, e))
+        # Fail fast when the game is not actually running -- but wait for it
+        # rather than refusing on the spot, because th06c pauses whenever it
+        # loses focus and stays paused until it is resumed by hand. The usual
+        # sequence is that the player alt-tabs away to start the run and the
+        # game pauses on the way, so a hard refusal at that instant would make
+        # the tool refuse every time it is most needed. Wait for the board to
+        # move instead, and only give up if it never does.
+        print("waiting up to %ds for the board to move (resume the game if it "
+              "is paused)..." % self.wait_live)
+        if not self._wait_for_live(time.perf_counter() + self.wait_live):
+            print("refusing to start: the board was identical across every read "
+                  "for %ds, so the game is paused or its window is not "
+                  "focused. Nothing pressed would reach it." % self.wait_live)
+            print("resume the game (th06c stays paused once it loses focus), "
+                  "then run again.")
             raise SystemExit(1)
-        if a == b:
-            print("refusing to start: the board is identical across two reads "
-                  "0.4s apart, so the game is paused or its window is not "
-                  "focused. Nothing pressed would reach it.")
-            print("unpause the game, then run again.")
-            raise SystemExit(1)
+        print("board is moving; starting.")
 
         worker = threading.Thread(target=self.decide_loop, daemon=True)
         worker.start()
@@ -419,6 +446,7 @@ def main():
         use_oracle="--no-oracle" not in argv,
         options=DE.move_options(stay_put="--no-stay-put" not in argv),
         binary="--binary" in argv,
+        wait_live=opt("--wait-live", 60.0, float),
     )
     ctl.run()
 

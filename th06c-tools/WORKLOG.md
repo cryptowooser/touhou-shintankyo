@@ -1551,3 +1551,49 @@ sequence of decisions across a stage, the oracle's approximation error (straight
 lines, no new spawns), or whether an 88% static rate survives contact with a real
 frame. The `rays` table also still describes only the bullets' situation, never
 the player's own movement, which was the original complaint.
+
+## First live run: the static rate does not transfer
+
+`--binary` (rays) and the eight-way `crop` run were each played once in a real
+stage, 476 and 500 decisions, and scored with `score_run.py`. Both die every ~3
+seconds of actual play:
+
+| run | decisions | alive | respawn blocks | alive + discriminating | survived |
+|---|---|---|---|---|---|
+| eight-way/crop | 500 | 42% | 10 | 94 | 89% |
+| binary/rays | 476 | 28% | 13 | 70 | 79% |
+
+The binary mode did not improve live play, and leans worse (79% against 89%,
+p ~ 0.09 on those frame counts). The 28-37 point static advantage does not
+appear at all. Three things the live run showed that the static harness could
+not:
+
+- **The loop decides 4-6 times a second.** A decision is ~250 ms stale when it
+  is applied and is then held for another ~250 ms, so a 15-frame commitment is
+  made against a 15-frame oracle horizon. The prediction is a full horizon out
+  of date by the time it acts. That is a decision-rate deficit against a human's
+  60 Hz, and no prompt or encoding addresses it.
+- **The oracle is a poor referee in dense play.** It models straight lines and
+  no new spawns, and it called the chosen move safe on 7 of the 12 deaths in the
+  binary run. Every "model survived" figure in `score_run.py` is defined by that
+  oracle, so those numbers measure agreement with an approximation, not
+  survival.
+- **The controller keeps deciding through respawns.** Player state 3 is the
+  respawn state. Only 28% of the binary run was alive; the rest was 13 respawn
+  blocks where the board reads empty (0 bullets), every answer is arbitrary, and
+  the player reappears still holding the chosen direction. Alive stretches of
+  1-3 decisions are deaths immediately after a respawn.
+
+The prompt finding stands on its own terms: the eight-way question is answered
+by the most distinctive item in the evidence, which is always the threat, and
+one question per direction fixes that on static boards. It is not what is
+killing the player. Next, in order of expected effect: release the keys while
+the player is not alive and resume when state returns to 0; then either
+extrapolate the snapshot forward by the measured round trip before rendering, or
+move the per-frame dodging into `oracle.py`, which is arithmetic and can run at
+60 Hz, leaving the model a job that is not reactive.
+
+`controller.py` now waits for the board to move instead of refusing to start,
+because th06c pauses on focus loss and stays paused until resumed by hand, so
+alt-tabbing to start a run is the normal case rather than an error.
+`--wait-live SECONDS` sets the budget (default 60).
