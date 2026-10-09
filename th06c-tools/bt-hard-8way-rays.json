@@ -1,0 +1,447 @@
+[
+ {
+  "lethal": [
+   "left",
+   "up",
+   "down",
+   "down-left",
+   "down-right"
+  ],
+  "choice": "down",
+  "ok": false,
+  "confidence": 0.8796191723816378
+ },
+ {
+  "lethal": [
+   "right",
+   "up",
+   "down",
+   "up-left"
+  ],
+  "choice": "up-right",
+  "ok": true,
+  "confidence": 0.9948238508594994
+ },
+ {
+  "lethal": [
+   "right",
+   "up-left",
+   "up-right",
+   "down-right"
+  ],
+  "choice": "down-right",
+  "ok": false,
+  "confidence": 0.5844214123042333
+ },
+ {
+  "lethal": [
+   "right",
+   "up",
+   "up-left",
+   "up-right"
+  ],
+  "choice": "right",
+  "ok": false,
+  "confidence": 0.9859238931538564
+ },
+ {
+  "lethal": [
+   "left",
+   "up",
+   "up-left",
+   "up-right",
+   "down-right"
+  ],
+  "choice": "down",
+  "ok": true,
+  "confidence": 0.646917427807306
+ },
+ {
+  "lethal": [
+   "left",
+   "up-left",
+   "up-right",
+   "down-left"
+  ],
+  "choice": "right",
+  "ok": true,
+  "confidence": 0.5251389103662795
+ },
+ {
+  "lethal": [
+   "left",
+   "right",
+   "down",
+   "down-right"
+  ],
+  "choice": "up-left",
+  "ok": true,
+  "confidence": 0.963605237381896
+ },
+ {
+  "lethal": [
+   "right",
+   "up-left",
+   "down-left",
+   "down-right"
+  ],
+  "choice": "left",
+  "ok": true,
+  "confidence": 0.982032609501864
+ },
+ {
+  "lethal": [
+   "down",
+   "up-left",
+   "down-left",
+   "down-right"
+  ],
+  "choice": "right",
+  "ok": true,
+  "confidence": 0.8609819667888219
+ },
+ {
+  "lethal": [
+   "left",
+   "up",
+   "down",
+   "down-right"
+  ],
+  "choice": "left",
+  "ok": false,
+  "confidence": 0.9210734403282335
+ },
+ {
+  "lethal": [
+   "left",
+   "right",
+   "up",
+   "down-left"
+  ],
+  "choice": "left",
+  "ok": false,
+  "confidence": 0.9763465723109465
+ },
+ {
+  "lethal": [
+   "up",
+   "up-left",
+   "down-left",
+   "down-right"
+  ],
+  "choice": "left",
+  "ok": true,
+  "confidence": 0.7918107858657297
+ },
+ {
+  "lethal": [
+   "right",
+   "up",
+   "down-left",
+   "down-right"
+  ],
+  "choice": "up",
+  "ok": false,
+  "confidence": 0.42446275694584495
+ },
+ {
+  "lethal": [
+   "left",
+   "up-left",
+   "down-left",
+   "down-right"
+  ],
+  "choice": "left",
+  "ok": false,
+  "confidence": 0.6915116170135612
+ },
+ {
+  "lethal": [
+   "right",
+   "up-left",
+   "up-right",
+   "down-right"
+  ],
+  "choice": "up-right",
+  "ok": false,
+  "confidence": 0.9912942217018579
+ },
+ {
+  "lethal": [
+   "up",
+   "down",
+   "up-left",
+   "down-left"
+  ],
+  "choice": "right",
+  "ok": true,
+  "confidence": 0.9918238160215795
+ },
+ {
+  "lethal": [
+   "left",
+   "up",
+   "down",
+   "up-left"
+  ],
+  "choice": "up-left",
+  "ok": false,
+  "confidence": 0.9716887161563973
+ },
+ {
+  "lethal": [
+   "right",
+   "down",
+   "up-right",
+   "down-right"
+  ],
+  "choice": "left",
+  "ok": true,
+  "confidence": 0.724323339057075
+ },
+ {
+  "lethal": [
+   "left",
+   "right",
+   "up",
+   "up-left"
+  ],
+  "choice": "right",
+  "ok": false,
+  "confidence": 0.40502437219283294
+ },
+ {
+  "lethal": [
+   "right",
+   "up",
+   "down",
+   "up-right"
+  ],
+  "choice": "up-left",
+  "ok": true,
+  "confidence": 0.8389895246111494
+ },
+ {
+  "lethal": [
+   "left",
+   "up",
+   "up-right",
+   "down-left"
+  ],
+  "choice": "down-right",
+  "ok": true,
+  "confidence": 0.536205898174391
+ },
+ {
+  "lethal": [
+   "right",
+   "up",
+   "up-left",
+   "down-right"
+  ],
+  "choice": "left",
+  "ok": true,
+  "confidence": 0.9739038757331734
+ },
+ {
+  "lethal": [
+   "left",
+   "down",
+   "up-right",
+   "down-left"
+  ],
+  "choice": "up",
+  "ok": true,
+  "confidence": 0.7137319248870763
+ },
+ {
+  "lethal": [
+   "down",
+   "up-left",
+   "up-right",
+   "down-right"
+  ],
+  "choice": "down-left",
+  "ok": true,
+  "confidence": 0.46643881765452483
+ },
+ {
+  "lethal": [
+   "left",
+   "right",
+   "down",
+   "up-left",
+   "down-left"
+  ],
+  "choice": "down-right",
+  "ok": true,
+  "confidence": 0.8797725790497968
+ },
+ {
+  "lethal": [
+   "right",
+   "up",
+   "down",
+   "up-right"
+  ],
+  "choice": "up-right",
+  "ok": false,
+  "confidence": 0.9692945522561005
+ },
+ {
+  "lethal": [
+   "left",
+   "up",
+   "down",
+   "up-right"
+  ],
+  "choice": "right",
+  "ok": true,
+  "confidence": 0.8832496963875334
+ },
+ {
+  "lethal": [
+   "right",
+   "down",
+   "up-left",
+   "up-right"
+  ],
+  "choice": "left",
+  "ok": true,
+  "confidence": 0.9962000826046264
+ },
+ {
+  "lethal": [
+   "left",
+   "right",
+   "up",
+   "down-right"
+  ],
+  "choice": "up-right",
+  "ok": true,
+  "confidence": 0.6788688695919639
+ },
+ {
+  "lethal": [
+   "right",
+   "down",
+   "down-left",
+   "down-right"
+  ],
+  "choice": "down-left",
+  "ok": false,
+  "confidence": 0.9607731622949014
+ },
+ {
+  "lethal": [
+   "right",
+   "up",
+   "up-left",
+   "down-right"
+  ],
+  "choice": "down-right",
+  "ok": false,
+  "confidence": 0.8338169573631494
+ },
+ {
+  "lethal": [
+   "right",
+   "up",
+   "up-right",
+   "down-right"
+  ],
+  "choice": "up-right",
+  "ok": false,
+  "confidence": 0.5204830310330325
+ },
+ {
+  "lethal": [
+   "right",
+   "up",
+   "up-left",
+   "up-right"
+  ],
+  "choice": "down",
+  "ok": true,
+  "confidence": 0.646845014243641
+ },
+ {
+  "lethal": [
+   "right",
+   "up-left",
+   "up-right",
+   "down-left"
+  ],
+  "choice": "down-left",
+  "ok": false,
+  "confidence": 0.8272436405080099
+ },
+ {
+  "lethal": [
+   "right",
+   "down",
+   "up-left",
+   "down-right"
+  ],
+  "choice": "down-right",
+  "ok": false,
+  "confidence": 0.9035176324158608
+ },
+ {
+  "lethal": [
+   "left",
+   "right",
+   "down",
+   "up-right",
+   "down-left"
+  ],
+  "choice": "left",
+  "ok": false,
+  "confidence": 0.8194748113312093
+ },
+ {
+  "lethal": [
+   "up",
+   "down",
+   "up-left",
+   "down-right"
+  ],
+  "choice": "up-right",
+  "ok": true,
+  "confidence": 0.7482725782528673
+ },
+ {
+  "lethal": [
+   "right",
+   "up-left",
+   "up-right",
+   "down-right"
+  ],
+  "choice": "up-left",
+  "ok": false,
+  "confidence": 0.30064171819902796
+ },
+ {
+  "lethal": [
+   "right",
+   "up",
+   "up-left",
+   "down-left"
+  ],
+  "choice": "up-right",
+  "ok": true,
+  "confidence": 0.4347863631725911
+ },
+ {
+  "lethal": [
+   "left",
+   "up",
+   "down",
+   "up-right",
+   "down-right"
+  ],
+  "choice": "up-right",
+  "ok": false,
+  "confidence": 0.4464684649080809
+ }
+]

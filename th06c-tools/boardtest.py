@@ -865,6 +865,8 @@ def main():
             print("  The model beat random by %.1f/%d." % (ok - exp, n))
         else:
             print("  The model did not beat random.")
+        if args.json:
+            dump(rows, args.json)
         return
 
     ap.print_help()

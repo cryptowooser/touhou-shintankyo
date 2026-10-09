@@ -1,0 +1,5602 @@
+[
+ {
+  "board": 0,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9706877664927535
+ },
+ {
+  "board": 0,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877724285167
+ },
+ {
+  "board": 0,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.939913350667554
+ },
+ {
+  "board": 0,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9149009555730611
+ },
+ {
+  "board": 0,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8933094096048377
+ },
+ {
+  "board": 0,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9859363738865317
+ },
+ {
+  "board": 0,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835309589073
+ },
+ {
+  "board": 0,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9626731089077046
+ },
+ {
+  "board": 1,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9579122768904644
+ },
+ {
+  "board": 1,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9579122750881832
+ },
+ {
+  "board": 1,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9324533036984186
+ },
+ {
+  "board": 1,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9149009642742806
+ },
+ {
+  "board": 1,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.7057850340255386
+ },
+ {
+  "board": 1,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9991959140174173
+ },
+ {
+  "board": 1,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9669140207770578
+ },
+ {
+  "board": 1,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.966914023160595
+ },
+ {
+  "board": 2,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9669140188702278
+ },
+ {
+  "board": 2,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.939913354875362
+ },
+ {
+  "board": 2,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731142622272
+ },
+ {
+  "board": 2,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9989677691940887
+ },
+ {
+  "board": 2,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9669140235181256
+ },
+ {
+  "board": 2,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7310585903489892
+ },
+ {
+  "board": 2,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9241418152779357
+ },
+ {
+  "board": 2,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9579122725349514
+ },
+ {
+  "board": 3,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9890130566812492
+ },
+ {
+  "board": 3,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9241418163225626
+ },
+ {
+  "board": 3,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9525741263175447
+ },
+ {
+  "board": 3,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8354835452961425
+ },
+ {
+  "board": 3,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9902915257122415
+ },
+ {
+  "board": 3,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8933094074745443
+ },
+ {
+  "board": 3,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9149009549929797
+ },
+ {
+  "board": 3,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.979667648438234
+ },
+ {
+  "board": 4,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835309589073
+ },
+ {
+  "board": 4,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9579122710330503
+ },
+ {
+  "board": 4,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9579122731357119
+ },
+ {
+  "board": 4,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9982992778731855
+ },
+ {
+  "board": 4,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9902915228380264
+ },
+ {
+  "board": 4,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.94659667246
+ },
+ {
+  "board": 4,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7772998663336157
+ },
+ {
+  "board": 4,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7772998611746911
+ },
+ {
+  "board": 5,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9579122710330503
+ },
+ {
+  "board": 5,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9988304896054823
+ },
+ {
+  "board": 5,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9669140191085817
+ },
+ {
+  "board": 5,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8670357494949105
+ },
+ {
+  "board": 5,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9324533036984186
+ },
+ {
+  "board": 5,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9770226302990508
+ },
+ {
+  "board": 5,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8519527982093668
+ },
+ {
+  "board": 5,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9525741313664297
+ },
+ {
+  "board": 6,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9525741244662869
+ },
+ {
+  "board": 6,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9796676443941232
+ },
+ {
+  "board": 6,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7981867849406659
+ },
+ {
+  "board": 6,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9669140229222415
+ },
+ {
+  "board": 6,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9998601778959443
+ },
+ {
+  "board": 6,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8519527982093668
+ },
+ {
+  "board": 6,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9933071493698107
+ },
+ {
+  "board": 6,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9324533121452495
+ },
+ {
+  "board": 7,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9997040430246752
+ },
+ {
+  "board": 7,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835452961425
+ },
+ {
+  "board": 7,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9579122710330503
+ },
+ {
+  "board": 7,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8807970779778823
+ },
+ {
+  "board": 7,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7772998714925403
+ },
+ {
+  "board": 7,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7772998611746911
+ },
+ {
+  "board": 7,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9706877708385804
+ },
+ {
+  "board": 7,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9241418262465169
+ },
+ {
+  "board": 8,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9820137924395612
+ },
+ {
+  "board": 8,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.991422516241544
+ },
+ {
+  "board": 8,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9770226310099107
+ },
+ {
+  "board": 8,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.6513548646660542
+ },
+ {
+  "board": 8,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9820137899063109
+ },
+ {
+  "board": 8,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9875683483235702
+ },
+ {
+  "board": 8,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.5621765008857981
+ },
+ {
+  "board": 8,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8933093975331751
+ },
+ {
+  "board": 9,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9706877665987492
+ },
+ {
+  "board": 9,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9914225153861963
+ },
+ {
+  "board": 9,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9465966653038896
+ },
+ {
+  "board": 9,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.5926665999540697
+ },
+ {
+  "board": 9,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9669140244715405
+ },
+ {
+  "board": 9,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877716865463
+ },
+ {
+  "board": 9,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9149009578933863
+ },
+ {
+  "board": 9,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8519528019683106
+ },
+ {
+  "board": 10,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.952574127663914
+ },
+ {
+  "board": 10,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.798186775339273
+ },
+ {
+  "board": 10,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.966914022445534
+ },
+ {
+  "board": 10,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9046505351008906
+ },
+ {
+  "board": 10,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.8670357494949105
+ },
+ {
+  "board": 10,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9579122677288678
+ },
+ {
+  "board": 10,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.6791787056691698
+ },
+ {
+  "board": 10,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.6791786926816161
+ },
+ {
+  "board": 11,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9820137940845286
+ },
+ {
+  "board": 11,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9859363722852489
+ },
+ {
+  "board": 11,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9796676448022446
+ },
+ {
+  "board": 11,
+  "direction": "down",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.7981867729389246
+ },
+ {
+  "board": 11,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835411997897
+ },
+ {
+  "board": 11,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9465966752847803
+ },
+ {
+  "board": 11,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9324533107374443
+ },
+ {
+  "board": 11,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9669140185126972
+ },
+ {
+  "board": 12,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877671287282
+ },
+ {
+  "board": 12,
+  "direction": "right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9770226287518852
+ },
+ {
+  "board": 12,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9669140247098942
+ },
+ {
+  "board": 12,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9740426403062039
+ },
+ {
+  "board": 12,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9995121429925952
+ },
+ {
+  "board": 12,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9796676477332972
+ },
+ {
+  "board": 12,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9669140233989487
+ },
+ {
+  "board": 12,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8519527982093668
+ },
+ {
+  "board": 13,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9820137869124695
+ },
+ {
+  "board": 13,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8519527982093668
+ },
+ {
+  "board": 13,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9796676443199194
+ },
+ {
+  "board": 13,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9995121429106246
+ },
+ {
+  "board": 13,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9740426401649208
+ },
+ {
+  "board": 13,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9924227601258124
+ },
+ {
+  "board": 13,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7772998611746911
+ },
+ {
+  "board": 13,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.754914997895581
+ },
+ {
+  "board": 14,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9964063980221743
+ },
+ {
+  "board": 14,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.5621765008857981
+ },
+ {
+  "board": 14,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7981867849406659
+ },
+ {
+  "board": 14,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877675527112
+ },
+ {
+  "board": 14,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9796676472509721
+ },
+ {
+  "board": 14,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9399133443558416
+ },
+ {
+  "board": 14,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.5
+ },
+ {
+  "board": 14,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9241418231126367
+ },
+ {
+  "board": 15,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9740426443092215
+ },
+ {
+  "board": 15,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9982992775197812
+ },
+ {
+  "board": 15,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9770226277065029
+ },
+ {
+  "board": 15,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835391516132
+ },
+ {
+  "board": 15,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9324533022906132
+ },
+ {
+  "board": 15,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9579122683296283
+ },
+ {
+  "board": 15,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9149009642742806
+ },
+ {
+  "board": 15,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.990291525183959
+ },
+ {
+  "board": 16,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9820137906958954
+ },
+ {
+  "board": 16,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.987568348975305
+ },
+ {
+  "board": 16,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9465966743431868
+ },
+ {
+  "board": 16,
+  "direction": "down",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8519528038477825
+ },
+ {
+  "board": 16,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9740426427080145
+ },
+ {
+  "board": 16,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.6791787056691698
+ },
+ {
+  "board": 16,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7981867825403176
+ },
+ {
+  "board": 16,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7549149923816048
+ },
+ {
+  "board": 17,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9933071502582888
+ },
+ {
+  "board": 17,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8807970858005139
+ },
+ {
+  "board": 17,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731147976793
+ },
+ {
+  "board": 17,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7549149923816048
+ },
+ {
+  "board": 17,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731095770201
+ },
+ {
+  "board": 17,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9525741288419872
+ },
+ {
+  "board": 17,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9840936091045726
+ },
+ {
+  "board": 17,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.939913343093499
+ },
+ {
+  "board": 18,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.96691402411401
+ },
+ {
+  "board": 18,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8519527963298947
+ },
+ {
+  "board": 18,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9706877670227323
+ },
+ {
+  "board": 18,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9840936074134845
+ },
+ {
+  "board": 18,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9840936051975758
+ },
+ {
+  "board": 18,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.992422759131332
+ },
+ {
+  "board": 18,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9399133473013074
+ },
+ {
+  "board": 18,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.946596665115571
+ },
+ {
+  "board": 19,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9859363756686041
+ },
+ {
+  "board": 19,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9149009491921662
+ },
+ {
+  "board": 19,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9770226278737641
+ },
+ {
+  "board": 19,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8175744850834649
+ },
+ {
+  "board": 19,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9996646497105578
+ },
+ {
+  "board": 19,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9525741254760638
+ },
+ {
+  "board": 19,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9796676488463552
+ },
+ {
+  "board": 19,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9579122731357119
+ },
+ {
+  "board": 20,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.880797071719777
+ },
+ {
+  "board": 20,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731089077046
+ },
+ {
+  "board": 20,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9706877725345124
+ },
+ {
+  "board": 20,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9149009520925732
+ },
+ {
+  "board": 20,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9796676479188069
+ },
+ {
+  "board": 20,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.987568350621793
+ },
+ {
+  "board": 20,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7772998663336157
+ },
+ {
+  "board": 20,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8519528038477825
+ },
+ {
+  "board": 21,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9998415637870799
+ },
+ {
+  "board": 21,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.731058584489497
+ },
+ {
+  "board": 21,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9706877706265888
+ },
+ {
+  "board": 21,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9046505331728751
+ },
+ {
+  "board": 21,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9796676449135503
+ },
+ {
+  "board": 21,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9669140192277585
+ },
+ {
+  "board": 21,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9669140191085817
+ },
+ {
+  "board": 21,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9149009567332238
+ },
+ {
+  "board": 22,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.754914997895581
+ },
+ {
+  "board": 22,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9859363699995465
+ },
+ {
+  "board": 22,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.999704042810814
+ },
+ {
+  "board": 22,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7057850402140659
+ },
+ {
+  "board": 22,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9796676472138701
+ },
+ {
+  "board": 22,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835330070839
+ },
+ {
+  "board": 22,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.7310585903489892
+ },
+ {
+  "board": 22,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8933094167058151
+ },
+ {
+  "board": 23,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9890130564687298
+ },
+ {
+  "board": 23,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9940889320795658
+ },
+ {
+  "board": 23,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9465966709534505
+ },
+ {
+  "board": 23,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8807970889295664
+ },
+ {
+  "board": 23,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.932453304167687
+ },
+ {
+  "board": 23,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9770226276228725
+ },
+ {
+  "board": 23,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9669140236373025
+ },
+ {
+  "board": 23,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.7549149813536518
+ },
+ {
+  "board": 24,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9525741310298375
+ },
+ {
+  "board": 24,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9669140210154115
+ },
+ {
+  "board": 24,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9980732652874212
+ },
+ {
+  "board": 24,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9579122735862822
+ },
+ {
+  "board": 24,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8670357512127872
+ },
+ {
+  "board": 24,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9399133481428692
+ },
+ {
+  "board": 24,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7772998560157665
+ },
+ {
+  "board": 24,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9990889489937907
+ },
+ {
+  "board": 25,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731158685837
+ },
+ {
+  "board": 25,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7772998508568416
+ },
+ {
+  "board": 25,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9706877663867577
+ },
+ {
+  "board": 25,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8807970732843035
+ },
+ {
+  "board": 25,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.5
+ },
+ {
+  "board": 25,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8519527963298947
+ },
+ {
+  "board": 25,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731145299533
+ },
+ {
+  "board": 25,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.990291522900704
+ },
+ {
+  "board": 26,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.982013794216126
+ },
+ {
+  "board": 26,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9914225140318961
+ },
+ {
+  "board": 26,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9525741264858409
+ },
+ {
+  "board": 26,
+  "direction": "down",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.5621765008857981
+ },
+ {
+  "board": 26,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9399133536130195
+ },
+ {
+  "board": 26,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8933094138654242
+ },
+ {
+  "board": 26,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.893309411735131
+ },
+ {
+  "board": 26,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8175744850834649
+ },
+ {
+  "board": 27,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9993736658357695
+ },
+ {
+  "board": 27,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.966914020538704
+ },
+ {
+  "board": 27,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9924227584940242
+ },
+ {
+  "board": 27,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9525741291785796
+ },
+ {
+  "board": 27,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9740426426609202
+ },
+ {
+  "board": 27,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9840936089587891
+ },
+ {
+  "board": 27,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9241418147556224
+ },
+ {
+  "board": 27,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.651354857898194
+ },
+ {
+  "board": 28,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7057850278370112
+ },
+ {
+  "board": 28,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.6513548714339145
+ },
+ {
+  "board": 28,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.977022630340866
+ },
+ {
+  "board": 28,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9046505299595163
+ },
+ {
+  "board": 28,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.962673116805625
+ },
+ {
+  "board": 28,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.8175744828610095
+ },
+ {
+  "board": 28,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.8933094131553264
+ },
+ {
+  "board": 28,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.6791787056691698
+ },
+ {
+  "board": 29,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877703086015
+ },
+ {
+  "board": 29,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8807970670261975
+ },
+ {
+  "board": 29,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9924227570303167
+ },
+ {
+  "board": 29,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9626731095770201
+ },
+ {
+  "board": 29,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9046505248181417
+ },
+ {
+  "board": 29,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7057850402140659
+ },
+ {
+  "board": 29,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9465966702001757
+ },
+ {
+  "board": 29,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835391516132
+ },
+ {
+  "board": 30,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9046505338155469
+ },
+ {
+  "board": 30,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9740426436499009
+ },
+ {
+  "board": 30,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9859363749712715
+ },
+ {
+  "board": 30,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9241418246795767
+ },
+ {
+  "board": 30,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9399133510883347
+ },
+ {
+  "board": 30,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9525741280005063
+ },
+ {
+  "board": 30,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9149009497722478
+ },
+ {
+  "board": 30,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.6791787121629466
+ },
+ {
+  "board": 31,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8670357580842941
+ },
+ {
+  "board": 31,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9324533097989077
+ },
+ {
+  "board": 31,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9740426422370712
+ },
+ {
+  "board": 31,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9978172840698624
+ },
+ {
+  "board": 31,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7310585727705126
+ },
+ {
+  "board": 31,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.946596667563714
+ },
+ {
+  "board": 31,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9579122708828604
+ },
+ {
+  "board": 31,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9579122701319096
+ },
+ {
+  "board": 32,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8807970779778823
+ },
+ {
+  "board": 32,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9324533013520764
+ },
+ {
+  "board": 32,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9959298614497885
+ },
+ {
+  "board": 32,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9978172838969432
+ },
+ {
+  "board": 32,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.970687768612669
+ },
+ {
+  "board": 32,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.977022630340866
+ },
+ {
+  "board": 32,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8807970732843035
+ },
+ {
+  "board": 32,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.924141817889503
+ },
+ {
+  "board": 33,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731109156508
+ },
+ {
+  "board": 33,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9324533051062237
+ },
+ {
+  "board": 33,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9770226322225539
+ },
+ {
+  "board": 33,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8354835289107309
+ },
+ {
+  "board": 33,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9149009509324104
+ },
+ {
+  "board": 33,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9241418158002492
+ },
+ {
+  "board": 33,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.5
+ },
+ {
+  "board": 33,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9770226325570762
+ },
+ {
+  "board": 34,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877715805505
+ },
+ {
+  "board": 34,
+  "direction": "right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.7057850402140659
+ },
+ {
+  "board": 34,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9933071504440332
+ },
+ {
+  "board": 34,
+  "direction": "down",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8354835432479661
+ },
+ {
+  "board": 34,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7057850154599563
+ },
+ {
+  "board": 34,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9993736656928729
+ },
+ {
+  "board": 34,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7057850340255386
+ },
+ {
+  "board": 34,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7549149923816048
+ },
+ {
+  "board": 35,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9579122714836206
+ },
+ {
+  "board": 35,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8933094124452288
+ },
+ {
+  "board": 35,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9399133439350607
+ },
+ {
+  "board": 35,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9399133510883347
+ },
+ {
+  "board": 35,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9525741216052517
+ },
+ {
+  "board": 35,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9875683519252624
+ },
+ {
+  "board": 35,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.7310585903489892
+ },
+ {
+  "board": 35,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9968273170978702
+ },
+ {
+  "board": 36,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9241418267688303
+ },
+ {
+  "board": 36,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9579122755387536
+ },
+ {
+  "board": 36,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9525741286736912
+ },
+ {
+  "board": 36,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7057850340255386
+ },
+ {
+  "board": 36,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.5621765008857981
+ },
+ {
+  "board": 36,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9914225148397244
+ },
+ {
+  "board": 36,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9579122684798184
+ },
+ {
+  "board": 36,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8519528076067262
+ },
+ {
+  "board": 37,
+  "direction": "left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.952574130693245
+ },
+ {
+  "board": 37,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8807970873650403
+ },
+ {
+  "board": 37,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877661747662
+ },
+ {
+  "board": 37,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.984093607092761
+ },
+ {
+  "board": 37,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.987568349203984
+ },
+ {
+  "board": 37,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9579122735862822
+ },
+ {
+  "board": 37,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8175744761936437
+ },
+ {
+  "board": 37,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.924141816844876
+ },
+ {
+  "board": 38,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9840936094252962
+ },
+ {
+  "board": 38,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7981867825403176
+ },
+ {
+  "board": 38,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7772998560157665
+ },
+ {
+  "board": 38,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9046505395995929
+ },
+ {
+  "board": 38,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9579122687801985
+ },
+ {
+  "board": 38,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9046505428129514
+ },
+ {
+  "board": 38,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7981867849406659
+ },
+ {
+  "board": 38,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.8354835350552604
+ },
+ {
+  "board": 39,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9740426413893734
+ },
+ {
+  "board": 39,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9579122684798184
+ },
+ {
+  "board": 39,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9914225150139618
+ },
+ {
+  "board": 39,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9324533163686646
+ },
+ {
+  "board": 39,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9525741219418441
+ },
+ {
+  "board": 39,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9859363720269774
+ },
+ {
+  "board": 39,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877705205931
+ },
+ {
+  "board": 39,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9241418215456966
+ },
+ {
+  "board": 40,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9914225129943909
+ },
+ {
+  "board": 40,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9959298632071358
+ },
+ {
+  "board": 40,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9933071494410127
+ },
+ {
+  "board": 40,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7310585727705126
+ },
+ {
+  "board": 40,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9796676470283605
+ },
+ {
+  "board": 40,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9241418246795767
+ },
+ {
+  "board": 40,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.89330940889474
+ },
+ {
+  "board": 40,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9990889486042683
+ },
+ {
+  "board": 41,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731105140616
+ },
+ {
+  "board": 41,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7981867873410141
+ },
+ {
+  "board": 41,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9875683499243224
+ },
+ {
+  "board": 41,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7981867849406659
+ },
+ {
+  "board": 41,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8807970732843035
+ },
+ {
+  "board": 41,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9859363761076656
+ },
+ {
+  "board": 41,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.7310585727705126
+ },
+ {
+  "board": 41,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.893309401793762
+ },
+ {
+  "board": 42,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9820137931304475
+ },
+ {
+  "board": 42,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731103801985
+ },
+ {
+  "board": 42,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9820137905971974
+ },
+ {
+  "board": 42,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9669140225647107
+ },
+ {
+  "board": 42,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9324533027598818
+ },
+ {
+  "board": 42,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.817574478416099
+ },
+ {
+  "board": 42,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.754914975839675
+ },
+ {
+  "board": 42,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9525741278322103
+ },
+ {
+  "board": 43,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.982013790366902
+ },
+ {
+  "board": 43,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9820137924395612
+ },
+ {
+  "board": 43,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.957912274487423
+ },
+ {
+  "board": 43,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835309589073
+ },
+ {
+  "board": 43,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8933094110250331
+ },
+ {
+  "board": 43,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.924141819456443
+ },
+ {
+  "board": 43,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835411997897
+ },
+ {
+  "board": 43,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9525741259809523
+ },
+ {
+  "board": 44,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9875683494212288
+ },
+ {
+  "board": 44,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7772998663336157
+ },
+ {
+  "board": 44,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9740426455807683
+ },
+ {
+  "board": 44,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8807970654616711
+ },
+ {
+  "board": 44,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9740426427080145
+ },
+ {
+  "board": 44,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9241418173671895
+ },
+ {
+  "board": 44,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.754914997895581
+ },
+ {
+  "board": 44,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.6224593312018546
+ },
+ {
+  "board": 45,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9991959139371663
+ },
+ {
+  "board": 45,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9046505261034853
+ },
+ {
+  "board": 45,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.880797068590724
+ },
+ {
+  "board": 45,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9525741244662869
+ },
+ {
+  "board": 45,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9840936073551713
+ },
+ {
+  "board": 45,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9525741246345829
+ },
+ {
+  "board": 45,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9525741269907294
+ },
+ {
+  "board": 45,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8519527982093668
+ },
+ {
+  "board": 46,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9968273177392345
+ },
+ {
+  "board": 46,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.904650527388829
+ },
+ {
+  "board": 46,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9399133519298963
+ },
+ {
+  "board": 46,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9046505254608136
+ },
+ {
+  "board": 46,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9669140237564795
+ },
+ {
+  "board": 46,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9046505440982949
+ },
+ {
+  "board": 46,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9465966690702636
+ },
+ {
+  "board": 46,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7981867777396212
+ },
+ {
+  "board": 47,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9995694428892907
+ },
+ {
+  "board": 47,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9465966702001757
+ },
+ {
+  "board": 47,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9046505383142494
+ },
+ {
+  "board": 47,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.731058584489497
+ },
+ {
+  "board": 47,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9046505453836383
+ },
+ {
+  "board": 47,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8519528000888387
+ },
+ {
+  "board": 47,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9579122693809591
+ },
+ {
+  "board": 47,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9324533158993962
+ },
+ {
+  "board": 48,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9820137883600413
+ },
+ {
+  "board": 48,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9399133443558416
+ },
+ {
+  "board": 48,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9890130585635627
+ },
+ {
+  "board": 48,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9046505318875316
+ },
+ {
+  "board": 48,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.5312093733737563
+ },
+ {
+  "board": 48,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9890130569241282
+ },
+ {
+  "board": 48,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7057850402140659
+ },
+ {
+  "board": 48,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9859363710197188
+ },
+ {
+  "board": 49,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9796676449135503
+ },
+ {
+  "board": 49,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.995929862335069
+ },
+ {
+  "board": 49,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.970687768612669
+ },
+ {
+  "board": 49,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.798186768138228
+ },
+ {
+  "board": 49,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9994472213460004
+ },
+ {
+  "board": 49,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9465966739665496
+ },
+ {
+  "board": 49,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.880797076413356
+ },
+ {
+  "board": 49,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8519528057272543
+ },
+ {
+  "board": 50,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.977022631344433
+ },
+ {
+  "board": 50,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9626731146638163
+ },
+ {
+  "board": 50,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9525741234565097
+ },
+ {
+  "board": 50,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7310585727705126
+ },
+ {
+  "board": 50,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9993736657196889
+ },
+ {
+  "board": 50,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731083722525
+ },
+ {
+  "board": 50,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.8175744828610095
+ },
+ {
+  "board": 50,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9465966677520327
+ },
+ {
+  "board": 51,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9149009474519222
+ },
+ {
+  "board": 51,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9399133451974032
+ },
+ {
+  "board": 51,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9706877661747662
+ },
+ {
+  "board": 51,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835391516132
+ },
+ {
+  "board": 51,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8933094003735664
+ },
+ {
+  "board": 51,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9995694429438265
+ },
+ {
+  "board": 51,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9984988180119904
+ },
+ {
+  "board": 51,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.5926665999540697
+ },
+ {
+  "board": 52,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9959298624275609
+ },
+ {
+  "board": 52,
+  "direction": "right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.754914997895581
+ },
+ {
+  "board": 52,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9046505428129514
+ },
+ {
+  "board": 52,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.880797068590724
+ },
+ {
+  "board": 52,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.5312093733737563
+ },
+ {
+  "board": 52,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9990889489519351
+ },
+ {
+  "board": 52,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.7981867849406659
+ },
+ {
+  "board": 52,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9669140251866016
+ },
+ {
+  "board": 53,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9579122737364725
+ },
+ {
+  "board": 53,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9986749774435268
+ },
+ {
+  "board": 53,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9820137875375574
+ },
+ {
+  "board": 53,
+  "direction": "down",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8354835371034369
+ },
+ {
+  "board": 53,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8519528000888387
+ },
+ {
+  "board": 53,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7057850402140659
+ },
+ {
+  "board": 53,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9840936105915636
+ },
+ {
+  "board": 53,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9924227590612982
+ },
+ {
+  "board": 54,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9399133561377042
+ },
+ {
+  "board": 54,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7549149868676283
+ },
+ {
+  "board": 54,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9924227599787414
+ },
+ {
+  "board": 54,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877689306563
+ },
+ {
+  "board": 54,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9046505376715775
+ },
+ {
+  "board": 54,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9933071487692366
+ },
+ {
+  "board": 54,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8175744695262777
+ },
+ {
+  "board": 54,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.8670357512127872
+ },
+ {
+  "board": 55,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8175744739711884
+ },
+ {
+  "board": 55,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.974042641483562
+ },
+ {
+  "board": 55,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731085061154
+ },
+ {
+  "board": 55,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8670357512127872
+ },
+ {
+  "board": 55,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9859363720269774
+ },
+ {
+  "board": 55,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9626731085061154
+ },
+ {
+  "board": 55,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9984988173939174
+ },
+ {
+  "board": 55,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.7057850278370112
+ },
+ {
+  "board": 56,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9669140195852891
+ },
+ {
+  "board": 56,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.977022632682522
+ },
+ {
+  "board": 56,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.6791787121629466
+ },
+ {
+  "board": 56,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.6513548782017746
+ },
+ {
+  "board": 56,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9669140253057785
+ },
+ {
+  "board": 56,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9740426409655245
+ },
+ {
+  "board": 56,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9796676454329774
+ },
+ {
+  "board": 56,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7057850402140659
+ },
+ {
+  "board": 57,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9914225163128229
+ },
+ {
+  "board": 57,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.970687769513633
+ },
+ {
+  "board": 57,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9924227570863438
+ },
+ {
+  "board": 57,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9149009497722478
+ },
+ {
+  "board": 57,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8933094159957173
+ },
+ {
+  "board": 57,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.985936370709793
+ },
+ {
+  "board": 57,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.962673113860638
+ },
+ {
+  "board": 57,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9890130588469217
+ },
+ {
+  "board": 58,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9933071479519605
+ },
+ {
+  "board": 58,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9149009491921662
+ },
+ {
+  "board": 58,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9770226308844647
+ },
+ {
+  "board": 58,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8670357580842941
+ },
+ {
+  "board": 58,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7981867801399695
+ },
+ {
+  "board": 58,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9902915235006181
+ },
+ {
+  "board": 58,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7549149813536518
+ },
+ {
+  "board": 58,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8175744761936437
+ },
+ {
+  "board": 59,
+  "direction": "left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.7772998611746911
+ },
+ {
+  "board": 59,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9890130555984128
+ },
+ {
+  "board": 59,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9770226321389233
+ },
+ {
+  "board": 59,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.996827316773138
+ },
+ {
+  "board": 59,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.5621765008857981
+ },
+ {
+  "board": 59,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.957912274787803
+ },
+ {
+  "board": 59,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.7772998508568416
+ },
+ {
+  "board": 59,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9706877706265888
+ },
+ {
+  "board": 60,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9859363749712715
+ },
+ {
+  "board": 60,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9399133485636499
+ },
+ {
+  "board": 60,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9324533116759811
+ },
+ {
+  "board": 60,
+  "direction": "down",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.6224593382055109
+ },
+ {
+  "board": 60,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.6791786926816161
+ },
+ {
+  "board": 60,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731151992686
+ },
+ {
+  "board": 60,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8807970732843035
+ },
+ {
+  "board": 60,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9149009538328171
+ },
+ {
+  "board": 61,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877705205931
+ },
+ {
+  "board": 61,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7772998560157665
+ },
+ {
+  "board": 61,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9820137885903367
+ },
+ {
+  "board": 61,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.893309401793762
+ },
+ {
+  "board": 61,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9579122743372327
+ },
+ {
+  "board": 61,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9465966649272521
+ },
+ {
+  "board": 61,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9525741221101401
+ },
+ {
+  "board": 61,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9046505370289059
+ },
+ {
+  "board": 62,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9324533079218341
+ },
+ {
+  "board": 62,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9890130548394152
+ },
+ {
+  "board": 62,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.991422516296983
+ },
+ {
+  "board": 62,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8175744761936437
+ },
+ {
+  "board": 62,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9241418278134569
+ },
+ {
+  "board": 62,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9996200154550463
+ },
+ {
+  "board": 62,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9241418241572634
+ },
+ {
+  "board": 62,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.6224593312018546
+ },
+ {
+  "board": 63,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9241418215456966
+ },
+ {
+  "board": 63,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9465966681286702
+ },
+ {
+  "board": 63,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8354835289107309
+ },
+ {
+  "board": 63,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9986749775317968
+ },
+ {
+  "board": 63,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9740426442150328
+ },
+ {
+  "board": 63,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.952574129515172
+ },
+ {
+  "board": 63,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.5926665999540697
+ },
+ {
+  "board": 63,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9046505376715775
+ },
+ {
+  "board": 64,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9626731087738417
+ },
+ {
+  "board": 64,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9968273171015519
+ },
+ {
+  "board": 64,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9796676482156224
+ },
+ {
+  "board": 64,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8933093989533708
+ },
+ {
+  "board": 64,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.962673111451103
+ },
+ {
+  "board": 64,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9669140179168129
+ },
+ {
+  "board": 64,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.6224593312018546
+ },
+ {
+  "board": 64,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9770226295881911
+ },
+ {
+  "board": 65,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9796676444312252
+ },
+ {
+  "board": 65,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7772998663336157
+ },
+ {
+  "board": 65,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9465966707651319
+ },
+ {
+  "board": 65,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8354835330070839
+ },
+ {
+  "board": 65,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8175744761936437
+ },
+ {
+  "board": 65,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.867035763237924
+ },
+ {
+  "board": 65,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.5621765008857981
+ },
+ {
+  "board": 65,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9241418267688303
+ },
+ {
+  "board": 66,
+  "direction": "left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9796676457297928
+ },
+ {
+  "board": 66,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8670357546485407
+ },
+ {
+  "board": 66,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9940889316335513
+ },
+ {
+  "board": 66,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9046505370289059
+ },
+ {
+  "board": 66,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8354835452961425
+ },
+ {
+  "board": 66,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.95791227073267
+ },
+ {
+  "board": 66,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9525741310298375
+ },
+ {
+  "board": 66,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.798186775339273
+ },
+ {
+  "board": 67,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.924141814233309
+ },
+ {
+  "board": 67,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9984988178175992
+ },
+ {
+  "board": 67,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9324533088603709
+ },
+ {
+  "board": 67,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9399133494052115
+ },
+ {
+  "board": 67,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9998601779125328
+ },
+ {
+  "board": 67,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.731058584489497
+ },
+ {
+  "board": 67,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.6224593312018546
+ },
+ {
+  "board": 67,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9399133519298963
+ },
+ {
+  "board": 68,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9859363734991246
+ },
+ {
+  "board": 68,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9984988177024304
+ },
+ {
+  "board": 68,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9706877703086015
+ },
+ {
+  "board": 68,
+  "direction": "down",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.5621765008857981
+ },
+ {
+  "board": 68,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9859363760560114
+ },
+ {
+  "board": 68,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.6791787056691698
+ },
+ {
+  "board": 68,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9579122753885635
+ },
+ {
+  "board": 68,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9669140180359896
+ },
+ {
+  "board": 69,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9796676464718315
+ },
+ {
+  "board": 69,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9984988176678796
+ },
+ {
+  "board": 69,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9859363738607045
+ },
+ {
+  "board": 69,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9465966645506146
+ },
+ {
+  "board": 69,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9796676475106856
+ },
+ {
+  "board": 69,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9046505357435624
+ },
+ {
+  "board": 69,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731098447463
+ },
+ {
+  "board": 69,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.7057850216484838
+ },
+ {
+  "board": 70,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9997388097179906
+ },
+ {
+  "board": 70,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9770226287518852
+ },
+ {
+  "board": 70,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9046505351008906
+ },
+ {
+  "board": 70,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9241418152779357
+ },
+ {
+  "board": 70,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.999704042903106
+ },
+ {
+  "board": 70,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877723225209
+ },
+ {
+  "board": 70,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.817574471748733
+ },
+ {
+  "board": 70,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9324533083911025
+ },
+ {
+  "board": 71,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9324533051062237
+ },
+ {
+  "board": 71,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835309589073
+ },
+ {
+  "board": 71,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9997388097951954
+ },
+ {
+  "board": 71,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9626731142622272
+ },
+ {
+  "board": 71,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8519528000888387
+ },
+ {
+  "board": 71,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9959298627805403
+ },
+ {
+  "board": 71,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9914225155525139
+ },
+ {
+  "board": 71,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9324533163686646
+ },
+ {
+  "board": 72,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.970687766704745
+ },
+ {
+  "board": 72,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.679178699175393
+ },
+ {
+  "board": 72,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9046505267461572
+ },
+ {
+  "board": 72,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9324533102681759
+ },
+ {
+  "board": 72,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9995694429051228
+ },
+ {
+  "board": 72,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9626731141283641
+ },
+ {
+  "board": 72,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9980732649560947
+ },
+ {
+  "board": 72,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9579122674284876
+ },
+ {
+  "board": 73,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9241418184118162
+ },
+ {
+  "board": 73,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9902915248078935
+ },
+ {
+  "board": 73,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9770226305499425
+ },
+ {
+  "board": 73,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.6224593382055109
+ },
+ {
+  "board": 73,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9859363734603838
+ },
+ {
+  "board": 73,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8933094074745443
+ },
+ {
+  "board": 73,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.6513548714339145
+ },
+ {
+  "board": 73,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7772998508568416
+ },
+ {
+  "board": 74,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9875683479805518
+ },
+ {
+  "board": 74,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8519528019683106
+ },
+ {
+  "board": 74,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9840936055474562
+ },
+ {
+  "board": 74,
+  "direction": "down",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.679178699175393
+ },
+ {
+  "board": 74,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9914225161385855
+ },
+ {
+  "board": 74,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9953904282094878
+ },
+ {
+  "board": 74,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9324533126145177
+ },
+ {
+  "board": 74,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9525741280005063
+ },
+ {
+  "board": 75,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9579122756889438
+ },
+ {
+  "board": 75,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9324533032291502
+ },
+ {
+  "board": 75,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.6224593312018546
+ },
+ {
+  "board": 75,
+  "direction": "down",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.851952809486198
+ },
+ {
+  "board": 75,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9241418246795767
+ },
+ {
+  "board": 75,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.8807970889295664
+ },
+ {
+  "board": 75,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9770226290027769
+ },
+ {
+  "board": 75,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7057850216484838
+ },
+ {
+  "board": 76,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9890130563270503
+ },
+ {
+  "board": 76,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7057850216484838
+ },
+ {
+  "board": 76,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.991422513960617
+ },
+ {
+  "board": 76,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9740426438853725
+ },
+ {
+  "board": 76,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9669140199428197
+ },
+ {
+  "board": 76,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.798186775339273
+ },
+ {
+  "board": 76,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9770226303826813
+ },
+ {
+  "board": 76,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9465966703884944
+ },
+ {
+  "board": 77,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9324533018213448
+ },
+ {
+  "board": 77,
+  "direction": "right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9465966686936261
+ },
+ {
+  "board": 77,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9982992777648716
+ },
+ {
+  "board": 77,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9988304899220661
+ },
+ {
+  "board": 77,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9626731098447463
+ },
+ {
+  "board": 77,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.979667644579633
+ },
+ {
+  "board": 77,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9465966718950439
+ },
+ {
+  "board": 77,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9465966709534505
+ },
+ {
+  "board": 78,
+  "direction": "left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.867035752930664
+ },
+ {
+  "board": 78,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731123881445
+ },
+ {
+  "board": 78,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9525741291785796
+ },
+ {
+  "board": 78,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9820137915512788
+ },
+ {
+  "board": 78,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8519528000888387
+ },
+ {
+  "board": 78,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8933094167058151
+ },
+ {
+  "board": 78,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.6224593382055109
+ },
+ {
+  "board": 78,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9993736659047039
+ },
+ {
+  "board": 79,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9770226282082864
+ },
+ {
+  "board": 79,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835371034369
+ },
+ {
+  "board": 79,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8670357546485407
+ },
+ {
+  "board": 79,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877713685592
+ },
+ {
+  "board": 79,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.798186768138228
+ },
+ {
+  "board": 79,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877706265888
+ },
+ {
+  "board": 79,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.7057850402140659
+ },
+ {
+  "board": 79,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9796676452103658
+ },
+ {
+  "board": 80,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9796676474735837
+ },
+ {
+  "board": 80,
+  "direction": "right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9046505428129514
+ },
+ {
+  "board": 80,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9626731133251859
+ },
+ {
+  "board": 80,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8670357649558007
+ },
+ {
+  "board": 80,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.5926665999540697
+ },
+ {
+  "board": 80,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9820137897089148
+ },
+ {
+  "board": 80,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.974042642472543
+ },
+ {
+  "board": 80,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9324533158993962
+ },
+ {
+  "board": 81,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9924227594815012
+ },
+ {
+  "board": 81,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9465966653038896
+ },
+ {
+  "board": 81,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877720045336
+ },
+ {
+  "board": 81,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8519528038477825
+ },
+ {
+  "board": 81,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9241418272911436
+ },
+ {
+  "board": 81,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9149009625340367
+ },
+ {
+  "board": 81,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.6513548646660542
+ },
+ {
+  "board": 81,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8933094174159129
+ },
+ {
+  "board": 82,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835411997897
+ },
+ {
+  "board": 82,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9669140203003503
+ },
+ {
+  "board": 82,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9525741227833249
+ },
+ {
+  "board": 82,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9399133439350607
+ },
+ {
+  "board": 82,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9669140237564795
+ },
+ {
+  "board": 82,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.974042643226052
+ },
+ {
+  "board": 82,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9046505408849363
+ },
+ {
+  "board": 82,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9149009538328171
+ },
+ {
+  "board": 83,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.974042644685976
+ },
+ {
+  "board": 83,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9669140223263571
+ },
+ {
+  "board": 83,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9840936113496375
+ },
+ {
+  "board": 83,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9770226286682546
+ },
+ {
+  "board": 83,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9399133557169234
+ },
+ {
+  "board": 83,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9959298624709754
+ },
+ {
+  "board": 83,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9525741311981335
+ },
+ {
+  "board": 83,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9046505440982949
+ },
+ {
+  "board": 84,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9820137919131714
+ },
+ {
+  "board": 84,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8933094152856196
+ },
+ {
+  "board": 84,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877680826902
+ },
+ {
+  "board": 84,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.914900957313305
+ },
+ {
+  "board": 84,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8933094074745443
+ },
+ {
+  "board": 84,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8175744695262777
+ },
+ {
+  "board": 84,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.817574471748733
+ },
+ {
+  "board": 84,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9840936083173419
+ },
+ {
+  "board": 85,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8933094003735664
+ },
+ {
+  "board": 85,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.946596664362296
+ },
+ {
+  "board": 85,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9840936106207203
+ },
+ {
+  "board": 85,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8519527963298947
+ },
+ {
+  "board": 85,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9770226282501017
+ },
+ {
+  "board": 85,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.966914019704466
+ },
+ {
+  "board": 85,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8933094053442511
+ },
+ {
+  "board": 85,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9914225147050862
+ },
+ {
+  "board": 86,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9840936071802311
+ },
+ {
+  "board": 86,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9770226292118533
+ },
+ {
+  "board": 86,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9820137890838271
+ },
+ {
+  "board": 86,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9820137864518786
+ },
+ {
+  "board": 86,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835309589073
+ },
+ {
+  "board": 86,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.7772998560157665
+ },
+ {
+  "board": 86,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.6513548714339145
+ },
+ {
+  "board": 86,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835350552604
+ },
+ {
+  "board": 87,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9933071485649175
+ },
+ {
+  "board": 87,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.966914024233187
+ },
+ {
+  "board": 87,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8519528019683106
+ },
+ {
+  "board": 87,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8354835350552604
+ },
+ {
+  "board": 87,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9706877662807619
+ },
+ {
+  "board": 87,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8175744761936437
+ },
+ {
+  "board": 87,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9840936062180602
+ },
+ {
+  "board": 87,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.5926665999540697
+ },
+ {
+  "board": 88,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9149009549929797
+ },
+ {
+  "board": 88,
+  "direction": "right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.6513548714339145
+ },
+ {
+  "board": 88,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9859363735766059
+ },
+ {
+  "board": 88,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8670357580842941
+ },
+ {
+  "board": 88,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9875683468600249
+ },
+ {
+  "board": 88,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9669140208962347
+ },
+ {
+  "board": 88,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9465966669987579
+ },
+ {
+  "board": 88,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9902915245750911
+ },
+ {
+  "board": 89,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9626731149315425
+ },
+ {
+  "board": 89,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8175744806385543
+ },
+ {
+  "board": 89,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9465966664338019
+ },
+ {
+  "board": 89,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9980732654114448
+ },
+ {
+  "board": 89,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9525741234565097
+ },
+ {
+  "board": 89,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9875683477747408
+ },
+ {
+  "board": 89,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.946596665115571
+ },
+ {
+  "board": 89,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.946596667563714
+ },
+ {
+  "board": 90,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877665457513
+ },
+ {
+  "board": 90,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9399133481428692
+ },
+ {
+  "board": 90,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9875683513192636
+ },
+ {
+  "board": 90,
+  "direction": "down",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9971990735908492
+ },
+ {
+  "board": 90,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.924141814233309
+ },
+ {
+  "board": 90,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8933093996634686
+ },
+ {
+  "board": 90,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.6224593382055109
+ },
+ {
+  "board": 90,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.622459324198198
+ },
+ {
+  "board": 91,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9997965730830792
+ },
+ {
+  "board": 91,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8933093968230772
+ },
+ {
+  "board": 91,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9971990731083157
+ },
+ {
+  "board": 91,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8354835289107309
+ },
+ {
+  "board": 91,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.957912274637613
+ },
+ {
+  "board": 91,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9669140226838876
+ },
+ {
+  "board": 91,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9241418158002492
+ },
+ {
+  "board": 91,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8933094103149354
+ },
+ {
+  "board": 92,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9626731158685837
+ },
+ {
+  "board": 92,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877662807619
+ },
+ {
+  "board": 92,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9964063967299486
+ },
+ {
+  "board": 92,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8519528057272543
+ },
+ {
+  "board": 92,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9149009584734678
+ },
+ {
+  "board": 92,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9996200154271219
+ },
+ {
+  "board": 92,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9975273762754033
+ },
+ {
+  "board": 92,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8175744828610095
+ },
+ {
+  "board": 93,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9046505299595163
+ },
+ {
+  "board": 93,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9525741290102833
+ },
+ {
+  "board": 93,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731091754309
+ },
+ {
+  "board": 93,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9770226308008343
+ },
+ {
+  "board": 93,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.996406397543634
+ },
+ {
+  "board": 93,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.939913346038965
+ },
+ {
+  "board": 93,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8354835309589073
+ },
+ {
+  "board": 93,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9669140191085817
+ },
+ {
+  "board": 94,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8933094124452288
+ },
+ {
+  "board": 94,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8670357494949105
+ },
+ {
+  "board": 94,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9840936074134845
+ },
+ {
+  "board": 94,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9465966685053074
+ },
+ {
+  "board": 94,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.8354835371034369
+ },
+ {
+  "board": 94,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9149009538328171
+ },
+ {
+  "board": 94,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9914225155604339
+ },
+ {
+  "board": 94,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877703086015
+ },
+ {
+  "board": 95,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8807970858005139
+ },
+ {
+  "board": 95,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9626731085061154
+ },
+ {
+  "board": 95,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8670357512127872
+ },
+ {
+  "board": 95,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8519528000888387
+ },
+ {
+  "board": 95,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.991422515679232
+ },
+ {
+  "board": 95,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.7981867777396212
+ },
+ {
+  "board": 95,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.5621765008857981
+ },
+ {
+  "board": 95,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9579122731357119
+ },
+ {
+  "board": 96,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9875683515708102
+ },
+ {
+  "board": 96,
+  "direction": "right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9399133536130195
+ },
+ {
+  "board": 96,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9579122740368525
+ },
+ {
+  "board": 96,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8807970826714613
+ },
+ {
+  "board": 96,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9914225148318045
+ },
+ {
+  "board": 96,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.7057850216484838
+ },
+ {
+  "board": 96,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9995121428900754
+ },
+ {
+  "board": 96,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8670357649558007
+ },
+ {
+  "board": 97,
+  "direction": "left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9669140211345884
+ },
+ {
+  "board": 97,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.957912274487423
+ },
+ {
+  "board": 97,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9525741254760638
+ },
+ {
+  "board": 97,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.7981867729389246
+ },
+ {
+  "board": 97,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9820137887219341
+ },
+ {
+  "board": 97,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9796676451732639
+ },
+ {
+  "board": 97,
+  "direction": "down-left",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9324533069832973
+ },
+ {
+  "board": 97,
+  "direction": "down-right",
+  "truth": true,
+  "said_yes": true,
+  "confidence": 0.9046505248181417
+ },
+ {
+  "board": 98,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.5926665999540697
+ },
+ {
+  "board": 98,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9046505261034853
+ },
+ {
+  "board": 98,
+  "direction": "up",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9953904272095568
+ },
+ {
+  "board": 98,
+  "direction": "down",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8175744828610095
+ },
+ {
+  "board": 98,
+  "direction": "up-left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9399133489844308
+ },
+ {
+  "board": 98,
+  "direction": "up-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9990889485976987
+ },
+ {
+  "board": 98,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.8807970858005139
+ },
+ {
+  "board": 98,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9706877670227323
+ },
+ {
+  "board": 99,
+  "direction": "left",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.9770226323479997
+ },
+ {
+  "board": 99,
+  "direction": "right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.6791786926816161
+ },
+ {
+  "board": 99,
+  "direction": "up",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8670357512127872
+ },
+ {
+  "board": 99,
+  "direction": "down",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.7981867705385763
+ },
+ {
+  "board": 99,
+  "direction": "up-left",
+  "truth": false,
+  "said_yes": true,
+  "confidence": 0.9046505408849363
+ },
+ {
+  "board": 99,
+  "direction": "up-right",
+  "truth": true,
+  "said_yes": false,
+  "confidence": 0.8807970889295664
+ },
+ {
+  "board": 99,
+  "direction": "down-left",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9796676482898262
+ },
+ {
+  "board": 99,
+  "direction": "down-right",
+  "truth": false,
+  "said_yes": false,
+  "confidence": 0.9890130581790039
+ }
+]

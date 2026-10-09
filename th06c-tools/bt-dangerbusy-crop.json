@@ -1,0 +1,1112 @@
+[
+ {
+  "lethal": [
+   "down-left"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.9642848778817483
+ },
+ {
+  "lethal": [
+   "right",
+   "up"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.6252930738009609
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.45297656464454883
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.27624556731968697
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.6831035149275111
+ },
+ {
+  "lethal": [
+   "left"
+  ],
+  "choice": "down-right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.4915411607323148
+ },
+ {
+  "lethal": [
+   "left"
+  ],
+  "choice": "down-right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.6883124879615239
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.7097117239777357
+ },
+ {
+  "lethal": [
+   "left"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.9035707931048184
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "up",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.8503298061026348
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "down",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.6163300328955477
+ },
+ {
+  "lethal": [
+   "up"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.547724895823613
+ },
+ {
+  "lethal": [
+   "up",
+   "up-right",
+   "down-right"
+  ],
+  "choice": "right",
+  "named_danger": false,
+  "chance": 0.375,
+  "confidence": 0.47278146984907504
+ },
+ {
+  "lethal": [
+   "up-left"
+  ],
+  "choice": "up-right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.7195611429038354
+ },
+ {
+  "lethal": [
+   "down"
+  ],
+  "choice": "down",
+  "named_danger": true,
+  "chance": 0.125,
+  "confidence": 0.8647673489221721
+ },
+ {
+  "lethal": [
+   "up-right"
+  ],
+  "choice": "right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.29423206377104577
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.4919671146739149
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "down-right",
+  "named_danger": true,
+  "chance": 0.125,
+  "confidence": 0.5373299529493635
+ },
+ {
+  "lethal": [
+   "up-right"
+  ],
+  "choice": "up",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.5604009223453575
+ },
+ {
+  "lethal": [
+   "up-left"
+  ],
+  "choice": "up-right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.40937749996294076
+ },
+ {
+  "lethal": [
+   "down"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.8062796811823183
+ },
+ {
+  "lethal": [
+   "up-left"
+  ],
+  "choice": "up-right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.3563105715206508
+ },
+ {
+  "lethal": [
+   "up",
+   "up-left"
+  ],
+  "choice": "up-left",
+  "named_danger": true,
+  "chance": 0.25,
+  "confidence": 0.6554318703137378
+ },
+ {
+  "lethal": [
+   "left"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.5645695552513648
+ },
+ {
+  "lethal": [
+   "down"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.8035882325296272
+ },
+ {
+  "lethal": [
+   "down"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.9199762158661094
+ },
+ {
+  "lethal": [
+   "up"
+  ],
+  "choice": "right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.7119354271047431
+ },
+ {
+  "lethal": [
+   "up-right"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.5748037876829163
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.4018176642933523
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.36232342818052626
+ },
+ {
+  "lethal": [
+   "left"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.3614372535037166
+ },
+ {
+  "lethal": [
+   "up"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.8550763144377677
+ },
+ {
+  "lethal": [
+   "right",
+   "down-right"
+  ],
+  "choice": "up-right",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.36938449734057544
+ },
+ {
+  "lethal": [
+   "down",
+   "up-left"
+  ],
+  "choice": "left",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.8711134576103978
+ },
+ {
+  "lethal": [
+   "down-left"
+  ],
+  "choice": "up-right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.5796344204623889
+ },
+ {
+  "lethal": [
+   "up-left"
+  ],
+  "choice": "up-right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.8099012772197383
+ },
+ {
+  "lethal": [
+   "up"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.5540405414127338
+ },
+ {
+  "lethal": [
+   "up-left"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.5096731820107814
+ },
+ {
+  "lethal": [
+   "right",
+   "up-left"
+  ],
+  "choice": "right",
+  "named_danger": true,
+  "chance": 0.25,
+  "confidence": 0.2878283500566537
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "up-right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.58062121449642
+ },
+ {
+  "lethal": [
+   "right",
+   "up-left"
+  ],
+  "choice": "up-left",
+  "named_danger": true,
+  "chance": 0.25,
+  "confidence": 0.47521082194051684
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.8683111786769006
+ },
+ {
+  "lethal": [
+   "up"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.696880734299667
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "right",
+  "named_danger": true,
+  "chance": 0.125,
+  "confidence": 0.9388733203184274
+ },
+ {
+  "lethal": [
+   "up-left"
+  ],
+  "choice": "up-left",
+  "named_danger": true,
+  "chance": 0.125,
+  "confidence": 0.9371720880943765
+ },
+ {
+  "lethal": [
+   "up"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.8921331180410536
+ },
+ {
+  "lethal": [
+   "up",
+   "up-left"
+  ],
+  "choice": "down-right",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.44818826110679594
+ },
+ {
+  "lethal": [
+   "up-left"
+  ],
+  "choice": "up-left",
+  "named_danger": true,
+  "chance": 0.125,
+  "confidence": 0.5124656518279449
+ },
+ {
+  "lethal": [
+   "down"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.8775734161843058
+ },
+ {
+  "lethal": [
+   "up"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.2931409142141034
+ },
+ {
+  "lethal": [
+   "down",
+   "down-right"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.5839926642593213
+ },
+ {
+  "lethal": [
+   "up-right"
+  ],
+  "choice": "up-right",
+  "named_danger": true,
+  "chance": 0.125,
+  "confidence": 0.4635285474452391
+ },
+ {
+  "lethal": [
+   "down"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.6024640141324171
+ },
+ {
+  "lethal": [
+   "down-left"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.4301790765135444
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.40406451472397326
+ },
+ {
+  "lethal": [
+   "right",
+   "up-left",
+   "up-right"
+  ],
+  "choice": "right",
+  "named_danger": true,
+  "chance": 0.375,
+  "confidence": 0.4903026373536073
+ },
+ {
+  "lethal": [
+   "up-left"
+  ],
+  "choice": "down-right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.6899351822371462
+ },
+ {
+  "lethal": [
+   "left"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.8403760083628359
+ },
+ {
+  "lethal": [
+   "up",
+   "down"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.80410070932267
+ },
+ {
+  "lethal": [
+   "left",
+   "up-left"
+  ],
+  "choice": "left",
+  "named_danger": true,
+  "chance": 0.25,
+  "confidence": 0.8705103759358649
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.42100004321262846
+ },
+ {
+  "lethal": [
+   "down-left"
+  ],
+  "choice": "down-right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.896441153873253
+ },
+ {
+  "lethal": [
+   "up-right"
+  ],
+  "choice": "up-right",
+  "named_danger": true,
+  "chance": 0.125,
+  "confidence": 0.2916713833925124
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.7889564784261612
+ },
+ {
+  "lethal": [
+   "left",
+   "down-left"
+  ],
+  "choice": "right",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.5213675812554295
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.8018062451691308
+ },
+ {
+  "lethal": [
+   "up-right"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.4002456640413502
+ },
+ {
+  "lethal": [
+   "down-left"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.7394172904542877
+ },
+ {
+  "lethal": [
+   "up"
+  ],
+  "choice": "up",
+  "named_danger": true,
+  "chance": 0.125,
+  "confidence": 0.4599507897165457
+ },
+ {
+  "lethal": [
+   "down-left",
+   "down-right"
+  ],
+  "choice": "down-right",
+  "named_danger": true,
+  "chance": 0.25,
+  "confidence": 0.4692353872817374
+ },
+ {
+  "lethal": [
+   "up-left"
+  ],
+  "choice": "down-right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.30505810861316496
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.4753358055652982
+ },
+ {
+  "lethal": [
+   "down",
+   "down-left"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.4532109884366698
+ },
+ {
+  "lethal": [
+   "down-left"
+  ],
+  "choice": "left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.9635711764805777
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "up-right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.43731718800438985
+ },
+ {
+  "lethal": [
+   "down"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.6083841570893522
+ },
+ {
+  "lethal": [
+   "up-right"
+  ],
+  "choice": "up",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.2533567483500654
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "up",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.4092602325442163
+ },
+ {
+  "lethal": [
+   "down-left"
+  ],
+  "choice": "up-right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.5122331154705821
+ },
+ {
+  "lethal": [
+   "up-right"
+  ],
+  "choice": "left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.5045724975454094
+ },
+ {
+  "lethal": [
+   "up"
+  ],
+  "choice": "right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.5189535404593532
+ },
+ {
+  "lethal": [
+   "right",
+   "down-right"
+  ],
+  "choice": "down",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.46083290288467926
+ },
+ {
+  "lethal": [
+   "right",
+   "down"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.29127861063146404
+ },
+ {
+  "lethal": [
+   "up-left",
+   "up-right"
+  ],
+  "choice": "up",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.6853395555908774
+ },
+ {
+  "lethal": [
+   "down",
+   "down-right"
+  ],
+  "choice": "down",
+  "named_danger": true,
+  "chance": 0.25,
+  "confidence": 0.7842876651486803
+ },
+ {
+  "lethal": [
+   "down-left"
+  ],
+  "choice": "down",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.957164424163483
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.7634218011888225
+ },
+ {
+  "lethal": [
+   "up",
+   "down-left"
+  ],
+  "choice": "down-right",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.5333916361107666
+ },
+ {
+  "lethal": [
+   "left"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.5067775552660135
+ },
+ {
+  "lethal": [
+   "up-right",
+   "down-right"
+  ],
+  "choice": "up",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.8221877637931573
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.444830484229469
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.36527459498801684
+ },
+ {
+  "lethal": [
+   "down-left"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.8200856911636653
+ },
+ {
+  "lethal": [
+   "up-left"
+  ],
+  "choice": "down-right",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.6663003038955398
+ },
+ {
+  "lethal": [
+   "up-left",
+   "down-left"
+  ],
+  "choice": "down-left",
+  "named_danger": true,
+  "chance": 0.25,
+  "confidence": 0.5905428395077864
+ },
+ {
+  "lethal": [
+   "up",
+   "up-right"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.7149172025656948
+ },
+ {
+  "lethal": [
+   "down"
+  ],
+  "choice": "left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.7576850304468024
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "right",
+  "named_danger": true,
+  "chance": 0.125,
+  "confidence": 0.5999812234433264
+ },
+ {
+  "lethal": [
+   "down-left"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.565236642111938
+ },
+ {
+  "lethal": [
+   "down-left",
+   "down-right"
+  ],
+  "choice": "down",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.8816858122997314
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "down",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.8804172143145211
+ },
+ {
+  "lethal": [
+   "up-left",
+   "down-left"
+  ],
+  "choice": "up-left",
+  "named_danger": true,
+  "chance": 0.25,
+  "confidence": 0.6315281651093365
+ },
+ {
+  "lethal": [
+   "up",
+   "down"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.4955670654489261
+ },
+ {
+  "lethal": [
+   "left"
+  ],
+  "choice": "left",
+  "named_danger": true,
+  "chance": 0.125,
+  "confidence": 0.4240223196763323
+ },
+ {
+  "lethal": [
+   "up-left"
+  ],
+  "choice": "down",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.8233699961435451
+ },
+ {
+  "lethal": [
+   "left"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.44853544077867735
+ },
+ {
+  "lethal": [
+   "up"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.9220165728499763
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.5037626902829777
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.5253005680734686
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.5198497685347974
+ },
+ {
+  "lethal": [
+   "up"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.742213097963022
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.9430762381164624
+ },
+ {
+  "lethal": [
+   "down-left"
+  ],
+  "choice": "down-left",
+  "named_danger": true,
+  "chance": 0.125,
+  "confidence": 0.5237390864328272
+ },
+ {
+  "lethal": [
+   "left"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.6570120826703948
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "up-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.2701692038852485
+ },
+ {
+  "lethal": [
+   "right"
+  ],
+  "choice": "down-left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.5460911100273739
+ },
+ {
+  "lethal": [
+   "down-right"
+  ],
+  "choice": "left",
+  "named_danger": false,
+  "chance": 0.125,
+  "confidence": 0.4075603587023022
+ },
+ {
+  "lethal": [
+   "up-right",
+   "down-right"
+  ],
+  "choice": "left",
+  "named_danger": false,
+  "chance": 0.25,
+  "confidence": 0.42733725684375784
+ },
+ {
+  "lethal": [
+   "up",
+   "down"
+  ],
+  "choice": "down",
+  "named_danger": true,
+  "chance": 0.25,
+  "confidence": 0.9464542231587724
+ },
+ {
+  "lethal": [
+   "up-left"
+  ],
+  "choice": "up-left",
+  "named_danger": true,
+  "chance": 0.125,
+  "confidence": 0.7389983636348592
+ }
+]

@@ -1535,6 +1535,17 @@ separation between lethal and safe directions rather than mixing the two modes.
 Verified through the controller's own code path on the same 40 dense boards:
 35/40 (88%) against a best constant of 24/40 (60%), 285 ms per decision.
 
+**The model is not deterministic, at temperature 0.** Re-running the eight-way
+control on the identical 40 boards gave 21/40 where the first run gave 19/40,
+with the per-lethal-count breakdown matching board for board, so the boards are
+the same and the answers are not. That is ~5% of run-to-run noise on 40 boards,
+and it means a single run of this size cannot resolve a gap smaller than about
+10 points. The headline comparisons here are 28-37 points (rays 85 against crop
+57, one question per direction 85 against 48 for eight-way) and survive it; the
+`crop` gap of +4 over the constant does not, which is why it is reported as
+noise. Rows are kept per run for this reason rather than being assumed
+reproducible.
+
 **What is not yet tested.** These are static boards. Nothing here covers the
 sequence of decisions across a stage, the oracle's approximation error (straight
 lines, no new spawns), or whether an 88% static rate survives contact with a real
