@@ -1270,3 +1270,94 @@ hitbox test:
 A live frame during a respawn read `playerState = 3` while 70 bullets were in
 flight. Any "am I about to die" check has to include this, or it will report
 deaths that cannot happen.
+
+---
+
+## The decision engine, and what it cannot do yet
+
+The idea was to let a decision model play: render the game state, ask which way
+to move, hold that arrow key. The pieces exist now. What follows is what was
+measured, and the two mistakes that had to be corrected before the numbers meant
+anything.
+
+### Reading the model matters more than the encoding
+
+The DE has two readouts. DE-1 writes the question once; **DE-2 writes it twice**,
+separated by a fixed sentence. We were reading a DE-2 model with the DE-1
+prompt, and on the eight hand-built scenarios that cost three of eight -- the
+player-centred grid went from 5/8 to 8/8 once the repeat was added. The readout
+contract is not a detail.
+
+### Latency: the honest number is ~130-300 ms
+
+Template path, one token, uncontended, median of 7:
+
+| evidence | size | round trip |
+| --- | --- | --- |
+| 32x36 character grid | 1696 chars | 242 ms |
+| 15x15 window on the player | 592 chars | 149 ms |
+| per-direction table | 516 chars | 128 ms |
+
+Building the text costs 0.02-0.28 ms, so the round trip is the whole budget. At
+60 fps that is 8-15 game frames per decision.
+
+Two things that *look* like latency but are not. Rendering a picture is pure
+Python and costs **272 ms at 768x896** -- that is a real cost, and it is ours,
+not the model's. And an early image measurement came back at 9.3 s, which turned
+out to be self-inflicted: the prompt demanded a chain of thought. The SDK's
+image read is a single direct read with no thinking, and comes back in ~194 ms.
+Asked to answer briefly, the model used 3 output tokens even with a 2000-token
+budget.
+
+### The evaluation problem, which is the real one
+
+Every result here rests on 8 hand-built scenarios plus 12 generated ones. Both
+were misleading in opposite directions.
+
+On loose scenarios -- most moves safe -- the model scores at or below chance,
+but chance is 67%, so the test proves nothing. On *tight* frames, 1-3 of 9 moves
+safe, it looked much better: 7/12 against a random baseline of 3.7/12. Then the
+baseline that mattered: **a constant "always move up" policy scores 9/12 on
+that set**, because the safe sets were skewed toward up. The model was worse
+than a policy that ignores the board.
+
+So: no configuration has yet been shown to read the state. Every apparent win
+has dissolved into test design -- first small samples, then an uncontrolled
+positional prior. Any future scoring needs constant-policy baselines computed
+per scenario set, not just a random one.
+
+### What is wired up
+
+  `state.py`       one bulk read per frame. The bullet array and enemy array are
+                   930 KB and 1016 KB, so each is a single ReadProcessMemory;
+                   entities.py's per-field reads would be ~2500 calls a frame.
+                   Velocities are differenced across frames by slot index.
+
+  `de_client.py`   the DE-2 readout as specified, text and image.
+
+  `controller.py`  60 Hz sampler plus a decision worker. The sampler must never
+                   block or the player stops moving, so decisions happen on the
+                   worker and the direction is held until the next one lands.
+
+  `oracle.py`      scores a decision after the fact by simulating which moves
+                   survive. It never goes into a prompt.
+
+The controller logs every decision to JSONL including the oracle's safe set, so
+a run can be scored afterwards without reproducing it.
+
+### Unknowns that will bite
+
+**The player's speed is a placeholder.** The view tells the model 4.0 units per
+frame. Nobody measured it. The model's judgement is a ratio of player speed to
+bullet speed, so a wrong number makes it play too cautiously or take lines it
+cannot clear. `state.py --calibrate-speed` measures it.
+
+**Bullet velocity has no known offset.** Differencing works but a bullet that
+just spawned has no history for a few frames, and accelerating or curving shots
+are extrapolated as straight lines.
+
+**The bullet kill radius is a guess** (4.0 units). The graze size in the struct
+runs 8-64 and is not the kill hitbox.
+
+None of these three affect whether the loop runs. All three affect whether the
+oracle's opinion of a decision is trustworthy.

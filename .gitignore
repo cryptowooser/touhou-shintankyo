@@ -23,6 +23,15 @@ codeindex.pkl
 th06c-tools/*.txt
 
 # ---------------------------------------------------------------------------
+# Controller runtime artifacts: the stop flag, per-run decision logs, and the
+# probe cache. All regenerable. A run log is worth keeping as a record, so
+# commit one deliberately with `git add -f` if it matters.
+# ---------------------------------------------------------------------------
+controller.stop
+th06c-tools/*.jsonl
+th06c-tools/vprobe_cache.json
+
+# ---------------------------------------------------------------------------
 # Dead ends and one-off probes, kept on disk for reference only.
 # ---------------------------------------------------------------------------
 th06c-tools/scratch/
