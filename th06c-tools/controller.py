@@ -24,6 +24,7 @@ without having to reproduce it.
   controller.py                           live
   controller.py --format crop --log run.jsonl
   controller.py --stop-after 60           stop after 60 decisions
+  controller.py --no-stay-put             drop `stay put`, so it must move
 
 Stop it with Ctrl+C, or by creating the stop file (default controller.stop).
 """
@@ -54,11 +55,46 @@ DIR_KEYS = {
 # refuses to act on it.
 MAX_SNAPSHOT_AGE = 0.5
 
+# Bumped whenever the evidence or the oracle's inputs change, because a log from
+# a different version is not comparable with a new one.
+#   1: implicit. The oracle collided against every allocated bullet, including
+#      the spawning and despawning ones that cannot kill -- see view.live_bullets
+#      for the disassembly. On one 500-decision run that affected 55% of the
+#      discriminating frames, so its numbers cannot be compared to a fixed run.
+#   2: the oracle and the view see live bullets only.
+LOG_VERSION = 2
+
+# Consecutive decisions over an unchanged board before the run gives up. At the
+# observed 5-7 decisions/s this is roughly 7-9 seconds, which is longer than any
+# legitimate static window (a death, a dialogue) and far shorter than the ~100s a
+# full run would waste.
+FROZEN_LIMIT = 45
+
+
+def board_fingerprint(snap):
+    """A cheap signature of the parts of the board that must change on their own.
+
+    A paused game returns identical memory on every read, and th06c pauses
+    itself whenever its window loses focus. Against a frozen board the model is
+    asked the same question over and over, every answer is meaningless, and a
+    full run is spent learning nothing. Bullet positions are the reliable tell:
+    in a live stage they change on essentially every frame.
+    """
+    bullets = snap.get("bullets", [])
+    return (
+        round(snap["player"]["pos"][0], 1),
+        round(snap["player"]["pos"][1], 1),
+        len(bullets),
+        round(sum(b["pos"][0] + b["pos"][1] for b in bullets), 1),
+        len(snap.get("enemies", [])),
+    )
+
 
 class Controller:
     def __init__(self, fmt="crop", speed=4.0, dry_run=False, log_path=None,
                  stop_file="controller.stop", stop_after=None, vel_off=None,
-                 poll_hz=60.0, use_oracle=True, model=DE.DEFAULT_MODEL):
+                 poll_hz=60.0, use_oracle=True, model=DE.DEFAULT_MODEL,
+                 options=None):
         self.fmt = fmt
         self.speed = speed
         self.dry_run = dry_run
@@ -67,6 +103,7 @@ class Controller:
         self.poll_dt = 1.0 / poll_hz
         self.use_oracle = use_oracle
         self.model = model
+        self.options = list(options) if options else list(DE.MOVE_OPTIONS)
 
         self.reader = S.Reader(vel_off=vel_off)
         self.hwnd = None
@@ -80,6 +117,8 @@ class Controller:
         self.errors = 0
         self.deaths = 0
         self._was_alive = True
+        self._last_fp = None
+        self._frozen = 0
         self._lock = threading.Lock()
 
         self.log = open(log_path, "a", encoding="utf-8") if log_path else None
@@ -158,15 +197,30 @@ class Controller:
         if snap is None or age > MAX_SNAPSHOT_AGE:
             return None
 
+        # Stop rather than spend an API call on a board that is not moving.
+        fp = board_fingerprint(snap)
+        if fp == self._last_fp:
+            self._frozen += 1
+        else:
+            self._frozen = 0
+        self._last_fp = fp
+        if self._frozen >= FROZEN_LIMIT:
+            print("\n  board unchanged across %d decisions -- the game is "
+                  "paused or its window lost focus, so nothing pressed is "
+                  "reaching it. Stopping." % self._frozen)
+            self.running = False
+            return None
+
         text = view.render_as(snap, self.fmt)
         t0 = time.perf_counter()
-        ans = DE.read_text(text, DE.MOVE_QUESTION, DE.MOVE_OPTIONS,
+        ans = DE.read_text(text, DE.MOVE_QUESTION, self.options,
                            model=self.model)
         wall = (time.perf_counter() - t0) * 1000
 
         row = {
             "t": time.time(),
             "n": self.decisions,
+            "log_version": LOG_VERSION,
             "snapshot_age_ms": round(age * 1000, 1),
             "round_trip_ms": round(wall, 1),
             "choice": ans["choice"],
@@ -176,9 +230,13 @@ class Controller:
                               ans["probabilities"].items()},
             "player": [round(snap["player"]["pos"][0], 1),
                        round(snap["player"]["pos"][1], 1)],
+            "player_state": snap["player"]["state"],
             "bullets": len(snap["bullets"]),
             "live_bullets": sum(1 for b in snap["bullets"] if b.get("live")),
             "enemies_fatal": sum(1 for e in snap["enemies"] if e["fatal"]),
+            # Record the menu that was offered, so a run stays scoreable
+            # against the right baselines after the menu changes.
+            "options": [d for _, d in self.options],
         }
         if self.use_oracle:
             try:
@@ -232,6 +290,25 @@ class Controller:
             print("dry run: reading state and asking the DE, pressing no keys")
         print("stop with Ctrl+C or by creating %s\n" % self.stop_file)
 
+        # Fail fast when the game is not actually running. A paused window --
+        # and th06c pauses itself on focus loss -- answers every read
+        # identically, so a full run against one is 500 decisions spent asking
+        # the same frozen question. Two reads 0.4s apart is enough to tell.
+        try:
+            a = board_fingerprint(self.reader.snapshot(speed=self.speed))
+            time.sleep(0.4)
+            b = board_fingerprint(self.reader.snapshot(speed=self.speed))
+        except Exception as e:                           # noqa: BLE001
+            print("refusing to start: could not read the board: %s: %s"
+                  % (type(e).__name__, e))
+            raise SystemExit(1)
+        if a == b:
+            print("refusing to start: the board is identical across two reads "
+                  "0.4s apart, so the game is paused or its window is not "
+                  "focused. Nothing pressed would reach it.")
+            print("unpause the game, then run again.")
+            raise SystemExit(1)
+
         worker = threading.Thread(target=self.decide_loop, daemon=True)
         worker.start()
         try:
@@ -270,6 +347,7 @@ def main():
         vel_off=opt("--vel-off", None, lambda s: int(s, 0)),
         model=opt("--model", DE.DEFAULT_MODEL),
         use_oracle="--no-oracle" not in argv,
+        options=DE.move_options(stay_put="--no-stay-put" not in argv),
     )
     ctl.run()
 

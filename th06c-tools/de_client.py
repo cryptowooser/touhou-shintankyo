@@ -168,6 +168,17 @@ MOVE_OPTIONS = [("A", "left"), ("B", "right"), ("C", "up"), ("D", "down"),
 MOVE_QUESTION = "Which way should the player move?"
 
 
+def move_options(stay_put=True):
+    """The move menu. Dropping `stay put` forces a move on every decision.
+
+    Worth doing deliberately. With it offered, the model chose it on 80 of 100
+    live decisions, which pins the player at the bottom of the field. Danger
+    then sits above it in every frame, the safe set skews toward down, and
+    every constant "do not move up" policy scores as well as the model does.
+    """
+    return [o for o in MOVE_OPTIONS if stay_put or o[1] != "stay put"]
+
+
 def main():
     import view
     argv = sys.argv[1:]
