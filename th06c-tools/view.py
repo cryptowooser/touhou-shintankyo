@@ -82,7 +82,7 @@ def render(state, grid=(GRID_W, GRID_H), horizon=HORIZON, soon=SOON):
             put(*cell_of(lx + math.cos(ang) * i, ly + math.sin(ang) * i, cw, ch),
                 "#")
 
-    for b in state.get("bullets", []):
+    for b in live_bullets(state):
         bx, by = b["pos"]
         vx, vy = b.get("vel", (0.0, 0.0))
         for k in range(horizon + 1):
@@ -110,7 +110,7 @@ def render(state, grid=(GRID_W, GRID_H), horizon=HORIZON, soon=SOON):
     else:
         cells[(pcx, pcy)] = "@"
 
-    bullets = state.get("bullets", [])
+    bullets = live_bullets(state)
     enemies = state.get("enemies", [])
     lasers = state.get("lasers", [])
     fatal = sum(1 for e in enemies if e.get("fatal"))
@@ -274,7 +274,7 @@ def render_rays(state, horizon=HORIZON):
     px, py = state["player"]["pos"]
     buckets = {name: [] for name, _ in DIRS}
     here = 0
-    for b in state.get("bullets", []):
+    for b in live_bullets(state):
         bx, by = b["pos"]
         dx, dy = bx - px, by - py
         dist = math.hypot(dx, dy)
@@ -324,7 +324,7 @@ def render_crop(state, half=7, horizon=HORIZON):
         if cur is None or PRIORITY[sym] > PRIORITY[cur]:
             cells[(cx, cy)] = sym
 
-    for b in state.get("bullets", []):
+    for b in live_bullets(state):
         bx, by = b["pos"]
         vx, vy = b.get("vel", (0.0, 0.0))
         for k in range(horizon + 1):
@@ -352,17 +352,35 @@ def render_crop(state, half=7, horizon=HORIZON):
     out.append("        o bullet now  x bullet <=%df  , bullet <=%df  # laser"
                % (SOON, horizon))
     out.append("        X enemy fatal on touch  e enemy harmless  . clear")
+    out.append("        ~ field edge; you cannot move past it")
     out.append("")
     for dy in range(-half, half + 1):
         row = []
         for dx in range(-half, half + 1):
             cx, cy = pcx + dx, pcy + dy
             if not (0 <= cx < gw and 0 <= cy < gh):
-                row.append("#")          # field edge
+                # Deliberately not "#": that is the laser glyph, and the window
+                # is wider than the field, so near the bottom edge two whole
+                # rows would read as a laser the player is nowhere near.
+                row.append("~")          # field edge
             else:
                 row.append(cells.get((cx, cy), "."))
         out.append("   " + "".join(row))
     return "\n".join(out)
+
+
+def live_bullets(state):
+    """Only the bullets that can actually kill, which is state 1 alone.
+
+    Disassembly, `BulletManager_OnUpdate` at 0x0DB90: a bullet in states 2-4 is
+    playing its spawn animation and jumps to 0xe4c5 -- the next slot -- on every
+    frame until that animation ends, so it never reaches the graze test at
+    0xe3fb. When the animation finishes the bullet is set to state 1 and enters
+    the path that does. State 5 is the same in reverse. `state.py` already
+    computes this as `live`; drawing or colliding against anything else invents
+    a threat the player cannot be hit by.
+    """
+    return [b for b in state.get("bullets", []) if b.get("live", True)]
 
 
 FORMATS = {"grid": lambda s: render(s), "rays": render_rays,
@@ -424,7 +442,7 @@ def render_png(state, path, scale=2, with_grid=True):
                 dot(bx + math.cos(ang + math.pi / 2) * off,
                     by + math.sin(ang + math.pi / 2) * off, BLUE, 0)
 
-    for b in state.get("bullets", []):
+    for b in live_bullets(state):
         dot(b["pos"][0], b["pos"][1], GREEN, 2)
 
     for e in state.get("enemies", []):
@@ -474,7 +492,7 @@ def render_model_png(state, path, scale=2, horizon=HORIZON):
         for x in (0, 1, w - 2, w - 1):
             rows[y][x * 3:x * 3 + 3] = EDGE
 
-    for b in state.get("bullets", []):
+    for b in live_bullets(state):
         bx, by = b["pos"]
         vx, vy = b.get("vel", (0.0, 0.0))
         for k in range(1, horizon + 1):

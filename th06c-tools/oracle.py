@@ -12,6 +12,8 @@ Approximations, all of which matter at longer horizons:
   * bullets are extrapolated in a straight line, so accelerating, curving and
     homing bullets (EX_ACCELERATION, EX_ANGLE_ADD, EX_ANGLE_PLAYER) are wrong
   * bullets that spawn during the window are invisible
+  * bullets still playing their spawn or despawn animation cannot kill and
+    are excluded; see view.live_bullets for the disassembly
   * collision is a circle test with fixed radii; real bullets vary from 4 to 32
     units and the real test is a box
   * lasers are treated as static segments and never as moving or fading
@@ -57,7 +59,7 @@ def survivable(state, horizon=view.HORIZON):
     """Map move name -> bool, for one state. True means no collision in the window."""
     px, py = state["player"]["pos"]
     speed = state["player"].get("speed", 4.0)
-    bullets = state.get("bullets", [])
+    bullets = view.live_bullets(state)
     lasers = state.get("lasers", [])
     fatal = [e for e in state.get("enemies", []) if e.get("fatal")]
 
