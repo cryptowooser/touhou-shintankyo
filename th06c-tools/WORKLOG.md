@@ -1450,3 +1450,93 @@ the model is to earn its place it needs either evidence that states the player's
 movement outcomes rather than only the bullets' futures, or a job the oracle
 cannot do -- bomb timing, risk appetite, spell-card strategy. Dodging, as
 currently posed, is not that job.
+
+## The eight-way prompt is the problem, not the encoding
+
+The question was whether the evidence could be simplified, since the crop is hard
+to read. It can be, and simplifying it makes the model **worse**. Measured on 120
+single-threat boards, three encodings of the same boards, against the best
+constant policy (88% on this set, because one direction of eight is lethal and a
+fixed direction misses it):
+
+| encoding | size | avoided |
+|---|---|---|
+| `grid`, 32x36 with row rulers | 1695 chars | 43% |
+| `crop`, the 15x15 window we ship | 638 chars | 42% |
+| `rays`, 13-line per-direction table | 517 chars | 3% |
+
+Readability and accuracy are inverted. `rays` is the shortest and clearest of the
+three and scores 3%, which is not a reading failure: on a single-threat board
+exactly one row of that table has data and the rest read `--`, and the model picks
+the populated row.
+
+**The model moves toward whatever is distinctive, and danger is what is
+distinctive.** A bullet rotated off the axis so that it cannot be reached still
+pulls the model toward its direction 117/120 (98%), against 116/120 (97%) for a
+bullet that kills. The danger is not entering the decision at all. With no
+populated row -- an empty board -- it falls back to a prior over cardinals, `left`
+64, `down` 32, `up` 16, `right` 8, and never a diagonal.
+
+**Asking about the danger does not change the behaviour, only the scoring.** On
+`rays`, 113 of 120 boards get a byte-identical answer under "which way should the
+player move" and "which direction is most dangerous" (94%). The 98% that the
+inverted question appears to score on single-threat boards is the same
+populated-row pull, rescored. On busy boards it is worth nothing: 27/120 against
+a 16% chance rate, and the whole excess sits in the subset with exactly one lethal
+move (21/92 against 12.5%); at two or more lethal moves it is at chance.
+
+## One direction at a time
+
+The eight-way framing never beat a constant policy in any encoding, on any board
+kind. Asking the same model the same question eight times, once per direction,
+with two options and neither salient, is different in kind.
+
+On 40 dense boards (4-8 of 8 directions lethal, best constant 53%, threats all
+within reach and separated by timing rather than magnitude):
+
+- **eight-way, `rays`: 48%** -- exactly the 48% of choosing at random, below the
+  constant.
+- **binary ranking, `rays`: 85/100 (85%)**, against a best constant of 53/100
+  (53%). z = +6.41.
+- **binary ranking, `crop`: 57/100 (57%)**, z = +0.80, which is noise.
+
+The two encodings ran on the same 100 boards. Paired: 37 boards where `rays`
+survived and `crop` did not, against 9 the other way; McNemar chi2 = 15.85,
+p ~ 0.0004. The ranking is: ask each direction separately whether moving there is
+fatal, and move where the model says yes least.
+
+**Why `rays` and not `crop`.** A "would I hit it" question needs distances to
+compare against the 60u the player covers in the horizon. `rays` gives exact
+numbers; `crop` quantises the same information into three glyph buckets. Mean
+P(yes) separates lethal from safe by 1.9x under `rays` and 1.2x under `crop`.
+Only the lowest rank works on `rays` (85%, then 58%, 58%): it is identifying safe
+directions, not merely producing a spread.
+
+**The cost is not what it first looks like.** Eight questions per decision
+sounds like eight round trips, but they do not depend on each other and go out
+concurrently. Measured: one call 164 ms, eight concurrent 225 ms, and 285 ms per
+decision end to end through the controller. That is roughly 4 decisions/s
+against the current loop's 6-7, so it is close to a drop-in rather than the
+eight-fold slowdown the request count suggests. (The first measurement of 485 ms
+was cold-start TLS, not serialisation; `de_client._post` opens a fresh connection
+per call and holds no shared state.)
+
+## Wired into the controller
+
+`controller.py --binary` selects the design. It defaults the encoding to `rays`
+(overriding it with `--format` is allowed but measured to be worse), asks one
+question per direction in the offered menu concurrently, and takes the lowest
+P(hit). `stay put` gets its own phrasing if the menu includes it. The log carries
+`mode` and the full `p_yes` map, so a run can be rescored under a different rank
+rule without being replayed, and `score_run.py` reports the mode and the P(hit)
+separation between lethal and safe directions rather than mixing the two modes.
+`LOG_VERSION` is 3.
+
+Verified through the controller's own code path on the same 40 dense boards:
+35/40 (88%) against a best constant of 24/40 (60%), 285 ms per decision.
+
+**What is not yet tested.** These are static boards. Nothing here covers the
+sequence of decisions across a stage, the oracle's approximation error (straight
+lines, no new spawns), or whether an 88% static rate survives contact with a real
+frame. The `rays` table also still describes only the bullets' situation, never
+the player's own movement, which was the original complaint.

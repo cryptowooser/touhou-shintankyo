@@ -25,6 +25,16 @@ without having to reproduce it.
   controller.py --format crop --log run.jsonl
   controller.py --stop-after 60           stop after 60 decisions
   controller.py --no-stay-put             drop `stay put`, so it must move
+  controller.py --binary                  one yes/no question per direction
+
+The `--binary` mode asks a separate question for each direction -- "if the
+player moves here, will a bullet hit them" -- and takes the direction least
+likely to be hit. It is slower in requests (one per direction) but they are
+asked concurrently, so a decision still costs about one round trip. It exists
+because the single eight-way question is answered by whatever is most
+distinctive in the evidence, which is always the threat, and that scores at
+chance on a dense board. It defaults to the `rays` encoding, which is the one
+that carries the distances the comparison needs.
 
 Stop it with Ctrl+C, or by creating the stop file (default controller.stop).
 """
@@ -34,6 +44,7 @@ import os
 import sys
 import threading
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import de_client as DE    # noqa: E402
@@ -62,7 +73,26 @@ MAX_SNAPSHOT_AGE = 0.5
 #      for the disassembly. On one 500-decision run that affected 55% of the
 #      discriminating frames, so its numbers cannot be compared to a fixed run.
 #   2: the oracle and the view see live bullets only.
-LOG_VERSION = 2
+#   3: the binary mode, which asks one yes/no question per direction instead of
+#      one eight-way question. Rows carry `mode` and `p_yes`.
+LOG_VERSION = 3
+
+# The binary mode. One yes/no question per direction, and the move is whichever
+# direction the model says is least likely to be hit. This exists because the
+# single eight-way question is answered by the most distinctive thing in the
+# evidence, which is always the threat: on 100 dense boards it scores 48%, which
+# is exactly chance and below a constant policy, while the same model asked one
+# direction at a time scores 85% against a best constant of 53%. See WORKLOG.md.
+#
+# `rays` is the encoding that works here, and only here: a "would I hit it"
+# question needs the exact distances to compare against the 60u the player
+# covers in the horizon, and `crop` quantises those into three glyph buckets.
+BINARY_OPTIONS = [("A", "yes"), ("B", "no")]
+YES_LETTER = next(l for l, d in BINARY_OPTIONS if d == "yes")
+BINARY_QUESTION = ("If the player moves %s, will a bullet hit them within the "
+                   "next 15 frames?")
+STAY_QUESTION = ("If the player stays where they are, will a bullet hit them "
+                 "within the next 15 frames?")
 
 # Consecutive decisions over an unchanged board before the run gives up. At the
 # observed 5-7 decisions/s this is roughly 7-9 seconds, which is longer than any
@@ -94,8 +124,9 @@ class Controller:
     def __init__(self, fmt="crop", speed=4.0, dry_run=False, log_path=None,
                  stop_file="controller.stop", stop_after=None, vel_off=None,
                  poll_hz=60.0, use_oracle=True, model=DE.DEFAULT_MODEL,
-                 options=None):
+                 options=None, binary=False):
         self.fmt = fmt
+        self.binary = binary
         self.speed = speed
         self.dry_run = dry_run
         self.stop_file = stop_file
@@ -190,6 +221,31 @@ class Controller:
                 next_t = time.perf_counter()
 
     # --------------------------------------------------------------- deciding
+    def decide_binary(self, text):
+        """One yes/no question per direction, all in flight at once.
+
+        Eight sequential round trips at 130-300 ms each would hold the player on
+        one direction for well over a second. The questions are independent of
+        each other, so they go out together and a decision costs about one round
+        trip rather than eight. Returns the safest direction and its P(hit).
+        """
+        items = [(d, BINARY_QUESTION % d) for _, d in self.options
+                 if d != "stay put"]
+        if any(d == "stay put" for _, d in self.options):
+            items.append(("stay put", STAY_QUESTION))
+        p_yes = {}
+        with ThreadPoolExecutor(max_workers=len(items)) as pool:
+            futs = {pool.submit(DE.read_text, text, q, BINARY_OPTIONS,
+                                model=self.model): d for d, q in items}
+            for fut in as_completed(futs):
+                ans = fut.result()
+                p_yes[futs[fut]] = ans["probabilities"].get(YES_LETTER, 0.0)
+        # Least likely to be hit. Ties keep the menu's own order.
+        order = [d for _, d in self.options]
+        choice = min(items, key=lambda it: (p_yes[it[0]],
+                                            order.index(it[0])))[0]
+        return choice, p_yes
+
     def decide_once(self):
         with self._lock:
             snap = self.latest
@@ -213,19 +269,28 @@ class Controller:
 
         text = view.render_as(snap, self.fmt)
         t0 = time.perf_counter()
-        ans = DE.read_text(text, DE.MOVE_QUESTION, self.options,
-                           model=self.model)
+        if self.binary:
+            choice, p_yes = self.decide_binary(text)
+            ans = {"choice": choice, "letter": "",
+                   "probabilities": {}}
+            conf = 1.0 - p_yes[choice]
+        else:
+            p_yes = None
+            ans = DE.read_text(text, DE.MOVE_QUESTION, self.options,
+                               model=self.model)
+            conf = ans["probabilities"][ans["letter"]]
         wall = (time.perf_counter() - t0) * 1000
 
         row = {
             "t": time.time(),
             "n": self.decisions,
             "log_version": LOG_VERSION,
+            "mode": "binary" if self.binary else "eight-way",
             "snapshot_age_ms": round(age * 1000, 1),
             "round_trip_ms": round(wall, 1),
             "choice": ans["choice"],
             "letter": ans["letter"],
-            "confidence": round(ans["probabilities"][ans["letter"]], 4),
+            "confidence": round(conf, 4),
             "probabilities": {k: round(v, 4) for k, v in
                               ans["probabilities"].items()},
             "player": [round(snap["player"]["pos"][0], 1),
@@ -238,6 +303,10 @@ class Controller:
             # against the right baselines after the menu changes.
             "options": [d for _, d in self.options],
         }
+        if p_yes is not None:
+            # Every direction's P(hit), so a run can be rescored against a
+            # different rank rule without being replayed.
+            row["p_yes"] = {k: round(v, 4) for k, v in p_yes.items()}
         if self.use_oracle:
             try:
                 safe = sorted(oracle.safe_moves(snap))
@@ -284,8 +353,9 @@ class Controller:
             th06.focus(self.hwnd)
         else:
             print("warning: no th06c window found; keys will not reach the game")
-        print("pid=%d base=%#x  window=%s  format=%s  dry_run=%s"
-              % (pid, self.reader.base, self.hwnd, self.fmt, self.dry_run))
+        print("pid=%d base=%#x  window=%s  format=%s  mode=%s  dry_run=%s"
+              % (pid, self.reader.base, self.hwnd, self.fmt,
+                 "binary" if self.binary else "eight-way", self.dry_run))
         if self.dry_run:
             print("dry run: reading state and asking the DE, pressing no keys")
         print("stop with Ctrl+C or by creating %s\n" % self.stop_file)
@@ -338,7 +408,7 @@ def main():
         return default
 
     ctl = Controller(
-        fmt=opt("--format", "crop"),
+        fmt=opt("--format", "rays" if "--binary" in argv else "crop"),
         speed=opt("--speed", 4.0, float),
         dry_run="--dry-run" in argv,
         log_path=opt("--log", None),
@@ -348,6 +418,7 @@ def main():
         model=opt("--model", DE.DEFAULT_MODEL),
         use_oracle="--no-oracle" not in argv,
         options=DE.move_options(stay_put="--no-stay-put" not in argv),
+        binary="--binary" in argv,
     )
     ctl.run()
 

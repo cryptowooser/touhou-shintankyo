@@ -45,6 +45,22 @@ DIRS = [("left", (-1.0, 0.0)), ("right", (1.0, 0.0)),
 OPTIONS = DE.move_options(stay_put=False)
 MENU = [d for _, d in OPTIONS]
 
+# Which view encoding to send. Set from --format, so a comparison across
+# encodings uses the same boards with the encoding as the only variable.
+FMT = "crop"
+
+# The question. The model reliably moves toward the most distinctive thing in
+# the evidence -- a bullet it cannot even be hit by pulls it 98% of the time --
+# so asking it to find the threat may work where asking it to avoid the threat
+# does not. --danger swaps in the inverted question.
+MOVE_QUESTION = DE.MOVE_QUESTION
+DANGER_QUESTION = ("Which direction is most dangerous for the player to move "
+                   "in?")
+BINARY_QUESTION = ("If the player moves %s, will a bullet hit them within the "
+                   "next 15 frames?")
+BINARY_OPTIONS = [("A", "yes"), ("B", "no")]
+CRITERION = MOVE_QUESTION
+
 # Player positions and blocker distances. Every position is at least 60 units
 # from each edge, which is the full 15-frame reach at 4.0 u/f, so no move is
 # clipped by the field boundary and the geometry stays the only variable.
@@ -119,6 +135,28 @@ def single_block_board(direction, dist, player, rng=None):
     ux, uy = dict(DIRS)[direction]
     return state(player, [((player[0] + ux * dist, player[1] + uy * dist),
                            (0.0, 0.0))])
+
+
+def clutter_board(direction, dist, player, rng, n_clutter=18):
+    """One lethal bullet plus a field full of harmless ones.
+
+    The single-threat boards are the only ones where a constant policy cannot
+    win, but they have one bullet on screen and real frames have twenty. Every
+    extra bullet is parked beyond the player's reach -- 4 u/f over 15 frames is
+    60u, so anything past 100u cannot be arrived at -- which keeps the lethal
+    direction unique while making the board as busy as a stage.
+    """
+    ux, uy = dict(DIRS)[direction]
+    bullets = [((player[0] + ux * dist, player[1] + uy * dist), (0.0, 0.0))]
+    for _ in range(600):
+        if len(bullets) > n_clutter:
+            break
+        ang = rng.uniform(0, 2 * math.pi)
+        r = rng.uniform(100.0, 250.0)
+        bx, by = player[0] + math.cos(ang) * r, player[1] + math.sin(ang) * r
+        if 8.0 <= bx < view.FIELD_W - 8.0 and 8.0 <= by < view.FIELD_H - 8.0:
+            bullets.append(((bx, by), (0.0, 0.0)))
+    return state(player, bullets)
 
 
 def approach_board(direction, dist, player, rng=None, speed=4.0):
@@ -197,8 +235,8 @@ def random_board(rng, lo=1, hi=4, n_bullets=14):
 
 
 def ask(st):
-    text = view.render_as(st, "crop")
-    ans = DE.read_text(text, DE.MOVE_QUESTION, OPTIONS)
+    text = view.render_as(st, FMT)
+    ans = DE.read_text(text, CRITERION, OPTIONS)
     return text, ans
 
 
@@ -317,16 +355,44 @@ def main():
     ap.add_argument("--marker", action="store_true")
     ap.add_argument("--harmless", action="store_true")
     ap.add_argument("--halfstep", action="store_true")
+    ap.add_argument("--danger", action="store_true",
+                    help="ask which direction is most dangerous instead")
+    ap.add_argument("--danger-random", action="store_true",
+                    help="danger question on busy boards; the real test of it")
+    ap.add_argument("--binary", action="store_true",
+                    help="one direction at a time, yes/no; removes selection")
+    ap.add_argument("--binary-single", action="store_true",
+                    help="binary ranking on single-threat boards, where a "
+                         "constant policy cannot win")
+    ap.add_argument("--clutter", type=int, default=0,
+                    help="with --binary-single, add this many out-of-reach "
+                         "bullets so the board is as busy as a real frame")
+    ap.add_argument("--binary-hard", action="store_true",
+                    help="binary ranking on boards where most directions kill")
+    ap.add_argument("--random-hard", action="store_true",
+                    help="the eight-way question on the same hard boards, to "
+                         "separate the framing from the boards")
     ap.add_argument("--control", action="store_true")
     ap.add_argument("--random", action="store_true")
     ap.add_argument("--show", action="store_true")
     ap.add_argument("--variants", type=int, default=len(VARIANTS))
     ap.add_argument("--n", type=int, default=60)
     ap.add_argument("--model", default=DE.DEFAULT_MODEL)
+    ap.add_argument("--format", default="crop", choices=sorted(view.FORMATS),
+                    help="which view encoding to send")
     ap.add_argument("--json", default=None,
                     help="write the per-board rows here for later analysis")
     args = ap.parse_args()
     rng = random.Random(20261009)
+    global FMT, CRITERION
+    FMT = args.format
+    if args.danger or args.danger_random:
+        CRITERION = DANGER_QUESTION
+    if args.block or args.control or args.marker or args.harmless \
+            or args.halfstep or args.random or args.danger \
+            or args.danger_random or args.binary or args.binary_single \
+            or args.binary_hard or args.random_hard:
+        print("view encoding: %s   question: %s" % (FMT, CRITERION))
 
     if args.show:
         for d, _ in DIRS:
@@ -378,6 +444,51 @@ def main():
               % ", ".join("%s %d" % (k, v)
                           for k, v in collections.Counter(
                               r["choice"] for r in rows).most_common()))
+        if args.json:
+            dump(rows, args.json)
+        return
+
+    if args.danger:
+        # Inverted scoring: the model is asked to name the danger, so success is
+        # picking a direction the oracle says would kill.
+        variants = make_variants(args.variants, rng)
+        rows = []
+        for d, _ in DIRS:
+            for dist, player in variants:
+                st = single_block_board(d, dist, player)
+                safe = oracle.safe_moves(st)
+                lethal = [m for m in MENU if m not in safe]
+                text, ans = ask(st)
+                rows.append({
+                    "direction": d, "dist": dist, "player": player,
+                    "lethal": lethal, "ground_truth_exact": (lethal == [d]),
+                    "choice": ans["choice"],
+                    "avoided": ans["choice"] not in lethal,
+                    "named_danger": ans["choice"] in lethal,
+                    "confidence": ans["probabilities"][ans["letter"]],
+                })
+        rows = [r for r in rows if r["ground_truth_exact"]]
+        n = len(rows)
+        named = sum(1 for r in rows if r["named_danger"])
+        print("=" * 72)
+        print("INVERTED: asked which direction is MOST DANGEROUS")
+        print("=" * 72)
+        print("  %d boards, exactly one lethal move each" % n)
+        print()
+        print("  model named the lethal direction:  %d/%d  (%.0f%%)"
+              % (named, n, 100.0 * named / n))
+        print("  naming one at random would give:   %.1f/%d  (%.0f%%)"
+              % (n / 8.0, n, 12.5))
+        print()
+        conf = sorted(r["confidence"] for r in rows if r["named_danger"])
+        if conf:
+            print("  confidence when it named it: median %.2f"
+                  % conf[len(conf) // 2])
+        if named / float(n) > 0.5:
+            print()
+            print("  That is well above chance, which is the whole point: the")
+            print("  model finds the distinctive item reliably. Inverting the")
+            print("  question to match that bias is a real way to use it.")
         if args.json:
             dump(rows, args.json)
         return
@@ -490,10 +601,233 @@ def main():
             print("  nothing is blocking them.")
         return
 
-    if args.random:
+    if args.danger_random:
+        # The single-threat version of this question is answered by the one
+        # populated row. Real boards populate every row, so the heuristic has
+        # nothing to grab and this is where it either survives or does not.
         rows = []
         while len(rows) < args.n:
             st, lethal = random_board(rng)
+            if st is None:
+                continue
+            text, ans = ask(st)
+            rows.append({"lethal": lethal, "choice": ans["choice"],
+                         "named_danger": ans["choice"] in lethal,
+                         "chance": len(lethal) / 8.0,
+                         "confidence": ans["probabilities"][ans["letter"]]})
+        n = len(rows)
+        named = sum(1 for r in rows if r["named_danger"])
+        chance = 100.0 * sum(r["chance"] for r in rows) / n
+        print("=" * 72)
+        print("INVERTED on BUSY boards: which direction is most dangerous?")
+        print("=" * 72)
+        print("  %d boards, 1-4 lethal moves each, every rays row populated" % n)
+        print()
+        print("  model named a lethal direction:  %d/%d  (%.0f%%)"
+              % (named, n, 100.0 * named / n))
+        print("  picking at random would give:    %.0f%%" % chance)
+        print()
+        if named / float(n) > chance / 100.0 + 0.15:
+            print("  Above chance -- some signal survives on busy boards.")
+        else:
+            print("  At chance. The single-threat result was the populated")
+            print("  row, and on a busy board there is no such row: the")
+            print("  inverted question buys nothing where it would matter.")
+        if args.json:
+            dump(rows, args.json)
+        return
+
+    if args.binary_hard:
+        # Random boards where most directions kill. A constant policy wins at
+        # most ~40% here, so unlike the 1-4 lethal set this cannot be passed by
+        # holding one direction, and unlike the clutter set the threats are in
+        # reach and separated by timing rather than by an order of magnitude.
+        boards = []
+        while len(boards) < args.n:
+            st, lethal = random_board(rng, lo=4, hi=8, n_bullets=20)
+            if st is None:
+                continue
+            boards.append((st, lethal))
+        rows = []
+        for i, (st, lethal) in enumerate(boards):
+            text = view.render_as(st, FMT)
+            for d in MENU:
+                ans = DE.read_text(text, BINARY_QUESTION % d, BINARY_OPTIONS)
+                rows.append({"board": i, "direction": d, "truth": d in lethal,
+                             "said_yes": ans["choice"] == "yes",
+                             "confidence": ans["probabilities"][ans["letter"]]})
+        nb = len(boards)
+
+        def py(x):
+            return x["confidence"] if x["said_yes"] else 1.0 - x["confidence"]
+
+        low = sum(1 for i in range(nb)
+                  if not min([r for r in rows if r["board"] == i], key=py)["truth"])
+        best = max(sum(1 for i in range(nb) if not [r for r in rows
+                   if r["board"] == i and r["direction"] == m][0]["truth"])
+                   for m in MENU)
+        avg = sum(len(l) for _, l in boards) / float(nb)
+        print("=" * 72)
+        print("BINARY RANKING on HARD boards (most directions kill)")
+        print("=" * 72)
+        print("  %d boards, %.1f lethal directions each on average" % (nb, avg))
+        print("  %d boards x 8 questions = %d calls" % (nb, len(rows)))
+        print()
+        print("  move where the model says yes least:  %d/%d  (%.0f%%)"
+              % (low, nb, 100.0 * low / nb))
+        print("  best constant policy:                 %d/%d  (%.0f%%)"
+              % (best, nb, 100.0 * best / nb))
+        print()
+        if low > best:
+            print("  It beats every constant where most moves are fatal. This")
+            print("  is the case that matters, because a stage is dense.")
+        elif low == best:
+            print("  It ties the best constant on the case that matters. The")
+            print("  single-threat win does not carry into density.")
+        else:
+            print("  It loses to a constant policy on the case that matters.")
+        if args.json:
+            dump(rows, args.json)
+        return
+
+    if args.binary_single:
+        # The random-board version of this is saturated: with 1-4 lethal moves
+        # out of 8, a fixed direction survives ~95% and no policy can be told
+        # apart from it. Here the lethal direction is varied across all eight,
+        # so the best constant tops out at 7/8 and skill has somewhere to show.
+        boards = []
+        for d, _ in DIRS:
+            for dist, player in make_variants(args.variants, rng):
+                if args.clutter:
+                    st = clutter_board(d, dist, player, rng, args.clutter)
+                else:
+                    st = single_block_board(d, dist, player)
+                lethal = [m for m in MENU if m not in oracle.safe_moves(st)]
+                if lethal != [d]:
+                    continue
+                boards.append((st, lethal))
+        rows = []
+        for i, (st, lethal) in enumerate(boards):
+            text = view.render_as(st, FMT)
+            for d in MENU:
+                ans = DE.read_text(text, BINARY_QUESTION % d, BINARY_OPTIONS)
+                rows.append({"board": i, "direction": d, "truth": d in lethal,
+                             "said_yes": ans["choice"] == "yes",
+                             "confidence": ans["probabilities"][ans["letter"]]})
+        nb = len(boards)
+        low = sum(1 for i in range(nb)
+                  if not min([r for r in rows if r["board"] == i],
+                             key=lambda x: x["confidence"] if x["said_yes"]
+                             else 1.0 - x["confidence"])["truth"])
+        best = max(sum(1 for i in range(nb)
+                       if not [r for r in rows
+                               if r["board"] == i and r["direction"] == m][0]["truth"])
+                   for m in MENU)
+        print("=" * 72)
+        print("BINARY RANKING on single-threat boards")
+        print("=" * 72)
+        print("  %d boards x 8 questions = %d calls" % (nb, len(rows)))
+        if args.clutter:
+            print("  each board carries %d extra out-of-reach bullets"
+                  % args.clutter)
+        print()
+        print("  move where the model says yes least:  %d/%d  (%.0f%%)"
+              % (low, nb, 100.0 * low / nb))
+        print("  best constant policy:                 %d/%d  (%.0f%%)"
+              % (best, nb, 100.0 * best / nb))
+        print()
+        if low > best:
+            print("  It beats every constant policy, which nothing in the")
+            print("  eight-way framing managed. The signal is real and usable,")
+            print("  at the cost of eight questions per decision.")
+        elif low == best:
+            print("  It ties the best constant. No usable edge: the ranking")
+            print("  is no better than picking a fixed direction and holding.")
+        else:
+            print("  It loses to a constant policy. The discrimination seen")
+            print("  in the pooled yes-rate does not survive being asked to")
+            print("  actually choose.")
+        if args.json:
+            dump(rows, args.json)
+        return
+
+    if args.binary:
+        # One direction per question, two options, neither salient. This takes
+        # the selection bias out entirely: if the model cannot do the
+        # simulation, there is nothing left for it to get right by accident.
+        rows = []
+        boards = 0
+        while boards < args.n:
+            st, lethal = random_board(rng)
+            if st is None:
+                continue
+            boards += 1
+            text = view.render_as(st, FMT)
+            for d in MENU:
+                ans = DE.read_text(text, BINARY_QUESTION % d, BINARY_OPTIONS)
+                rows.append({"direction": d, "truth": d in lethal,
+                             "said_yes": ans["choice"] == "yes",
+                             "confidence": ans["probabilities"][ans["letter"]]})
+        n = len(rows)
+        acc = sum(1 for r in rows if r["said_yes"] == r["truth"])
+        yes = sum(1 for r in rows if r["said_yes"])
+        hit = [r for r in rows if r["truth"]]
+        tp = sum(1 for r in hit if r["said_yes"])
+        print("=" * 72)
+        print("ONE DIRECTION AT A TIME: will moving <d> be fatal?")
+        print("=" * 72)
+        print("  %d questions over %d boards, 2 options each"
+              % (n, boards))
+        print()
+        print("  accuracy:            %d/%d  (%.0f%%)"
+              % (acc, n, 100.0 * acc / n))
+        print("  answering 'no' always:      %.0f%%  <- the bar to beat"
+              % (100.0 * (n - len(hit)) / n))
+        print()
+        print("  of %d fatal directions it said yes to %d  (%.0f%%)"
+              % (len(hit), tp, 100.0 * tp / max(len(hit), 1)))
+        print("  of %d safe directions it said yes to %d  (%.0f%%)"
+              % (n - len(hit), yes - tp, 100.0 * (yes - tp) / max(n - len(hit), 1)))
+        print()
+        tpr = 100.0 * tp / max(len(hit), 1)
+        fpr = 100.0 * (yes - tp) / max(n - len(hit), 1)
+        gap = tpr - fpr
+        by_dir = {}
+        for r in rows:
+            y, t = by_dir.setdefault(r["direction"], [0, 0])
+            by_dir[r["direction"]] = [y + (1 if r["said_yes"] else 0), t + 1]
+        print("  yes-rate by direction name (a prior over names, not the board):")
+        for d, (y, t) in sorted(by_dir.items(), key=lambda kv: -kv[1][0]):
+            print("      %-11s %2d/%2d  %3.0f%%" % (d, y, t, 100.0 * y / t))
+        print()
+        if tpr < 5.0 and fpr < 5.0:
+            print("  It essentially never says yes (%.0f%% vs %.0f%%). The high"
+                  % (tpr, fpr))
+            print("  accuracy is the majority answer, not a judgement.")
+        elif gap < 8.0:
+            print("  Its yes-rate does not separate fatal from safe moves")
+            print("  (gap %+.0f points): no usable discrimination." % gap)
+        elif tpr < 50.0:
+            print("  It does separate them (%+.0f points, %.1fx the rate), so some"
+                  % (gap, tpr / max(fpr, 0.01)))
+            print("  board signal survives the binary framing -- but it misses")
+            print("  %.0f%% of fatal moves, so it is not usable as a filter on"
+                  % (100.0 - tpr))
+            print("  its own. Compare the yes-rate by name above before")
+            print("  crediting the board: much of the split may be the name.")
+        else:
+            print("  It separates them (%+.0f points) and catches most fatal"
+                  % gap)
+            print("  moves. Usable, if 8 questions per decision is affordable.")
+        if args.json:
+            dump(rows, args.json)
+        return
+
+    if args.random or args.random_hard:
+        lo, hi, nb_ = (4, 8, 20) if args.random_hard else (1, 4, 14)
+        rows = []
+        while len(rows) < args.n:
+            st, lethal = random_board(rng, lo=lo, hi=hi, n_bullets=nb_)
             if st is None:
                 continue
             text, ans = ask(st)
@@ -503,13 +837,19 @@ def main():
         n = len(rows)
         ok = sum(1 for r in rows if r["ok"])
         print("=" * 72)
-        print("RANDOM boards: %d, each with 1-4 lethal moves" % n)
+        if args.random_hard:
+            print("HARD random boards: %d, %d-%d lethal moves of 8" % (n, lo, hi))
+        else:
+            print("RANDOM boards: %d, each with 1-4 lethal moves" % n)
         print("=" * 72)
         print("  model chose a surviving move:  %d/%d  (%.0f%%)"
               % (ok, n, 100.0 * ok / n))
+        best = max(sum(1 for r in rows if m not in r["lethal"]) for m in MENU)
+        print("  best constant policy:         %d/%d  (%.0f%%)"
+              % (best, n, 100.0 * best / n))
         print()
         print("  by how many moves were lethal:")
-        for k in range(1, 5):
+        for k in range(lo, hi + 1):
             sub = [r for r in rows if len(r["lethal"]) == k]
             if sub:
                 o = sum(1 for r in sub if r["ok"])

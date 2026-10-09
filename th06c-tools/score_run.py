@@ -72,8 +72,20 @@ def score(path, rng):
 
     opts = offered(safe_rows[0])
     print("  menu offered: %s" % ", ".join(opts))
-    if len(opts) != len(ALL_MOVES):
+    # `stay put` is dropped deliberately by --no-stay-put, which is not a
+    # reduced menu -- only a menu smaller than the eight directions is.
+    full = len(ALL_MOVES) if "stay put" in opts else len(ALL_MOVES) - 1
+    if len(opts) < full:
         print("  (reduced menu, so constant-policy baselines are over these only)")
+
+    modes = collections.Counter(r.get("mode", "eight-way") for r in rows)
+    if len(modes) > 1 or "binary" in modes:
+        print("  decision mode: %s"
+              % ", ".join("%s %d" % kv for kv in modes.most_common()))
+        if "binary" in modes:
+            print("     (one yes/no question per direction; the choice is the")
+            print("      direction with the lowest P(hit). Not comparable with")
+            print("      an eight-way run -- see WORKLOG.md.)")
 
     ver = safe_rows[0].get("log_version")
     if ver is None or ver < 2:
@@ -108,6 +120,25 @@ def score(path, rng):
     print("  choice distribution:")
     for k, v in collections.Counter(r["choice"] for r in rows).most_common():
         print("     %-11s %4d  (%.0f%%)" % (k, v, 100.0 * v / len(rows)))
+
+    # In binary mode the whole decision is the ranking, so the question is
+    # whether P(hit) actually separates the moves that would have killed from
+    # the ones that would not. A ranking with no separation would pick a
+    # survivor by luck on a sparse board and fail on a dense one.
+    rated = [r for r in safe_rows if r.get("p_yes")]
+    if rated:
+        safe_p, lethal_p = [], []
+        for r in rated:
+            for m, p in r["p_yes"].items():
+                (lethal_p if m not in r["oracle_safe"] else safe_p).append(p)
+        if safe_p and lethal_p:
+            ms = sum(safe_p) / len(safe_p)
+            ml = sum(lethal_p) / len(lethal_p)
+            print("  P(hit) separation over %d rated frames: safe %.3f vs "
+                  "lethal %.3f  (%.1fx)" % (len(rated), ms, ml, ml / max(ms, 1e-9)))
+            if ml / max(ms, 1e-9) < 1.3:
+                print("     weak separation: on a sparse board this picks a")
+                print("     survivor anyway, but a dense one will show it.")
 
     # Split by whether the answer could have been wrong.
     def all_safe(r):
