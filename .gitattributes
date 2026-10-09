@@ -1,0 +1,8 @@
+# Normalise line endings to LF, so the working tree matches the repository.
+* text=auto eol=lf
+
+# Never rewrite binary assets.
+*.bmp binary
+*.png binary
+*.jpg binary
+*.pkl binary

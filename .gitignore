@@ -1,0 +1,37 @@
+# ---------------------------------------------------------------------------
+# Game capture artifacts.
+#
+# These are screenshots of the running game, so they contain its artwork,
+# sprites, portraits, and stage backgrounds. None of it is ours to publish,
+# and it accounts for ~815 MB of the working tree. Regenerate locally instead
+# of committing: most tools write their own output.
+#
+# This pattern is deliberately broad. If you ever need to track a legitimate
+# image, add it with `git add -f`.
+# ---------------------------------------------------------------------------
+*.bmp
+*.png
+
+# ---------------------------------------------------------------------------
+# Game data and anything derived from the executable's bytes.
+# ---------------------------------------------------------------------------
+*.lzh
+*.pkl
+codeindex.pkl
+
+# Tool output written next to the scripts.
+th06c-tools/*.txt
+
+# ---------------------------------------------------------------------------
+# Dead ends and one-off probes, kept on disk for reference only.
+# ---------------------------------------------------------------------------
+th06c-tools/scratch/
+
+# ---------------------------------------------------------------------------
+# Environment and editor noise.
+# ---------------------------------------------------------------------------
+.venv/
+.multiloop/
+.pi/
+__pycache__/
+*.py[cod]

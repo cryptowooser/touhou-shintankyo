@@ -1,0 +1,7 @@
+# Everything else the toolkit imports is standard library, plus ctypes/Win32
+# bindings that ship with CPython on Windows.
+#
+# capstone is only needed by the static-analysis tools (disasm.py,
+# findrefs.py, arrayrefs.py, codeindex.py). The runtime tools
+# (gamestate.py, keepalive.py, entities.py, ...) work without it.
+capstone>=5.0
