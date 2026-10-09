@@ -1,14 +1,14 @@
 # touhou-shintankyo
 
-![当方深探郷 ~ Embodiment of Azure Whale, a parody title screen made for this project](title.jpg)
+![東方深探郷 ~ Embodiment of Azure Whale, a parody title screen made for this project](title.jpg)
 
 Reverse-engineering toolkit for `th06c.exe`, the Steam remaster of Touhou 6
 ~ the Embodiment of Scarlet Devil, installed at `steamapps\common\th06c\`.
 
-The banner is **当方深探郷 ~ Embodiment of Azure Whale**, a parody title screen
-made for this project rather than the game's own artwork. The name follows the
-series' naming convention: 当方 (*touhou*, "our side") for 東方 (*Touhou*), and
-深探 (*shintan*, "deep probing") for 紅魔 (*kouma*), after what this toolkit does.
+The banner is **東方深探郷 ~ Embodiment of Azure Whale**, a parody title screen
+made for this project rather than the game's own artwork. It renames 紅魔郷
+(*Koumakyou*, "Scarlet Devil") to 深探郷 (*Shintankyou*) — 深 *deep*, 探 *seek* —
+and "Scarlet Devil" to "Azure Whale", after DeepSeek, whose logo is a blue whale.
 
 The toolkit reads game state out of a running process, writes the counters back,
 and disassembles the executable on disk. Every address in this repository was
