@@ -1,5 +1,7 @@
 # touhou-shintankyo
 
+![Title screen of 当方深探郷 ~ Embodiment of Azure Whale](title.jpg)
+
 Reverse-engineering toolkit for `th06c.exe`, the EoSD-engine game installed at
 `steamapps\common\th06c\` (title screen: 当方深探郷 ~ Embodiment of Azure Whale).
 
