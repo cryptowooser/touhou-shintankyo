@@ -1,9 +1,14 @@
 # touhou-shintankyo
 
-![Title screen of 当方深探郷 ~ Embodiment of Azure Whale](title.jpg)
+![当方深探郷 ~ Embodiment of Azure Whale, a parody title screen made for this project](title.jpg)
 
-Reverse-engineering toolkit for `th06c.exe`, the EoSD-engine game installed at
-`steamapps\common\th06c\` (title screen: 当方深探郷 ~ Embodiment of Azure Whale).
+Reverse-engineering toolkit for `th06c.exe`, the Steam remaster of Touhou 6
+~ the Embodiment of Scarlet Devil, installed at `steamapps\common\th06c\`.
+
+The banner is **当方深探郷 ~ Embodiment of Azure Whale**, a parody title screen
+made for this project rather than the game's own artwork. The name follows the
+series' naming convention: 当方 (*touhou*, "our side") for 東方 (*Touhou*), and
+深探 (*shintan*, "deep probing") for 紅魔 (*kouma*), after what this toolkit does.
 
 The toolkit reads game state out of a running process, writes the counters back,
 and disassembles the executable on disk. Every address in this repository was
@@ -267,12 +272,13 @@ resolution.
 ## Legal
 
 This repository contains no game code, no game data, and no screenshots of the
-game. It contains addresses, disassembly notes, and tooling.
+game. It contains addresses, disassembly notes, tooling, and the original parody
+artwork at the top.
 
 Using it requires your own legitimate copy of the game. Whether modifying a
 running game process is permitted is governed by that game's licence, not by
-this repository's licence. The MIT licence below covers only the original code
-and documentation here.
+this repository's licence. The MIT licence below covers only the original code,
+documentation, and artwork here.
 
 ## Licence
 
