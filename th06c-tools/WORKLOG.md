@@ -1347,10 +1347,14 @@ a run can be scored afterwards without reproducing it.
 
 ### Unknowns that will bite
 
-**The player's speed is a placeholder.** The view tells the model 4.0 units per
-frame. Nobody measured it. The model's judgement is a ratio of player speed to
-bullet speed, so a wrong number makes it play too cautiously or take lines it
-cannot clear. `state.py --calibrate-speed` measures it.
+**The player's speed was a placeholder, and turned out to be right.** The view
+tells the model 4.0 units per frame. `state.py --calibrate-speed` measured a
+median step of exactly 4.00 u/f in each of right, up and down, so the guess was
+correct and no change was needed. The `dist/frames` column reads 3.91-4.07 only
+because the frame count is derived from wall time and rounds. One caveat for the
+tool itself: the `left` reading came back at 1.46 u/f with a median step of 0.00
+because the player was already against the left wall. A blocked direction is not
+a slow one, and the tool does not currently tell them apart.
 
 **Bullet velocity has no known offset.** Differencing works but a bullet that
 just spawned has no history for a few frames, and accelerating or curving shots
@@ -1361,3 +1365,88 @@ runs 8-64 and is not the kill hitbox.
 
 None of these three affect whether the loop runs. All three affect whether the
 oracle's opinion of a decision is trustworthy.
+
+### Bullets that cannot kill were being drawn and collided with
+
+The largest single defect found so far, and it was in both the evidence and the
+critic at once. `state.py` has always computed `live = state == 1` per bullet,
+and **nothing consumed it**. The view drew every allocated bullet as a threat and
+the oracle collided against every one, so on 43% of frames in a 500-decision run
+the model was shown bullets that could not hurt it -- 136 of them on one frame.
+
+That was not a guess about the state enum. `BulletManager_OnUpdate` dispatches on
+state at `0xdcc0` (`r15 == 1`), and the path for states 2-4 is:
+
+```
+0xddd3  call 0x62c0                 ; spawn animation update
+0xddd8  test eax, eax
+0xddda  je   0xe4c5                 ; still spawning -> next slot, NO graze test
+0xddee  mov word [rbx + 0x44], r15w ; animation done -> state = 1
+```
+
+While a bullet is spawning it jumps to `0xe4c5`, the next slot, on every frame
+and never reaches the graze test at `0xe3fb`. Only when the animation ends does
+it become state 1 and enter the movement path that reaches it. State 5 is the
+same in reverse, and state > 5 skips to `0xe4c5` directly. The kill test itself
+is gated on `isGrazed` at `0xe475`.
+
+`view.live_bullets` now filters, and every renderer and the oracle use it. The
+remaining known gap: a spawning bullet will become lethal within a few frames,
+and excluding it makes the oracle miss an imminent threat. That is consistent
+with the approximation it already documents -- bullets that spawn during the
+window are invisible -- but it is a real loss, and the alternative (drawing it,
+marked as spawning) has not been built.
+
+### The model does not read the board, and the crop does not ask it to
+
+Playing runs cannot settle this. 500 decisions buys about 178 frames where the
+answer could have been wrong, and the model's score on those sits three frames
+from `always down` (144 vs 147, exact McNemar p = 0.77). `boardtest.py` builds
+the boards instead, with ground truth from `oracle.py`, so no game is needed.
+
+**The prior, with nothing to read.** On a board with no bullets at all the model
+answered `left` 120 times out of 120, at 0.64 confidence. That is the baseline
+every other number has to beat.
+
+**One threat, one direction, every direction.** Each board carries a single
+lethal move, so a constant policy scores (N-1)/N = 88% by construction and only
+reading the board can beat it.
+
+| board | model | best constant |
+|---|---|---|
+| single stationary bullet, 1 lone `o` | **50/120 (42%)** | 105/120 (88%) |
+| column of three stationary bullets | 86/120 (72%) | 105/120 (88%) |
+| single approaching bullet, 16-cell trail | 77/88 (88%) | 77/88 (88%) |
+
+The model never beat the constant. On the single stationary bullet it moved
+*into* the threat on 70 of 120 boards. Place one bullet directly above the player
+and it moved up 15 times out of 15; above-left, up-left 15 out of 15. Confidence
+was higher when it was wrong (median 0.94) than when it was right (0.87).
+
+**The behaviour does not depend on the threat.** Rotating that same bullet 22.5
+degrees off the axis puts it between two moves, so every path clears it while the
+mark, the range and the glyph stay the same. Nothing is lethal on those boards,
+yet the model still moves toward the mark 53% of the time overall and **82%** of
+the time when the mark is above it -- against **80%** on the boards where moving
+there would have killed it.
+
+**Why.** `render_crop` draws each bullet's predicted positions for the next 16
+frames. It never draws the player's own movement outcomes. A stationary bullet's
+future is its own cell, so the prompt for a lethal stationary bullet and a
+harmless one at the same range is often *byte-identical* -- 15 of 72 pairs in a
+sample of 72. The model is not ignoring information; for those boards the
+information is not there. Answering correctly requires simulating the player at
+4.0 u/f across 12-unit cells, and it does not do that.
+
+The one case that does carry a signal is an approaching bullet, whose trail runs
+through the player's cell and replaces it with `+` or `!`. There the model scores
+88% -- exactly what `always left` scores, so still no evidence of reading, but it
+is no longer actively harmful.
+
+**Consequence for the loop.** `oracle.py` computes the safe set exactly, in
+arithmetic, with no API call. On every measure here it beats the model, which
+costs ~130 ms per decision and reads the board less reliably than a constant. If
+the model is to earn its place it needs either evidence that states the player's
+movement outcomes rather than only the bullets' futures, or a job the oracle
+cannot do -- bomb timing, risk appetite, spell-card strategy. Dodging, as
+currently posed, is not that job.

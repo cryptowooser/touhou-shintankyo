@@ -21,6 +21,10 @@ codeindex.pkl
 
 # Tool output written next to the scripts.
 th06c-tools/*.txt
+# boardtest.py row dumps: regenerable from the tool, but the model is
+# deterministic so a re-run costs real calls. Commit deliberately with -f if a
+# set is worth keeping.
+th06c-tools/bt*.json
 
 # ---------------------------------------------------------------------------
 # Controller runtime artifacts: the stop flag, per-run decision logs, and the
