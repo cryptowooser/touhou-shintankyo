@@ -86,6 +86,11 @@ def score(path, rng):
             print("     (one yes/no question per direction; the choice is the")
             print("      direction with the lowest P(hit). Not comparable with")
             print("      an eight-way run -- see WORKLOG.md.)")
+        if "dodger" in modes:
+            print("     (dodger mode: the choice is the oracle's own argmax, so")
+            print("      'chose a surviving move' is self-referential and proves")
+            print("      nothing. Read deaths, and the clearance map on the frame")
+            print("      a death happens.)")
 
     ver = safe_rows[0].get("log_version")
     if ver is None or ver < 2:

@@ -1597,3 +1597,73 @@ move the per-frame dodging into `oracle.py`, which is arithmetic and can run at
 because th06c pauses on focus loss and stays paused until resumed by hand, so
 alt-tabbing to start a run is the normal case rather than an error.
 `--wait-live SECONDS` sets the budget (default 60).
+
+## The critic was calling new bullets harmless
+
+Three defects, all pushing the same way: the oracle was more willing to call a
+move safe than the evidence supported.
+
+**An unknown velocity was reported as `(0, 0)`.** `state.snapshot` differences a
+bullet's position across frames, and a bullet seen for the first time has no
+history, so it was handed to the oracle as `(0, 0)`. The oracle extrapolates
+that as a bullet that never moves, and a stationary bullet at its spawn point is
+usually outside the 15-frame reach, so a freshly spawned threat was scored
+harmless. The fallback is now `None`, and `oracle.clearance` turns `None` into
+the worst bounded case: the bullet is assumed to be aimed straight at the player
+at 8 u/f, twice the player's speed and above every bullet speed observed so far.
+That is a guess, but it errs toward avoiding a harmless move rather than taking a
+lethal one, which is the direction that costs a life.
+
+**The differenced velocity was 1.25-1.5x too high.** `Reader._rotate` stored the
+previous frame's positions but stamped them with the current time, so `frames`
+undercounted by one frame. Replaying the old algorithm on a synthetic 3 u/f
+bullet fed at 60 Hz gives 3.75-4.50 u/f (mean 4.18); `VelocityTracker` reads
+3.00 at every frame after the first.
+
+**A reused slot was differenced across two different bullets.** Bullet slots are
+pooled. When one was reused, the baseline and the current position belonged to
+different bullets and the difference was a velocity that belonged to neither.
+`VelocityTracker` keeps a generation counter, bumped whenever a slot goes from
+empty to occupied, and reports no velocity when the generations disagree; the
+new bullet gets a correct one from its own history on the next refresh.
+
+None of this needs the game. `dodger.py --selftest` exercises the tracker, the
+oracle's unknown-velocity rule, the scenario suite and a closed-loop escape from
+a falling column; all pass. What still needs the game is the velocity offset
+itself (`state.py --find-velocity`), which would remove the differencing and the
+unknown-velocity window together. It has still never been run with bullets in
+flight.
+
+## A per-frame dodger
+
+`dodger.py` re-picks a direction from `oracle.clearance` every frame: no model,
+no API calls, no round trip. `clearance` is the arithmetic the boolean
+`survivable` always did, kept instead of discarded at the comparison, so the
+dodger can order moves that all kill and take the least bad. Hysteresis of 2
+units keeps it from alternating between two near-equal moves and cancelling the
+player's motion.
+
+Cost on synthetic boards concentrated where a stage's threats are: 0.23 ms at 20
+live bullets, 1.20 ms at 150, 2.40 ms at 300. The 60 Hz budget is 16.7 ms, so the
+arithmetic is not the constraint.
+
+`controller.py --dodger` runs it on the sampler's clock, and `--dodger-hz 4`
+throttles the identical policy to the model's decision rate -- the control for
+whether the failure is the rate or the policy. Rows log the full `clearance`
+map, which is the only place the oracle's model error can show: the dodger picks
+the oracle's own argmax, so "the dodger chose a surviving move" is
+self-referential and proves nothing.
+
+The same change releases the held direction while the player is not alive. Input
+does nothing during a respawn, but a direction held through one starts the player
+moving the instant they reappear, which is how a run died immediately after each
+of the previous night's deaths.
+
+**What is still not tested.** Everything here is arithmetic on synthetic boards
+and hand-built scenarios; none of it has met a real frame. The order the game is
+up in: run `state.py --find-velocity` with bullets in flight, then
+`controller.py --dodger --dodger-hz 60 --log dodge60.jsonl` and the same at
+`--dodger-hz 4`, against the model runs already on disk. If the 60 Hz dodger
+survives where the model did not, the rate was the problem. If it also dies, the
+problem is upstream of the policy -- the representation or the oracle -- and no
+prompt or encoding will fix it.

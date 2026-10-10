@@ -27,6 +27,15 @@ without having to reproduce it.
   controller.py --no-stay-put             drop `stay put`, so it must move
   controller.py --binary                  one yes/no question per direction
   controller.py --wait-live 120           wait up to 2 min for the game to run
+  controller.py --dodger                  per-frame arithmetic, no model calls
+  controller.py --dodger --dodger-hz 4    the same policy at the model's rate
+
+The `--dodger` mode replaces the model with `dodger.py`, which re-picks a
+direction from the oracle every frame. It costs no API calls and exists to
+separate the decision rate from the policy: if the arithmetic dodger survives
+where the model does not, the rate was the problem; if it also dies, the
+representation or the oracle is. `--dodger-hz` throttles it, so the identical
+policy can be run at the model's ~4 decisions/s as a control.
 
 The `--binary` mode asks a separate question for each direction -- "if the
 player moves here, will a bullet hit them" -- and takes the direction least
@@ -53,6 +62,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import de_client as DE    # noqa: E402
+import dodger as D        # noqa: E402
 import oracle             # noqa: E402
 import state as S         # noqa: E402
 import th06               # noqa: E402
@@ -80,7 +90,12 @@ MAX_SNAPSHOT_AGE = 0.5
 #   2: the oracle and the view see live bullets only.
 #   3: the binary mode, which asks one yes/no question per direction instead of
 #      one eight-way question. Rows carry `mode` and `p_yes`.
-LOG_VERSION = 3
+#   4: unknown bullet velocities are no longer reported as (0, 0). The oracle
+#      now assumes a new bullet is aimed at the player, so a freshly spawned
+#      threat is no longer scored harmless, and the differenced velocity no
+#      longer carries the one-frame timestamp skew or the reused-slot match.
+#      Also adds `mode: dodger`, which carries `clearance` instead of `p_yes`.
+LOG_VERSION = 4
 
 # The binary mode. One yes/no question per direction, and the move is whichever
 # direction the model says is least likely to be hit. This exists because the
@@ -129,7 +144,9 @@ class Controller:
     def __init__(self, fmt="crop", speed=4.0, dry_run=False, log_path=None,
                  stop_file="controller.stop", stop_after=None, vel_off=None,
                  poll_hz=60.0, use_oracle=True, model=DE.DEFAULT_MODEL,
-                 options=None, binary=False, wait_live=60.0):
+                 options=None, binary=False, wait_live=60.0, use_dodger=False,
+                 dodger_hz=60.0, dodger_horizon=view.HORIZON,
+                 dodger_stickiness=2.0):
         self.fmt = fmt
         self.binary = binary
         self.wait_live = wait_live
@@ -141,6 +158,15 @@ class Controller:
         self.use_oracle = use_oracle
         self.model = model
         self.options = list(options) if options else list(DE.MOVE_OPTIONS)
+
+        self.dodger = (D.Dodger(horizon=dodger_horizon,
+                                stickiness=dodger_stickiness)
+                       if use_dodger else None)
+        # The dodger is evaluated on the sampler's clock, so throttle it to the
+        # requested rate. --dodger-hz 4 runs the identical policy at the model's
+        # decision rate, which is the control for "is it the rate or the
+        # policy".
+        self.dodger_every = max(1, int(round(poll_hz / max(1.0, dodger_hz))))
 
         self.reader = S.Reader(vel_off=vel_off)
         self.hwnd = None
@@ -214,8 +240,22 @@ class Controller:
                       % (snap["player"]["state"], self.deaths))
             self._was_alive = alive
 
-            if not self.focused():
-                self._set_keys(())            # th06c pauses on focus loss
+            if (self.dodger is not None and alive and self.focused()
+                    and tick % self.dodger_every == 0):
+                t0 = time.perf_counter()
+                choice = self.dodger.choose(snap)
+                self.desired = DIR_KEYS[choice]
+                self._log_dodger(snap, choice,
+                                 (time.perf_counter() - t0) * 1000.0)
+                if self.stop_after and self.decisions >= self.stop_after:
+                    self.running = False
+
+            if not self.focused() or not alive:
+                # th06c pauses on focus loss, and input does nothing while the
+                # player is respawning -- but a direction held through a respawn
+                # starts the player moving the instant they reappear, which is
+                # how a run dies immediately after every death. Release instead.
+                self._set_keys(())
             else:
                 self._set_keys(self.desired)
 
@@ -227,6 +267,44 @@ class Controller:
                 next_t = time.perf_counter()
 
     # --------------------------------------------------------------- deciding
+    def _log_dodger(self, snap, choice, compute_ms):
+        """One row per frame the dodger ran, in the shape score_run expects.
+
+        `oracle_ok` here is not evidence about the dodger -- it picks by that
+        same oracle, so on any frame with a safe move it is safe by
+        construction. What the row is for is the `clearance` map at the frame a
+        death happens, which is the only place the oracle's model error shows.
+        """
+        self.decisions += 1
+        if not self.log:
+            return
+        cl = self.dodger.clearance
+        safe = sorted(m for m, c in cl.items() if c > 0)
+        row = {
+            "t": time.time(),
+            "n": self.decisions,
+            "log_version": LOG_VERSION,
+            "mode": "dodger",
+            "snapshot_age_ms": 0.0,
+            "round_trip_ms": round(compute_ms, 2),
+            "choice": choice,
+            "letter": "",
+            "confidence": 1.0,
+            "probabilities": {},
+            "player": [round(snap["player"]["pos"][0], 1),
+                       round(snap["player"]["pos"][1], 1)],
+            "player_state": snap["player"]["state"],
+            "bullets": len(snap["bullets"]),
+            "live_bullets": sum(1 for b in snap["bullets"] if b.get("live")),
+            "enemies_fatal": sum(1 for e in snap["enemies"] if e["fatal"]),
+            "options": list(D.PREFERENCE),
+            "oracle_safe": safe,
+            "oracle_ok": choice in safe,
+            "clearance": {m: round(c, 2) for m, c in cl.items()},
+        }
+        self.log.write(json.dumps(row) + "\n")
+        self.log.flush()
+
     def decide_binary(self, text):
         """One yes/no question per direction, all in flight at once.
 
@@ -383,9 +461,12 @@ class Controller:
             print("warning: no th06c window found; keys will not reach the game")
         print("pid=%d base=%#x  window=%s  format=%s  mode=%s  dry_run=%s"
               % (pid, self.reader.base, self.hwnd, self.fmt,
-                 "binary" if self.binary else "eight-way", self.dry_run))
+                 "dodger" if self.dodger is not None
+                 else "binary" if self.binary else "eight-way", self.dry_run))
         if self.dry_run:
-            print("dry run: reading state and asking the DE, pressing no keys")
+            print("dry run: reading state and %s, pressing no keys"
+                  % ("running the dodger" if self.dodger is not None
+                     else "asking the DE"))
         print("stop with Ctrl+C or by creating %s\n" % self.stop_file)
 
         # Fail fast when the game is not actually running -- but wait for it
@@ -406,15 +487,21 @@ class Controller:
             raise SystemExit(1)
         print("board is moving; starting.")
 
-        worker = threading.Thread(target=self.decide_loop, daemon=True)
-        worker.start()
+        worker = None
+        if self.dodger is not None:
+            print("dodger mode: arithmetic policy every %d frame(s), no model "
+                  "calls" % self.dodger_every)
+        else:
+            worker = threading.Thread(target=self.decide_loop, daemon=True)
+            worker.start()
         try:
             self.sample_loop()
         except KeyboardInterrupt:
             print("\ninterrupted")
         finally:
             self.running = False
-            worker.join(timeout=2.0)
+            if worker is not None:
+                worker.join(timeout=2.0)
             self.release_all()
             if self.log:
                 self.log.close()
@@ -447,6 +534,10 @@ def main():
         options=DE.move_options(stay_put="--no-stay-put" not in argv),
         binary="--binary" in argv,
         wait_live=opt("--wait-live", 60.0, float),
+        use_dodger="--dodger" in argv,
+        dodger_hz=opt("--dodger-hz", 60.0, float),
+        dodger_horizon=opt("--dodger-horizon", view.HORIZON, int),
+        dodger_stickiness=opt("--dodger-stickiness", 2.0, float),
     )
     ctl.run()
 

@@ -84,7 +84,7 @@ def render(state, grid=(GRID_W, GRID_H), horizon=HORIZON, soon=SOON):
 
     for b in live_bullets(state):
         bx, by = b["pos"]
-        vx, vy = b.get("vel", (0.0, 0.0))
+        vx, vy = b.get("vel") or (0.0, 0.0)
         for k in range(horizon + 1):
             cx, cy = cell_of(bx + vx * k, by + vy * k, cw, ch)
             if not (0 <= cx < gw and 0 <= cy < gh):
@@ -283,7 +283,7 @@ def render_rays(state, horizon=HORIZON):
             continue
         ang = math.degrees(math.atan2(dy, dx))
         name = DIRS[int((ang + 22.5) // 45) % 8][0]
-        vx, vy = b.get("vel", (0.0, 0.0))
+        vx, vy = b.get("vel") or (0.0, 0.0)
         closing = -(vx * dx + vy * dy) / dist
         buckets[name].append((dist, closing))
 
@@ -326,7 +326,7 @@ def render_crop(state, half=7, horizon=HORIZON):
 
     for b in live_bullets(state):
         bx, by = b["pos"]
-        vx, vy = b.get("vel", (0.0, 0.0))
+        vx, vy = b.get("vel") or (0.0, 0.0)
         for k in range(horizon + 1):
             cx, cy = cell_of(bx + vx * k, by + vy * k, cw, ch)
             put(cx, cy, "o" if k == 0 else ("x" if k <= SOON else ","))
@@ -494,7 +494,7 @@ def render_model_png(state, path, scale=2, horizon=HORIZON):
 
     for b in live_bullets(state):
         bx, by = b["pos"]
-        vx, vy = b.get("vel", (0.0, 0.0))
+        vx, vy = b.get("vel") or (0.0, 0.0)
         for k in range(1, horizon + 1):
             dot(bx + vx * k, by + vy * k, TRAIL if k > SOON else TRAIL_NEAR, 1)
         dot(bx, by, BULLET, 5)

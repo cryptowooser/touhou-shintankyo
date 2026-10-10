@@ -78,6 +78,68 @@ BULLET_KILL_RADIUS = 4.0
 PLAYER_KILL_RADIUS = 2.0
 
 
+class VelocityTracker:
+    """Derive a bullet's velocity by differencing its slot across frames.
+
+    The baseline is refreshed once it is at least `min_age` old, so a velocity
+    spans several frames and one frame of read jitter does not turn into a
+    velocity error. Two details are easy to get wrong and both were:
+
+      * The baseline's timestamp must be the time its positions were read. The
+        old code stored the previous frame's positions but stamped them with
+        the current time, so `frames` undercounted by one frame and the
+        reported speed was 1.3-2x too high depending on where in the refresh
+        window it was asked.
+      * A slot is a slot, not a bullet. Slots are pooled, so when one is reused
+        the baseline and the current position belong to two different bullets
+        and differencing them invents a velocity that belongs to neither. A
+        generation counter is bumped whenever a slot goes from empty to
+        occupied; a mismatch means no velocity, not a wrong one.
+
+    A bullet with no usable history gets no velocity at all (`None`), and the
+    caller decides what that means. It must not be silently (0, 0): that reads
+    as a stationary bullet, which the oracle scores as harmless.
+    """
+
+    def __init__(self, min_age=0.05, fps=FPS):
+        self.min_age = min_age
+        self.fps = fps
+        self._base = None
+        self._base_t = 0.0
+        self._gen = {}
+        self._seen = set()
+
+    def update(self, now, bullets):
+        """bullets: iterable of (idx, x, y). Returns {idx: (vx, vy)}.
+
+        Only slots with a matching generation in the baseline are returned, so
+        the caller can treat a missing key as "velocity unknown".
+        """
+        cur = {}
+        seen = set()
+        for idx, x, y in bullets:
+            seen.add(idx)
+            if idx not in self._seen:
+                self._gen[idx] = self._gen.get(idx, 0) + 1
+            cur[idx] = (x, y, self._gen[idx])
+
+        out = {}
+        if self._base is not None:
+            frames = (now - self._base_t) * self.fps
+            if frames >= 1.0:
+                for idx, (x, y, gen) in cur.items():
+                    old = self._base.get(idx)
+                    if old is None or old[2] != gen:
+                        continue
+                    out[idx] = ((x - old[0]) / frames, (y - old[1]) / frames)
+
+        if self._base is None or now - self._base_t >= self.min_age:
+            self._base = cur
+            self._base_t = now
+        self._seen = seen
+        return out
+
+
 class Reader:
     """Bulk state reads from a running th06c."""
 
@@ -87,10 +149,7 @@ class Reader:
         if not self.base:
             raise SystemExit("th06c module not found in pid %d" % self.pid)
         self.vel_off = vel_off
-        self.min_age = min_age
-        self._old = {}
-        self._old_t = 0.0
-        self._cur = {}
+        self.vel = VelocityTracker(min_age=min_age)
         self.stats = {"reads": 0, "last_ms": 0.0}
 
     # ------------------------------------------------------------ bulk reads
@@ -173,28 +232,6 @@ class Reader:
             out[name] = int.from_bytes(raw, "little") if raw else None
         return out
 
-    # ------------------------------------------------------------ velocities
-    def _velocity(self, idx, x, y, now):
-        old = self._old.get(idx)
-        if old is None:
-            return None
-        dt = now - self._old_t
-        if dt <= 0:
-            return None
-        frames = dt * FPS
-        if frames < 1.0:
-            return None
-        return ((x - old[0]) / frames, (y - old[1]) / frames)
-
-    def _rotate(self, now, cur):
-        # `_old` is refreshed only once it is at least min_age stale, so the
-        # baseline spans several frames and one frame of jitter does not turn
-        # into a velocity error.
-        if now - self._old_t >= self.min_age:
-            self._old = self._cur
-            self._old_t = now
-        self._cur = cur
-
     # --------------------------------------------------------------- snapshot
     def snapshot(self, speed=4.0, hud=None):
         """One frame in the shape view.py renders and oracle.py scores."""
@@ -204,20 +241,20 @@ class Reader:
         bullets = self.read_bullets(now)
         enemies = self.read_enemies()
 
-        cur = {}
+        vels = self.vel.update(
+            now, [(b["idx"], b["pos"][0], b["pos"][1]) for b in bullets])
         out_bullets = []
         for b in bullets:
             x, y, _z = b["pos"]
-            cur[b["idx"]] = (x, y)
             if "vel" in b:
-                vx, vy = b["vel"][0], b["vel"][1]
+                vel = (b["vel"][0], b["vel"][1])
             else:
-                v = self._velocity(b["idx"], x, y, now)
-                vx, vy = v if v else (0.0, 0.0)
-            out_bullets.append({"idx": b["idx"], "pos": (x, y), "vel": (vx, vy),
+                # None, not (0, 0): an unknown velocity is an unknown threat,
+                # and the oracle is responsible for treating it as one.
+                vel = vels.get(b["idx"])
+            out_bullets.append({"idx": b["idx"], "pos": (x, y), "vel": vel,
                                 "state": b["state"], "size": b["size"],
                                 "live": b["live"]})
-        self._rotate(now, cur)
 
         state = {
             "player": {"pos": (player["pos"][0], player["pos"][1]) if player
@@ -372,7 +409,8 @@ def main():
         if watch == 1 or f % max(1, watch // 10) == 0 or f == watch - 1:
             live = [b for b in state["bullets"] if b["live"]]
             moving = [b for b in state["bullets"]
-                      if abs(b["vel"][0]) + abs(b["vel"][1]) > 0.3]
+                      if b["vel"] is not None
+                      and abs(b["vel"][0]) + abs(b["vel"][1]) > 0.3]
             print("frame %4d  %5.2f ms  player=(%.1f,%.1f) state=%d  "
                   "bullets=%d live=%d moving=%d  enemies=%d fatal=%d"
                   % (f, reader.stats["last_ms"],
