@@ -57,6 +57,26 @@ MOVE_L, MOVE_T = 8.0, 16.0
 MOVE_R, MOVE_B = 376.0, 432.0
 
 HORIZON = 15        # frames of lookahead; should match the commitment window
+
+# The dodger's look-ahead. It is longer than HORIZON on purpose: HORIZON is the
+# model's *commitment* window -- how long a direction stays in force between two
+# decisions -- while the dodger re-decides every frame, so nothing commits for
+# 15 frames and it can afford to see further.
+#
+# 30 is where `sim.py --patterns` puts the useful end of the range. Sweeping the
+# horizon over every pattern at 900 frames (survival frame, "900" = survived):
+#
+#   laser_cross   8:63  15:58  20:51  25:900  30:900  40:900  60:900  90:900
+#   corner_trap   8:900 15:900 20:900 25:900  30:900  40:198  60:198  90:198
+#   wall_gap      8:213 15:212 20:207 25:215  30:215  40:201  60:900  90:149
+#   column, ring_16, spiral: 900 at every horizon tested
+#
+# So 30 is the largest horizon that keeps corner_trap alive -- at 40 it dies --
+# and it clears the knee for laser_cross, which needs 25. It does NOT fix
+# wall_gap. That one survives only at 60 and dies again at 90, which is the
+# straight-line extrapolation inventing threats that never arrive, not a real
+# improvement; treat wall_gap as unsolved rather than tuned away.
+DODGER_HORIZON = 30
 SOON = 5            # frames under which a bullet counts as imminent
 
 ORDER = "!+o#Xx@,e"        # highest priority first; '.' is the default

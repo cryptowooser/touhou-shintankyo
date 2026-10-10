@@ -100,7 +100,7 @@ MAX_SNAPSHOT_AGE = 0.5
 #      oracle extends a laser's far end over its look-ahead. Rows carry
 #      `lasers` and `laser_state`. Version 4 and earlier scored every frame as
 #      if no laser existed, which is the run that stood still under one.
-LOG_VERSION = 5
+LOG_VERSION = 6
 
 # The binary mode. One yes/no question per direction, and the move is whichever
 # direction the model says is least likely to be hit. This exists because the
@@ -150,7 +150,7 @@ class Controller:
                  stop_file="controller.stop", stop_after=None, vel_off=None,
                  poll_hz=60.0, use_oracle=True, model=DE.DEFAULT_MODEL,
                  options=None, binary=False, wait_live=60.0, use_dodger=False,
-                 dodger_hz=60.0, dodger_horizon=view.HORIZON,
+                 dodger_hz=60.0, dodger_horizon=view.DODGER_HORIZON,
                  dodger_stickiness=2.0, shoot=False):
         self.fmt = fmt
         self.binary = binary
@@ -186,6 +186,7 @@ class Controller:
         self.errors = 0
         self.deaths = 0
         self._was_alive = True
+        self._last_choice = None
         self._last_fp = None
         self._frozen = 0
         self._lock = threading.Lock()
@@ -244,6 +245,7 @@ class Controller:
                 self.deaths += 1
                 print("  player state %d (not alive) -- death %d"
                       % (snap["player"]["state"], self.deaths))
+                self._log_death(snap)
             self._was_alive = alive
 
             if (self.dodger is not None and alive and self.focused()
@@ -251,6 +253,7 @@ class Controller:
                 t0 = time.perf_counter()
                 choice = self.dodger.choose(snap)
                 self.desired = DIR_KEYS[choice]
+                self._last_choice = choice
                 self._log_dodger(snap, choice,
                                  (time.perf_counter() - t0) * 1000.0)
                 if self.stop_after and self.decisions >= self.stop_after:
@@ -296,6 +299,7 @@ class Controller:
             "mode": "dodger",
             "snapshot_age_ms": 0.0,
             "round_trip_ms": round(compute_ms, 2),
+            "horizon": self.dodger.horizon_used,
             "choice": choice,
             "letter": "",
             "confidence": 1.0,
@@ -311,6 +315,50 @@ class Controller:
             "options": list(D.PREFERENCE),
             "oracle_safe": safe,
             "oracle_ok": choice in safe,
+            "clearance": {m: round(c, 2) for m, c in cl.items()},
+        }
+        self.log.write(json.dumps(row) + "\n")
+        self.log.flush()
+
+    def _log_death(self, snap):
+        """One row at each death, so a run's deaths can be counted at all.
+
+        `_log_dodger` only runs on frames where the dodger acted -- alive and
+        focused -- so a death left no row whatsoever and `score_run.deaths`
+        counted zero on a run that had 25. The row carries the board at the
+        death frame and the clearance map from the last decision, which is
+        where the oracle's model error is visible.
+
+        The zeroed timing fields are there because the scorer reads every row's
+        `round_trip_ms` and `snapshot_age_ms`; no decision was made here.
+        """
+        if not self.log:
+            return
+        cl = self.dodger.clearance if self.dodger else {}
+        row = {
+            "t": time.time(),
+            "n": self.decisions,
+            "log_version": LOG_VERSION,
+            "mode": "death",
+            "death": self.deaths,
+            "snapshot_age_ms": 0.0,
+            "round_trip_ms": 0.0,
+            "horizon": self.dodger.horizon_used if self.dodger else None,
+            "choice": self._last_choice,
+            "letter": "",
+            "confidence": 0.0,
+            "probabilities": {},
+            "player": [round(snap["player"]["pos"][0], 1),
+                       round(snap["player"]["pos"][1], 1)],
+            "player_state": snap["player"]["state"],
+            "bullets": len(snap["bullets"]),
+            "live_bullets": sum(1 for b in snap["bullets"] if b.get("live")),
+            "enemies_fatal": sum(1 for e in snap["enemies"] if e["fatal"]),
+            "lasers": len(snap.get("lasers", [])),
+            "laser_state": [L.get("state") for L in snap.get("lasers", [])],
+            "options": list(D.PREFERENCE),
+            "oracle_safe": [],
+            "oracle_ok": False,
             "clearance": {m: round(c, 2) for m, c in cl.items()},
         }
         self.log.write(json.dumps(row) + "\n")
@@ -548,7 +596,7 @@ def main():
         wait_live=opt("--wait-live", 60.0, float),
         use_dodger="--dodger" in argv,
         dodger_hz=opt("--dodger-hz", 60.0, float),
-        dodger_horizon=opt("--dodger-horizon", view.HORIZON, int),
+        dodger_horizon=opt("--dodger-horizon", view.DODGER_HORIZON, int),
         dodger_stickiness=opt("--dodger-stickiness", 2.0, float),
         shoot="--shoot" in argv,
     )

@@ -336,10 +336,17 @@ def run(state, policy, frames=600, spawners=(), speed=PLAYER_SPEED,
             "death_t": sim.death_t, "sim": sim}
 
 
-def dodger_policy(horizon=15):
-    """The real dodger, so a pattern measures the shipped policy."""
+def dodger_policy(horizon=None):
+    """The real dodger, so a pattern measures the shipped policy.
+
+    `None` means the shipped default (`view.DODGER_HORIZON`), and it must stay
+    that way: this function used to hardcode 15 while the dodger's default
+    moved to 30, so `sim.py --patterns` silently measured a policy that was not
+    the one that runs against the game.
+    """
     import dodger
-    d = dodger.Dodger(horizon=horizon)
+    import view
+    d = dodger.Dodger(horizon=horizon if horizon else view.DODGER_HORIZON)
     return lambda st: d.choose(st)
 
 

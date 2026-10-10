@@ -32,6 +32,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import patterns  # noqa: E402
 import sim as S  # noqa: E402
+import view  # noqa: E402
 
 ACTION_NAMES = [name for name, _ in S.MOVES]
 N_ACTIONS = len(ACTION_NAMES)
@@ -123,7 +124,7 @@ def stay_policy():
     return lambda st: "stay put"
 
 
-def dodger_policy(horizon=15):
+def dodger_policy(horizon=view.DODGER_HORIZON):
     import dodger
     d = dodger.Dodger(horizon=horizon)
     return lambda st: d.choose(st)

@@ -49,14 +49,45 @@ class Dodger:
     the oracle calls unsafe.
     """
 
-    def __init__(self, horizon=view.HORIZON, stickiness=2.0):
+    def __init__(self, horizon=view.DODGER_HORIZON, stickiness=2.0,
+                 budget_ms=10.0):
         self.horizon = horizon
         self.stickiness = stickiness
+        self.budget_ms = budget_ms
         self.last = None
         self.clearance = {}
+        self.horizon_used = horizon
+        self.last_ms = 0.0
+
+    def _pick_horizon(self):
+        """Shrink the look-ahead when the last decision did not fit the frame.
+
+        A decision costs horizon * moves * (bullets near the player's path),
+        and the sampling loop only has 16.7 ms. Measured here at horizon 30:
+        300 bullets clustered around the player costs 9.1 ms, 500 costs 15.0,
+        800 costs 23.4 -- so past roughly 400 a fixed 30 cannot hold 60 Hz and
+        every decision is then made on a stale board, which is worse than a
+        short look-ahead. Lunatic stages reach that density. Counting bullets
+        on screen would overstate the cost, because the oracle already drops
+        any that cannot reach the player's path; timing the previous decision
+        measures what it actually paid.
+
+        It grows back the same way, so a dense passage costs a shorter horizon
+        and the board thinning out restores the full one.
+        """
+        h = self.horizon_used
+        if self.last_ms > self.budget_ms and h > 8:
+            return max(8, h // 2)
+        if self.last_ms < self.budget_ms * 0.5 and h < self.horizon:
+            return min(self.horizon, h * 2)
+        return h
 
     def choose(self, state):
-        cl = oracle.clearance(state, self.horizon)
+        h = self._pick_horizon()
+        self.horizon_used = h
+        t0 = time.perf_counter()
+        cl = oracle.clearance(state, h)
+        self.last_ms = (time.perf_counter() - t0) * 1000.0
         self.clearance = cl
         best = max(PREFERENCE, key=lambda m: cl[m])
         if (self.last in cl
@@ -239,7 +270,11 @@ def bench(n_bullets=150, iters=200):
 def main():
     argv = sys.argv[1:]
     if "--bench" in argv:
-        for count in (20, 60, 150, 300):
+        i = argv.index("--bench")
+        counts = (20, 60, 150, 300)
+        if i + 1 < len(argv) and argv[i + 1].isdigit():
+            counts = (int(argv[i + 1]),)
+        for count in counts:
             bench(count)
         return
     if "--selftest" in argv:

@@ -40,11 +40,15 @@ def offered(row):
 
 
 def deaths(rows):
-    """A death is a transition out of playerState 0, counted once per death.
+    """Count deaths in a run.
 
-    State 0 is ALIVE and 1/2/3 are all not-alive, so a single death shows up as
-    a run of non-zero frames. Only the leading edge counts.
+    From log version 6 the controller writes a row with mode "death" at each
+    death, because the per-frame dodger rows only cover frames where the player
+    was alive. Older logs have no such rows and carry a run of non-zero
+    player_state frames instead, so the leading edge of each run is one death.
     """
+    if any(r.get("mode") == "death" for r in rows):
+        return sum(1 for r in rows if r.get("mode") == "death")
     n, prev = 0, 0
     for r in rows:
         s = r.get("player_state")
@@ -121,6 +125,16 @@ def score(path, rng):
     print("  deaths: %s" % ("%d" % d if d is not None
                             else "not logged (pre-dates player_state)"))
 
+    # From version 6 the dodger shortens its look-ahead when the last decision
+    # did not fit the 16.7 ms frame, so the horizon in force is part of reading
+    # the result: a dense passage is scored at a shorter one than a sparse one.
+    hs = [r.get("horizon") for r in safe_rows if r.get("horizon")]
+    if hs:
+        c = collections.Counter(hs)
+        print("  dodger horizon in force: %s"
+              % ", ".join("%d on %d frames" % (h, n)
+                          for h, n in sorted(c.items(), reverse=True)))
+
     # Lasers are only in the log from version 5. Before that the reader returned
     # none, so a death beside one cannot be told apart from a death beside
     # nothing -- which is exactly the run that stood still under one.
@@ -150,7 +164,7 @@ def score(path, rng):
 
     print()
     print("  choice distribution:")
-    for k, v in collections.Counter(r["choice"] for r in rows).most_common():
+    for k, v in collections.Counter(r.get("choice") for r in rows).most_common():
         print("     %-11s %4d  (%.0f%%)" % (k, v, 100.0 * v / len(rows)))
 
     # In binary mode the whole decision is the ranking, so the question is

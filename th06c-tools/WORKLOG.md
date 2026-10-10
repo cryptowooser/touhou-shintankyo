@@ -1799,3 +1799,66 @@ was tried and makes things *worse* -- `corner_trap` goes from 900 to 411 at
 weight 1 -- because near an edge is genuinely safer when the threats are
 elsewhere, and a flat penalty pushes the player back into them. Whatever the
 right term is, it is not "avoid walls".
+
+## The horizon is 30, and it does not fix what we thought it fixed
+
+The dodger now looks 30 frames ahead instead of 15. `HORIZON` stays at 15
+because it means something different: it is the model's *commitment* window, how
+long a direction stays in force between two decisions, and the oracle scores a
+move against it. The dodger re-decides every frame, so nothing commits for 15
+frames and a longer look-ahead costs it nothing but arithmetic.
+
+The horizon was chosen by sweeping it over every pattern at 900 frames:
+
+| pattern | 8 | 15 | 20 | 25 | 30 | 40 | 60 | 90 |
+|---|---|---|---|---|---|---|---|---|
+| `laser_cross` | 63 | 58 | 51 | **900** | **900** | 900 | 900 | 900 |
+| `corner_trap` | 900 | 900 | 900 | 900 | **900** | 198 | 198 | 198 |
+| `wall_gap` | 213 | 212 | 207 | 215 | 215 | 201 | 900 | 149 |
+
+(`column`, `ring_16` and `spiral` survive at every horizon tested.)
+
+30 is the largest horizon that keeps `corner_trap` alive -- at 40 it dies -- and
+it clears the knee for `laser_cross`, which needs 25. **It does not fix
+`wall_gap`.** An earlier note claimed `wall_gap` went from 212 to 900 at 30;
+that was never measured. It survives only at 60 and dies again at 90, which is
+straight-line extrapolation inventing threats that never arrive, not a fix.
+`wall_gap` is unsolved, and it should not be quoted as a win.
+
+### The horizon now shrinks when the board is too dense for it
+
+A decision costs horizon x moves x (bullets near the player's path), and the
+sampling loop has 16.7 ms. Measured on this machine at horizon 30:
+
+| bullets, clustered near the player | ms per decision |
+|---|---|
+| 300 | 9.1 |
+| 500 | 15.0 |
+| 800 | 23.4 |
+| 1200 | 34.8 |
+
+Past roughly 400 the loop cannot hold 60 Hz, and then every decision is made on
+a stale board -- worse than a short look-ahead. Lunatic reaches that density. So
+`Dodger._pick_horizon` halves the horizon when the previous decision exceeded
+10 ms, and doubles it back when it came in under 5 ms, with a floor of 8. Timing
+the previous decision is better than counting bullets on screen, because the
+oracle already drops any bullet that cannot reach the player's path; the count
+is not what it pays for. The horizon in force is written to every log row, and
+`score_run` reports the distribution.
+
+### The deaths were never in the log
+
+`_log_dodger` runs inside the `alive` branch, so a death left no row at all and
+`score_run.deaths` counted zero on a run that had 25 of them -- the deaths were
+only visible as ~5 s gaps in the timestamps. Log version 6 writes a row with
+`mode: "death"` at each death, carrying the board at the death frame and the
+clearance map from the last decision. That also feeds the existing
+"laser count on the frame of each death" table, which was previously empty
+whenever the log held no non-alive frames.
+
+### Two defaults had drifted apart
+
+`sim.py` had its own `dodger_policy(horizon=15)` while the dodger's default
+moved to 30, so `sim.py --patterns` silently measured a policy that is not the
+one that runs against the game. It now defaults to `view.DODGER_HORIZON`.
+`dodger.py --bench` also ignored its argument and always benched 20/60/150/300.

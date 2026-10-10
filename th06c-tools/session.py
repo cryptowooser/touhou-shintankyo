@@ -1,17 +1,24 @@
 #!/usr/bin/env python3
-"""One unattended measurement session.
+"""One unattended dodger session against the live game.
 
-Waits for th06c to appear, waits until the board is a live stage with bullets in
-flight, runs the velocity-offset finder once (it is read-only, and it has never
-been run with bullets on screen), then runs the two logged dodger runs back to
-back: the 60 Hz policy and the identical policy throttled to the model's rate.
+Waits for th06c, waits for a stage with bullets in flight, then runs the dodger
+at 60 Hz for a fixed wall-clock window and stops it cleanly.
 
-Nothing here presses a key until a controller run starts, and the controller
-focuses the game window itself. The session log is written next to the run logs.
+The velocity offset is already known -- 0x008, confirmed against the game -- so
+the finder does not run unless --find-velocity asks for it. It is read-only, but
+it costs a minute of the window and it re-derives something already settled.
 
-  session.py                      60 Hz for 60s, then 4 Hz for 60s
-  session.py --seconds 90         longer window
-  session.py --skip-finder        go straight to the dodger runs
+The window is wall-clock rather than a decision count on purpose. --stop-after
+counts decisions, and the dodger only makes one while the player is alive, so
+on a run with deaths a decision budget takes an unbounded amount of real time
+to expire. The stop file is used instead.
+
+Lives and bombs are not managed here. Run the keepalive separately or the run
+ends after three deaths.
+
+  session.py --seconds 180          three minutes of dodging
+  session.py --seconds 60 --dry-run  read and decide, press nothing
+  session.py --find-velocity        re-run the read-only offset finder first
 
 Stop it with Ctrl-C, or stop the background task.
 """
@@ -27,6 +34,10 @@ import th06         # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PY = sys.executable
+
+# Confirmed against the live game by differencing bullet positions and matching
+# the vector back into the struct. state.py --find-velocity re-derives it.
+VEL_OFF = "0x008"
 
 
 def log(msg):
@@ -50,16 +61,22 @@ def wait_for_game(timeout):
     return None
 
 
-def wait_for_stage(reader, timeout):
+def wait_for_stage(reader, timeout, need=5):
     """Wait until the board is moving and has live bullets.
 
     A menu is a static board with no bullets; a stage is a moving board with
-    bullets. Requiring both avoids running the finder against a menu, where it
-    would spend its whole budget finding nothing.
+    bullets. Requiring both, plus a few live bullets, avoids starting on a menu
+    -- where the dodger would press directions into the UI -- or on the title
+    screen's demo reel.
+
+    `need` is deliberately low. Lunatic throws far more, but a stage's first
+    second can be sparse, and the cost of starting slightly early is one wasted
+    second, while the cost of waiting is a shorter run.
     """
     t0 = time.time()
     last = None
     moving = 0
+    best = 0
     while time.time() - t0 < timeout:
         try:
             snap = reader.snapshot()
@@ -68,40 +85,44 @@ def wait_for_stage(reader, timeout):
             time.sleep(1.0)
             continue
         live = sum(1 for b in snap["bullets"] if b["live"])
+        best = max(best, live)
         sig = (len(snap["bullets"]),
                round(sum(b["pos"][0] + b["pos"][1]
                          for b in snap["bullets"]), 1))
         moving = moving + 1 if sig != last else 0
         last = sig
-        if live and moving >= 3:
-            log("stage is live: %d live bullets, player state %d"
-                % (live, snap["player"]["state"]))
+        if live >= need and moving >= 3:
+            log("stage is live: %d live bullets, %d lasers, player state %d, "
+                "lives %s"
+                % (live, len(snap.get("lasers", [])),
+                   snap["player"]["state"], snap.get("lives")))
             return True
         time.sleep(0.5)
+    log("no live stage after %.0fs (most live bullets seen: %d)"
+        % (timeout, best))
     return False
-
-
-def run(cmd, label):
-    log("--- %s ---" % label)
-    log(" ".join(os.path.basename(c) for c in cmd))
-    t0 = time.time()
-    rc = subprocess.call(cmd, cwd=HERE)
-    log("--- %s finished rc=%d in %.0fs ---" % (label, rc, time.time() - t0))
-    return rc
 
 
 def main():
     ap = argparse.ArgumentParser(
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--seconds", type=float, default=60.0,
-                    help="alive-time window for each dodger run (default 60)")
-    ap.add_argument("--wait-game", type=float, default=900.0,
-                    help="seconds to wait for th06c to start (default 900)")
-    ap.add_argument("--wait-stage", type=float, default=600.0,
-                    help="seconds to wait for a live stage (default 600)")
-    ap.add_argument("--skip-finder", action="store_true",
-                    help="skip state.py --find-velocity")
+    ap.add_argument("--seconds", type=float, default=180.0,
+                    help="wall-clock length of the dodger run (default 180)")
+    ap.add_argument("--wait-game", type=float, default=1800.0,
+                    help="seconds to wait for th06c to start (default 1800)")
+    ap.add_argument("--wait-stage", type=float, default=900.0,
+                    help="seconds to wait for a live stage (default 900)")
+    ap.add_argument("--log", default=None,
+                    help="log path (default lunatic-<HHMMSS>.jsonl)")
+    ap.add_argument("--vel-off", default=VEL_OFF,
+                    help="velocity offset for the reader (default %s)" % VEL_OFF)
+    ap.add_argument("--find-velocity", action="store_true",
+                    help="re-run the read-only offset finder first")
+    ap.add_argument("--no-shoot", action="store_true",
+                    help="do not hold Z (slower stage progress, fewer threats)")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="decide and log, but press no keys")
     args = ap.parse_args()
 
     log("session start; waiting up to %.0fs for the game" % args.wait_game)
@@ -111,29 +132,78 @@ def main():
         return 1
 
     log("game is running (pid %d, base %#x)" % (reader.pid, reader.base))
-    log("waiting up to %.0fs for a live stage (get into one now)"
+    log("waiting up to %.0fs for a live stage -- be in a stage now"
         % args.wait_stage)
     if not wait_for_stage(reader, args.wait_stage):
-        log("no live stage after %.0fs -- giving up" % args.wait_stage)
+        log("giving up")
         return 1
 
-    if not args.skip_finder:
+    if args.find_velocity:
         # Read-only: it differences bullet positions and scans the struct for a
-        # matching vector. It has never been run with bullets in flight.
-        run([PY, "state.py", "--find-velocity"], "velocity-offset finder")
+        # matching vector.
+        log("--- velocity-offset finder ---")
+        subprocess.call([PY, "state.py", "--find-velocity"], cwd=HERE)
 
-    frames = int(round(args.seconds * 60))
-    run([PY, "controller.py", "--dodger",
-         "--log", "dodge60.jsonl",
-         "--stop-after", str(frames),
-         "--wait-live", "120"], "dodger at 60 Hz")
+    logfile = args.log or time.strftime("lunatic-%H%M%S.jsonl")
+    stopfile = os.path.join(HERE, "session.stop")
+    if os.path.exists(stopfile):
+        os.remove(stopfile)
 
-    run([PY, "controller.py", "--dodger", "--dodger-hz", "4",
-         "--log", "dodge4.jsonl",
-         "--stop-after", str(int(round(args.seconds * 4))),
-         "--wait-live", "120"], "dodger at 4 Hz")
+    cmd = [PY, "controller.py", "--dodger",
+           "--vel-off", args.vel_off,
+           "--dodger-horizon", "30",
+           "--log", logfile,
+           "--stop-file", stopfile,
+           "--wait-live", "120"]
+    if not args.no_shoot:
+        cmd.append("--shoot")
+    if args.dry_run:
+        cmd.append("--dry-run")
 
-    log("session done. score with: python score_run.py dodge60.jsonl dodge4.jsonl")
+    log("--- dodger, %.0fs wall clock -> %s ---" % (args.seconds, logfile))
+    log(" ".join(os.path.basename(c) for c in cmd))
+    t0 = time.time()
+    proc = subprocess.Popen(cmd, cwd=HERE)
+
+    # The controller watches for this file every 15 ticks and then releases the
+    # keys in its finally block, so this is a clean stop rather than a kill.
+    try:
+        while proc.poll() is None and time.time() - t0 < args.seconds:
+            time.sleep(1.0)
+        if proc.poll() is None:
+            log("window elapsed; asking the controller to stop")
+            open(stopfile, "w").close()
+            for _ in range(30):
+                if proc.poll() is not None:
+                    break
+                time.sleep(0.5)
+        if proc.poll() is None:
+            log("controller did not stop on the stop file; terminating")
+            proc.terminate()
+            try:
+                proc.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+    except KeyboardInterrupt:
+        log("interrupted; stopping the controller")
+        open(stopfile, "w").close()
+        try:
+            proc.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+    finally:
+        if os.path.exists(stopfile):
+            os.remove(stopfile)
+
+    log("--- dodger finished rc=%s after %.0fs ---"
+        % (proc.returncode, time.time() - t0))
+
+    path = logfile if os.path.isabs(logfile) else os.path.join(HERE, logfile)
+    if os.path.exists(path) and os.path.getsize(path):
+        log("--- score ---")
+        subprocess.call([PY, "score_run.py", path], cwd=HERE)
+    else:
+        log("no rows were written to %s" % path)
     return 0
 
 
