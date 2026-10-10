@@ -1711,3 +1711,63 @@ differencing and the unknown-velocity window both disappear.
 
 `controller.py --shoot` holds Z, which a dodger run needs to kill a boss and
 advance a stage at all; without it the run is pinned to the first boss.
+
+## The game is a bad loop, so here is the game instead
+
+Getting to a specific attack in th06c means playing to it, the attack lasts a few
+seconds, and every experiment costs a run. The thing being debugged is the
+oracle's *model* of the game, and the only way to find a model error by playing
+is to die of it. So the threat layer is now simulated instead.
+
+`sim.py` steps the same state dict `state.Reader.snapshot` returns, at 60 Hz,
+using the game's own arithmetic rather than the oracle's approximation:
+
+  * the player's hitbox is a 2.5x2.5 box (`hitboxSize = (1.25, 1.25)`,
+    `Player::AddedCallback`, Player.cpp:107). The oracle uses a radius-2 circle.
+    That difference is the point -- this file is allowed to disagree with the
+    oracle, which is how it can find the oracle's errors instead of echoing them.
+  * bullet collision is the AABB test from `Player::CalcKillBoxCollision`, not a
+    circle with a fixed radius. Real bullets run 4 to 32 units across.
+  * a laser is a box in its own frame -- `x` in [startOffset, endOffset], `y` in
+    [-width/2, width/2] -- with both ends advancing by `speed` per frame. This is
+    the same machine `state.read_lasers` observes, so a beam that grows into a
+    stationary player is fatal here and is only *approximated* as such by the
+    oracle.
+
+`patterns.py` is the attack library. Two entries are not invented:
+`captured_pair_vertical` and `captured_spread` are the two attacks the live laser
+probe actually caught, rebuilt from the raw slot dump at the same pivots, angles,
+widths, speeds and lengths. That is the whole reason the file exists -- getting
+back to those attacks in the game took a full run each.
+
+`gym.py` wraps it as `reset()` / `step(action)` with a flat feature observation,
+so a policy can be measured thousands of times and an observation encoding can be
+changed and re-measured in seconds. `record.py` dumps live frames in the snapshot
+shape and validates the simulator against them, one frame at a time, because the
+simulator is a claim and this port has already been caught disagreeing with the
+decomp once.
+
+### What it found immediately
+
+The 25 logged deaths in `dodge-lasers5.jsonl` are not where they looked. The log
+only records frames where the player is *alive*, so a death does not appear as a
+state transition at all -- it appears as a gap in the timestamps, and `deaths()`
+reads zero. Reconstructed from the gaps: 25 deaths in 546 s, and 20 of them at
+y=432, the bottom edge, with the oracle reporting a *safe* move on the last frame
+before 7 of them.
+
+Both of those are one failure with two causes, and the simulator separates them:
+
+  * **The horizon is too short.** 15 frames was inherited from the model's
+    commitment window, but the dodger re-decides every frame and does not need a
+    horizon that short. On `laser_cross` it dies at frame 58 with horizon 15 and
+    survives 900 with horizon 30. Across all twelve patterns a longer horizon is
+    a strict improvement -- `wall_gap` 145 -> 208, `laser_cross` 58 -> 900, and
+    nothing else moves. At horizon 90 `wall_gap` gets *worse* (155), because
+    straight-line extrapolation over 90 frames invents threats that never arrive.
+  * **Clearance has no term for escape room.** The highest clearance is at the
+    field edge, because fewer bullets can reach it, so a greedy maximiser walks
+    into the corner and then has nowhere to go. `wall_gap` shows it directly: the
+    player sits at y=448 for seven frames and then walks *up* into the wall. This
+    is the part a longer horizon does not fix, and it is what the 20 deaths at
+    y=432 are.
