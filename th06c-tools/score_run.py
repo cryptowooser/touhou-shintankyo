@@ -186,12 +186,18 @@ def score(path, rng):
                 print("     weak separation: on a sparse board this picks a")
                 print("     survivor anyway, but a dense one will show it.")
 
-    # Split by whether the answer could have been wrong.
+    # Split by whether the answer could have been wrong. This is over the
+    # frames the dodger decided on, not `safe_rows`: a frame where every move
+    # is lethal has an empty oracle_safe, which is falsy, so `safe_rows` drops
+    # exactly the frames the `doomed` line exists to count. That line read 0 on
+    # the first Lunatic run, which had 144 such frames.
+    dec = [r for r in rows if r.get("mode") != "death"]
+
     def all_safe(r):
         return all(m in r["oracle_safe"] for m in opts)
 
-    trivial = [r for r in safe_rows if all_safe(r)]
-    constrained = [r for r in safe_rows if not all_safe(r)]
+    trivial = [r for r in dec if all_safe(r)]
+    constrained = [r for r in dec if not all_safe(r)]
     winnable = [r for r in constrained
                 if any(m in r["oracle_safe"] for m in opts)]
     doomed = [r for r in constrained
@@ -199,7 +205,7 @@ def score(path, rng):
 
     print()
     print("  frames where every offered move was safe:  %4d  (%.0f%%)"
-          % (len(trivial), 100.0 * len(trivial) / len(safe_rows)))
+          % (len(trivial), 100.0 * len(trivial) / len(dec)))
     print("  frames with at least one lethal move:      %4d" % len(constrained))
     print("     of those, some move survived:           %4d" % len(winnable))
     print("     of those, every offered move died:     %4d" % len(doomed))

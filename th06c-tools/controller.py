@@ -185,7 +185,7 @@ class Controller:
         self.decisions = 0
         self.errors = 0
         self.deaths = 0
-        self._was_alive = True
+        self._was_alive = None
         self._last_choice = None
         self._last_fp = None
         self._frozen = 0
@@ -241,7 +241,14 @@ class Controller:
                 self.latest_t = time.perf_counter()
 
             alive = snap["player"]["state"] == 0
-            if self._was_alive and not alive:
+            if self._was_alive is None:
+                # First frame: adopt the state we find instead of assuming the
+                # player was alive. Attaching while the player is mid-death
+                # (state 3) used to log a death the dodger had nothing to do
+                # with -- the first run on Lunatic reported "1 death" that was
+                # only the respawn animation already in progress.
+                self._was_alive = alive
+            elif self._was_alive and not alive:
                 self.deaths += 1
                 print("  player state %d (not alive) -- death %d"
                       % (snap["player"]["state"], self.deaths))

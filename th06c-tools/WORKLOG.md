@@ -1862,3 +1862,79 @@ whenever the log held no non-alive frames.
 moved to 30, so `sim.py --patterns` silently measured a policy that is not the
 one that runs against the game. It now defaults to `view.DODGER_HORIZON`.
 `dodger.py --bench` also ignored its argument and always benched 20/60/150/300.
+
+## First Lunatic run: 180 s, no deaths, and it camped
+
+One unattended run against the live game on Lunatic, stage 1: 10744 decisions in
+179.7 s at 59.79 decisions/s, round trip median 1 ms, p90 2 ms, max 6 ms. The
+sampling loop held 60 Hz for the whole window.
+
+**It did not die.** The log reports one death and that one is an artifact: the
+row has `n=0`, `choice=null`, an empty clearance map, `player_state=3` and the
+respawn position `(192, 384)`, and the session log shows the board was already
+at `player state 3` the moment it attached. The controller seeded
+`_was_alive = True`, so attaching mid-death logged a death the dodger had
+nothing to do with. It now adopts the first observed state instead. Across the
+whole run the player states were `{0: 10744, 3: 1}`.
+
+### The horizon never had to shrink
+
+`horizon in force: 30 on 10600 frames` -- the adaptive shrink never fired, and
+the slowest decision was 6 ms against a 16.7 ms frame. Live bullets reached 214
+on some frames and it still cost 6 ms. The reason is the oracle's own filter:
+it drops any bullet that cannot reach the player's path, and on a real stage
+most of the board cannot. The bench's "bullets clustered around the player" is a
+worst case that ordinary play does not produce, so the 9.1 ms / 300-bullet
+figure overstates the cost.
+
+### It sat in the bottom corner
+
+Position over the run, against the movement area `x in [8, 376]`, `y in [16, 432]`:
+
+| axis | p0 | p25 | p50 | p75 | p100 |
+|---|---|---|---|---|---|
+| x | 8.0 | 30.6 | 319.4 | 376.0 | 376.0 |
+| y | 16.0 | 384.0 | 432.0 | 432.0 | 432.0 |
+
+56% of frames were at the bottom edge, 3115 frames at the right edge and 2207 at
+the left. The median per-frame displacement was 0.00; the longest stationary
+streak was 354 frames (5.9 s) and there were 31 streaks over a second. `stay put`
+was chosen 27% of the time and `down` 15%, which is what `PREFERENCE` asks for:
+it breaks ties toward standing still and then toward moving down, and the bottom
+edge is where that stops.
+
+So the survival is real but it is not evidence of dodging. Standing low is
+correct Touhou play, and it is also where the threats in this stage do not go.
+The evidence that the board is being read is the discrimination number below,
+not the absence of deaths.
+
+### The oracle is pessimistic by a tenth of a unit at the corner
+
+144 frames had *every* offered move lethal, and the player lived through all of
+them. They cluster at `(376, 432)` -- 40 of them at y=432 -- with 83 live
+bullets and clearances like `right: -0.1, down: -0.1, stay put: -0.1`. The
+oracle was calling a hit by a tenth of a unit. It uses circles
+(`PLAYER_RADIUS + BULLET_RADIUS`) where the game uses a 2.5x2.5 box, so it is
+conservative, and against a clamped player in a corner that conservatism is the
+whole margin. This is the same model error the edge deaths showed, from the
+other side: the oracle cannot tell "definitely hit" from "missed by 0.1".
+
+### The `doomed` count could never have been non-zero
+
+`score_run` built its frame split from `safe_rows`, which is filtered on a
+truthy `oracle_safe`. A frame where every move is lethal has an empty
+`oracle_safe`, so it was dropped before the `doomed` line counted it -- that
+line was structurally always 0. The split is now over the decision rows and the
+run reports 144.
+
+### The numbers that do say the board is read
+
+| | |
+|---|---|
+| exactly one lethal move among the 9 offered | model picked it **0/1146** (random would: 127/1146) |
+| frames where `always stay put` dies | model chose a survivor **469/482** (97%) |
+| all discriminating frames | `always stay put` 93%, model 100% |
+
+`always stay put` is a strong baseline on this stage -- 93% -- so the model's
+edge over it is only 462/7090. Its value is concentrated in the 482 frames where
+standing still kills, and that is the right place for it to be.
