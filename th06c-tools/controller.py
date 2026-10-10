@@ -96,7 +96,11 @@ MAX_SNAPSHOT_AGE = 0.5
 #      threat is no longer scored harmless, and the differenced velocity no
 #      longer carries the one-frame timestamp skew or the reused-slot match.
 #      Also adds `mode: dodger`, which carries `clearance` instead of `p_yes`.
-LOG_VERSION = 4
+#   5: lasers are read from the live array instead of always empty, and the
+#      oracle extends a laser's far end over its look-ahead. Rows carry
+#      `lasers` and `laser_state`. Version 4 and earlier scored every frame as
+#      if no laser existed, which is the run that stood still under one.
+LOG_VERSION = 5
 
 # The binary mode. One yes/no question per direction, and the move is whichever
 # direction the model says is least likely to be hit. This exists because the

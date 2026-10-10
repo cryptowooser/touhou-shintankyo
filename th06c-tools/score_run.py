@@ -121,6 +121,33 @@ def score(path, rng):
     print("  deaths: %s" % ("%d" % d if d is not None
                             else "not logged (pre-dates player_state)"))
 
+    # Lasers are only in the log from version 5. Before that the reader returned
+    # none, so a death beside one cannot be told apart from a death beside
+    # nothing -- which is exactly the run that stood still under one.
+    laser_rows = [r for r in rows if r.get("lasers") is not None]
+    if laser_rows:
+        with_laser = sum(1 for r in laser_rows if r["lasers"])
+        print("  frames with a live laser: %d/%d (%.0f%%)"
+              % (with_laser, len(laser_rows),
+                 100.0 * with_laser / len(laser_rows)))
+        prev, at_death = 0, []
+        for r in laser_rows:
+            s = r.get("player_state")
+            if s is None:
+                continue
+            if prev == 0 and s != 0:
+                at_death.append(r)
+            prev = s
+        if at_death:
+            print("  laser count on the frame of each death:")
+            for r in at_death:
+                cl = r.get("clearance") or {}
+                print("     n=%-6s lasers=%-3s live_bullets=%-4s  "
+                      "stay put=%7.2f  best=%7.2f"
+                      % (r.get("n"), r.get("lasers"), r.get("live_bullets"),
+                         cl.get("stay put", float("nan")),
+                         max(cl.values()) if cl else float("nan")))
+
     print()
     print("  choice distribution:")
     for k, v in collections.Counter(r["choice"] for r in rows).most_common():
