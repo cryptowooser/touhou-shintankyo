@@ -28,6 +28,7 @@ without having to reproduce it.
   controller.py --binary                  one yes/no question per direction
   controller.py --wait-live 120           wait up to 2 min for the game to run
   controller.py --dodger                  per-frame arithmetic, no model calls
+  controller.py --dodger --shoot          hold Z too, so a stage can be cleared
   controller.py --dodger --dodger-hz 4    the same policy at the model's rate
 
 The `--dodger` mode replaces the model with `dodger.py`, which re-picks a
@@ -146,12 +147,13 @@ class Controller:
                  poll_hz=60.0, use_oracle=True, model=DE.DEFAULT_MODEL,
                  options=None, binary=False, wait_live=60.0, use_dodger=False,
                  dodger_hz=60.0, dodger_horizon=view.HORIZON,
-                 dodger_stickiness=2.0):
+                 dodger_stickiness=2.0, shoot=False):
         self.fmt = fmt
         self.binary = binary
         self.wait_live = wait_live
         self.speed = speed
         self.dry_run = dry_run
+        self.shoot = shoot
         self.stop_file = stop_file
         self.stop_after = stop_after
         self.poll_dt = 1.0 / poll_hz
@@ -257,7 +259,10 @@ class Controller:
                 # how a run dies immediately after every death. Release instead.
                 self._set_keys(())
             else:
-                self._set_keys(self.desired)
+                keys = self.desired
+                if self.shoot:
+                    keys = tuple(keys) + ("z",)
+                self._set_keys(keys)
 
             next_t += self.poll_dt
             slack = next_t - time.perf_counter()
@@ -297,6 +302,8 @@ class Controller:
             "bullets": len(snap["bullets"]),
             "live_bullets": sum(1 for b in snap["bullets"] if b.get("live")),
             "enemies_fatal": sum(1 for e in snap["enemies"] if e["fatal"]),
+            "lasers": len(snap.get("lasers", [])),
+            "laser_state": [L.get("state") for L in snap.get("lasers", [])],
             "options": list(D.PREFERENCE),
             "oracle_safe": safe,
             "oracle_ok": choice in safe,
@@ -490,7 +497,8 @@ class Controller:
         worker = None
         if self.dodger is not None:
             print("dodger mode: arithmetic policy every %d frame(s), no model "
-                  "calls" % self.dodger_every)
+                  "calls%s" % (self.dodger_every,
+                               ", holding Z" if self.shoot else ""))
         else:
             worker = threading.Thread(target=self.decide_loop, daemon=True)
             worker.start()
@@ -538,6 +546,7 @@ def main():
         dodger_hz=opt("--dodger-hz", 60.0, float),
         dodger_horizon=opt("--dodger-horizon", view.HORIZON, int),
         dodger_stickiness=opt("--dodger-stickiness", 2.0, float),
+        shoot="--shoot" in argv,
     )
     ctl.run()
 

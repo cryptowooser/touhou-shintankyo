@@ -1667,3 +1667,47 @@ up in: run `state.py --find-velocity` with bullets in flight, then
 survives where the model did not, the rate was the problem. If it also dies, the
 problem is upstream of the policy -- the representation or the oracle -- and no
 prompt or encoding will fix it.
+
+## The lasers were never being read
+
+`state.py` hardcoded `"lasers": []` from the start, so every oracle decision was
+made on bullets and enemies alone and the dodger stood still while a laser swept
+onto it. The array is not a separate allocation: it is `g_BulletManager +
+0xE8818` (RVA `0xA3DC28`), 64 slots of `0x278`, immediately after the 640 bullet
+slots. `probe_lasers.py` dumps a whole slot so a live laser can identify the
+fields, and the offsets came from the port's own code rather than the 1.02h
+decomp, whose field order this port does not keep:
+
+  * `SpawnLaserPattern` at `0xD920` writes the descriptor into the slot.
+  * The slot loop at `0xE570` in `BulletManager_OnUpdate` does `f14 += f24c`,
+    clamps `f10`, and divides `f04` by the sprite width.
+  * The decomp fixes the semantics exactly: `endOffset += speed`,
+    `startOffset = endOffset - startLength` (clamped at 0),
+    `laserSize.x = endOffset - startOffset`, `scaleX = width / sprite->widthPx`.
+
+A probe dump with three live lasers confirmed every offset at once:
+
+    width        +0x004      startOffset  +0x010      endOffset    +0x014
+    angle        +0x240      speed        +0x24C      active       +0x254
+    pos          +0x258      startLength  +0x268      state        +0x270
+
+The three slots shared one origin `(182.3, 70.9)` with three different angles
+(`0.908`, `1.301`, `1.694` rad) -- a spread -- and each had `endOffset -
+startOffset = 192 = startLength` with `speed = 4`, exactly as the decomp
+predicts. `read_lasers` folds `startOffset` into the segment start, so the
+oracle scores the shape it already knew how to score.
+
+The oracle also had to change: it treated a laser as a static segment, but both
+ends advance at `speed` per frame once the laser is extended, so the far end
+reaches `length + speed*t` by frame `t`. A laser sweeps as fast as the player
+moves, so the static reading marked the player's own square safe while the laser
+was about to arrive. Extending the far end over the look-ahead is the fix; a
+laser aimed at a stationary player is now fatal, and one that passes to the side
+stays safe.
+
+`--vel-off 0x008` is confirmed too: the field reads `1.80` where the measured
+motion is `12.57` over `7.3` frames, i.e. `1.72` per frame. With the offset the
+differencing and the unknown-velocity window both disappear.
+
+`controller.py --shoot` holds Z, which a dodger run needs to kill a boss and
+advance a stage at all; without it the run is pinned to the first boss.

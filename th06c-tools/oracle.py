@@ -122,8 +122,13 @@ def clearance(state, horizon=view.HORIZON):
 
             for L in lasers:
                 pad = PLAYER_RADIUS + L.get("width", 10.0) / 2.0
+                # A laser's far end advances at `speed` per frame, so at frame t
+                # of the look-ahead it has reached `length + speed*t`. Treating
+                # it as the static current segment is what let the dodger hold
+                # still while a laser swept onto it.
                 d = _laser_dist(L["pos"][0], L["pos"][1], L.get("angle", 0.0),
-                                L.get("length", 200.0), cx, cy) - pad
+                                L.get("length", 200.0) + L.get("speed", 0.0) * t,
+                                cx, cy) - pad
                 if d < worst:
                     worst = d
 

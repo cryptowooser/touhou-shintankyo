@@ -18,6 +18,7 @@ no velocity for a few frames.
   state.py --dump              one frame, text
   state.py --watch 120         timing and bullet count over 120 frames
   state.py --find-velocity     scan the bullet struct for its velocity vector
+  state.py --lasers 120        live laser segments, 120 frames
 """
 import math
 import os
@@ -51,6 +52,34 @@ E_OFF_FLAGS2 = 0x0B5
 E_OFF_FLAGS3 = 0x0B6
 E_OFF_HITBOX = 0x2A4
 ENEMY_BYTES = ENEMIES_OFF + ENEMY_SLOTS * ENEMY_STRIDE + 4
+
+# Lasers live in the same allocation as the bullets, after all 640 bullet
+# slots: `g_BulletManager + 0xE8818`, i.e. RVA 0xA3DC28, 64 slots of 0x278
+# (both from the loop at the end of `BulletManager_OnUpdate`, 0x0DB90).
+#
+# The field offsets are NOT the 1.02h decomp's: this port reorders the struct,
+# so they were re-derived from `SpawnLaserPattern` (0xD920) and the laser loop,
+# then checked against the decomp's geometry, which is unambiguous:
+#     laserSize.x = endOffset - startOffset
+#     laserCenter.x = (endOffset - startOffset)/2 + startOffset + pos.x
+#     vm0.scaleX  = width / sprite->widthPx
+#     vm0.rotation.z = PI/2 - angle
+# In the port the update does `f14 += f24c`, clamps `f10`, and divides `f04` by
+# the sprite width, which fixes endOffset=0x14, speed=0x24c, startOffset=0x10,
+# startLength=0x268 and width=0x04; the alloc writes pos at 0x258 and angle at
+# 0x240.  `state.py --lasers` prints them, and `probe_lasers.py` dumps the raw
+# slot so a live laser can confirm this.
+LASERS_RVA = 0xA3DC28
+LASER_STRIDE = 0x278
+LASER_SLOTS = 64
+L_OFF_WIDTH = 0x004
+L_OFF_START_OFFSET = 0x010
+L_OFF_END_OFFSET = 0x014
+L_OFF_ANGLE = 0x240
+L_OFF_SPEED = 0x24C
+L_OFF_ACTIVE = 0x254
+L_OFF_POS = 0x258
+L_OFF_STATE = 0x270
 
 PLAYER_RVA = 0xBB89F0
 P_OFF_HITBOX_TL = 0x410
@@ -210,6 +239,55 @@ class Reader:
                               and not boss and not invisible)})
         return out
 
+    def read_lasers(self):
+        """Only the lasers that can kill, as segments the oracle can score.
+
+        A laser is a line from `pos` along `angle`: the live part starts at
+        `startOffset` and ends at `endOffset`, both measured from `pos`, so the
+        segment's start and length are folded out here. `width` is the full
+        width; the oracle adds half of it to the player radius.
+
+        The decomp calls the hitbox test in state 0 after `hitboxStartTime`,
+        in state 1 for its whole duration, and in state 2 for `hitboxEndDelay`.
+        All three are kept, which is conservative while a laser is still
+        charging but never drops one that has started firing.
+        """
+        buf = M.read_mem(self.h, self.base + LASERS_RVA,
+                         LASER_SLOTS * LASER_STRIDE)
+        if buf is None:
+            return []
+        out = []
+        pos_fmt = struct.Struct("<3f")
+        for i in range(LASER_SLOTS):
+            a = i * LASER_STRIDE
+            if buf[a + L_OFF_ACTIVE] == 0:
+                continue
+            px, py, _pz = pos_fmt.unpack_from(buf, a + L_OFF_POS)
+            angle, = struct.unpack_from("<f", buf, a + L_OFF_ANGLE)
+            start, = struct.unpack_from("<f", buf, a + L_OFF_START_OFFSET)
+            end, = struct.unpack_from("<f", buf, a + L_OFF_END_OFFSET)
+            width, = struct.unpack_from("<f", buf, a + L_OFF_WIDTH)
+            speed, = struct.unpack_from("<f", buf, a + L_OFF_SPEED)
+            if not (-1e6 < angle < 1e6) or not (-1e6 < start < 1e6) \
+                    or not (-1e6 < end < 1e6):
+                continue                     # a field that is not a float
+            sx = px + math.cos(angle) * start
+            sy = py + math.sin(angle) * start
+            out.append({
+                "idx": i, "pos": (sx, sy),
+                "angle": math.degrees(angle),
+                "length": max(0.0, end - start),
+                "width": max(0.0, width),
+                # Both ends advance at `speed` per frame once the laser is fully
+                # extended (the decomp does `endOffset += speed`, then
+                # `startOffset = endOffset - startLength`), so the far end keeps
+                # reaching further out. The oracle uses this to extend the
+                # segment over its look-ahead instead of treating it as static.
+                "speed": speed if 0.0 <= speed < 100.0 else 0.0,
+                "state": buf[a + L_OFF_STATE],
+            })
+        return out
+
     def read_player(self):
         p = self.base + PLAYER_RVA
         raw = M.read_mem(self.h, p + P_OFF_STATE, 1)
@@ -264,7 +342,7 @@ class Reader:
             "bullets": out_bullets,
             "enemies": [{"pos": (e["pos"][0], e["pos"][1]), "fatal": e["fatal"]}
                         for e in enemies],
-            "lasers": [],
+            "lasers": self.read_lasers(),
         }
         if hud:
             state.update({k: v for k, v in hud.items() if v is not None})
@@ -398,6 +476,19 @@ def main():
     if "--calibrate-speed" in argv:
         calibrate_speed(reader)
         return
+    if "--lasers" in argv:
+        i = argv.index("--lasers")
+        watch = int(argv[i + 1]) if len(argv) > i + 1 else 1
+        for _ in range(watch):
+            lasers = reader.read_lasers()
+            print("live lasers: %d" % len(lasers))
+            for L in lasers:
+                print("  slot %2d  pos=(%7.1f,%7.1f)  angle=%7.1f deg  "
+                      "len=%7.1f  width=%5.1f  state=%d"
+                      % (L["idx"], L["pos"][0], L["pos"][1], L["angle"],
+                         L["length"], L["width"], L["state"]))
+            time.sleep(1.0 / FPS)
+        return
 
     watch = int(argv[argv.index("--watch") + 1]) if "--watch" in argv else 1
     hud = reader.read_hud()
@@ -412,12 +503,13 @@ def main():
                       if b["vel"] is not None
                       and abs(b["vel"][0]) + abs(b["vel"][1]) > 0.3]
             print("frame %4d  %5.2f ms  player=(%.1f,%.1f) state=%d  "
-                  "bullets=%d live=%d moving=%d  enemies=%d fatal=%d"
+                  "bullets=%d live=%d moving=%d  enemies=%d fatal=%d  lasers=%d"
                   % (f, reader.stats["last_ms"],
                      state["player"]["pos"][0], state["player"]["pos"][1],
                      state["player"]["state"], len(state["bullets"]), len(live),
                      len(moving), len(state["enemies"]),
-                     sum(1 for e in state["enemies"] if e["fatal"])))
+                     sum(1 for e in state["enemies"] if e["fatal"]),
+                     len(state["lasers"])))
         if f != watch - 1:
             time.sleep(1.0 / FPS)
     times.sort()
