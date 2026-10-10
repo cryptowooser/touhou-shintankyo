@@ -44,6 +44,18 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 FIELD_W, FIELD_H = 384.0, 448.0
 GRID_W, GRID_H = 32, 36
+
+# The player's centre is clamped to this box, which is NOT the playfield.
+# GameManager sets playerMovementAreaTopLeftPos = (8, 16) and
+# playerMovementAreaSize = (368, 416), so the reachable centre is x in [8, 376]
+# and y in [16, 432]. Player::OnUpdate clamps to exactly that at Player.cpp:803.
+# The two boxes differ by 8 units left and right and 16 up and down, which is
+# where the logged run kept dying -- 20 of its 25 deaths were at y=432, and an
+# oracle that thinks the player can still move to y=448 reads that square as
+# having somewhere to go.
+MOVE_L, MOVE_T = 8.0, 16.0
+MOVE_R, MOVE_B = 376.0, 432.0
+
 HORIZON = 15        # frames of lookahead; should match the commitment window
 SOON = 5            # frames under which a bullet counts as imminent
 

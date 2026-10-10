@@ -112,8 +112,8 @@ def clearance(state, horizon=view.HORIZON):
         ux, uy = _unit(dx, dy)
         worst = float("inf")
         for t in range(1, horizon + 1):
-            cx = min(max(px + ux * speed * t, 0.0), view.FIELD_W)
-            cy = min(max(py + uy * speed * t, 0.0), view.FIELD_H)
+            cx = min(max(px + ux * speed * t, view.MOVE_L), view.MOVE_R)
+            cy = min(max(py + uy * speed * t, view.MOVE_T), view.MOVE_B)
 
             for bx, by, vx, vy in bullets:
                 d = math.hypot(bx + vx * t - cx, by + vy * t - cy) - reach

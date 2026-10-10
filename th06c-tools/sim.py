@@ -48,6 +48,15 @@ FIELD_W, FIELD_H = 384.0, 448.0
 FPS = 60.0
 PLAYER_SPEED = 4.0
 
+# GameManager.cpp:290 -- playerMovementAreaTopLeftPos (8, 16) with size
+# (368, 416), applied by Player::OnUpdate at Player.cpp:803. The player's centre
+# cannot leave this box, and it is smaller than the playfield by 8 units on the
+# left and right and 16 on the top and bottom. Clamping to the playfield instead
+# hands the player 16 units of escape at the bottom edge that the game does not
+# have, which is exactly where the logged run kept dying.
+MOVE_L, MOVE_T = 8.0, 16.0
+MOVE_R, MOVE_B = 376.0, 432.0
+
 # Player::AddedCallback, Player.cpp:107.
 PLAYER_HALF = 1.25
 
@@ -108,8 +117,8 @@ class Sim:
 
         ux, uy = dict(MOVES)[move] if isinstance(move, str) else move
         px, py = p["pos"]
-        px = min(max(px + ux * self.speed, 0.0), FIELD_W)
-        py = min(max(py + uy * self.speed, 0.0), FIELD_H)
+        px = min(max(px + ux * self.speed, MOVE_L), MOVE_R)
+        py = min(max(py + uy * self.speed, MOVE_T), MOVE_B)
         p["pos"] = (px, py)
 
         for s in self.spawners:
@@ -436,15 +445,18 @@ def selftest():
     check("the near end is dragged along", L["startOffset"] > 0.0,
           "startOffset=%s" % L["startOffset"])
 
-    # --- the player is clamped to the field --------------------------------
+    # --- the player is clamped to the movement area, not the playfield -----
     st = base()
     st["player"]["pos"] = (FIELD_W - 1.0, FIELD_H - 1.0)
     sim = Sim(st)
     for _ in range(10):
         sim.step("down-right")
-    check("the player cannot leave the field",
-          sim.state["player"]["pos"] == (FIELD_W, FIELD_H),
+    check("the player stops at the movement area, not the field edge",
+          sim.state["player"]["pos"] == (MOVE_R, MOVE_B),
           repr(sim.state["player"]["pos"]))
+    check("and that box is smaller than the playfield",
+          MOVE_R < FIELD_W and MOVE_B < FIELD_H,
+          "%s %s" % (MOVE_R, MOVE_B))
 
     # --- off-screen bullets despawn ----------------------------------------
     st = base()

@@ -1771,3 +1771,31 @@ Both of those are one failure with two causes, and the simulator separates them:
     player sits at y=448 for seven frames and then walks *up* into the wall. This
     is the part a longer horizon does not fix, and it is what the 20 deaths at
     y=432 are.
+
+### The player was being clamped to the wrong box
+
+Building the simulator turned up a bug in the oracle that the game had been
+hiding. `GameManager` sets
+
+    playerMovementAreaTopLeftPos = (8, 16)
+    playerMovementAreaSize      = (368, 416)
+
+and `Player::OnUpdate` (Player.cpp:803) clamps the player's centre to exactly
+that, so the reachable centre is x in [8, 376] and y in [16, 432]. The playfield
+is 384x448, so the two boxes differ by 8 units left and right and **16 units top
+and bottom**.
+
+Both the oracle and the new simulator clamped to the playfield. On the bottom
+edge that hands the player 16 units of escape the game does not have: an oracle
+that believes the player can still step down to y=448 reads a square at y=432 as
+having somewhere to go. The logged run died 20 times out of 25 at y=432.
+
+Fixing it moves `wall_gap` from 145 to 212 frames and changes nothing else. The
+scenario answer keys in `oracle.py --selftest` all still hold, so this is a
+correction to a boundary, not a change of policy.
+
+The oracle's remaining edge problem is not this. A penalty for being near a wall
+was tried and makes things *worse* -- `corner_trap` goes from 900 to 411 at
+weight 1 -- because near an edge is genuinely safer when the threats are
+elsewhere, and a flat penalty pushes the player back into them. Whatever the
+right term is, it is not "avoid walls".
